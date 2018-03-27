@@ -27,6 +27,7 @@ export class AuthService {
   }
 
 
+  //retornar si hay algún usuario conectado
   getAuth(){
     return this.afAuth.authState.map(auth => auth);
   }
