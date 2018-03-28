@@ -13,7 +13,7 @@
     </ul>
 
     <form class="form-inline my-2 my-lg-0" *ngIf="isLogin">
-        <input class="form-control mr-sm-2" type="text" placeholder="Buscar">
+        <input class="form-control mr-sm-2" name="buscar" id="buscar" [(ngModel)]="buscar" type="text" placeholder="Buscar">
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button>
     </form>
     <ul class="navbar-nav mx-auto">
