@@ -10,7 +10,12 @@
         <a class="nav-link" href="#" routerLink="/">Home <span class="sr-only">(current)</span></a>
       </li>
     </ul>
-    <ul class="navbar-nav mx-auto">
+
+      <form class="form-inline my-2 my-lg-0" *ngIf="isLogin">
+          <input class="form-control mr-sm-2" type="text" placeholder="Buscar expertos">
+          <button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button>
+      </form>
+      <ul class="navbar-nav ml-auto">
       <li class="nav-item" *ngIf="!isLogin">
         <a class="nav-link" href="#" routerLink="/login" >Login</a>
       </li>
@@ -18,19 +23,18 @@
         <a class="nav-link" href="#" routerLink="/register" >Registrarse</a>
       </li>
       <li class="nav-item" *ngIf="isLogin">
-        <a class="nav-link" (click)="onClickLogout()" href="#">Salir</a>
-      </li>
-      <li class="nav-item" *ngIf="isLogin">
-        <a  class="nav-link">{{username}}
-        </a>
-      </li>
-      <li class="nav-item" *ngIf="isLogin">
-        <img src="{{fotoUsuario}}k" alt="" class="rounded-circle">
+        <img src="{{fotoUsuario}}k" alt="" class="rounded-frame">
         <span class="badge badge pill badge-secondary">
           {{email}}
         </span>
       </li>
+      <li class="nav-item" *ngIf="isLogin">
+        <a class="nav-link" (click)="onClickLogout()" href="#">Salir</a>
+      </li>
+
+
     </ul>
 
   </div>
+
 </nav>
