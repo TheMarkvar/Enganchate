@@ -16,7 +16,7 @@
         <input class="form-control mr-sm-2" name="buscar" id="buscar" [(ngModel)]="buscar" type="text" placeholder="Buscar">
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button>
     </form>
-    
+
     <ul class="navbar-nav mx-auto">
       <li class="nav-item" *ngIf="!isLogin">
         <a class="nav-link" href="#" routerLink="/login">Login</a>
@@ -28,7 +28,7 @@
         <a class="nav-link">{{username}}</a>
       </li>
       <li class="nav-item" *ngIf="isLogin">
-        <img src="{{fotoUsuario}}" class="rounded-circle">
+        <img src="{{fotoUsuario}}" *ngIf="fotoUsuario" class="rounded-circle">
         <!--<span class="badge pill badge-secondary">{{email}}</span>-->
       </li>
       <li class="nav-item" *ngIf="isLogin">
