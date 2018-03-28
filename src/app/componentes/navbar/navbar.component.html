@@ -29,7 +29,7 @@
       </li>
       <li class="nav-item" *ngIf="isLogin">
         <img src="{{fotoUsuario}}" *ngIf="fotoUsuario" class="rounded-circle">
-        <!--<span class="badge pill badge-secondary">{{email}}</span>-->
+        <span class="badge pill badge-secondary">{{email}}</span>
       </li>
       <li class="nav-item" *ngIf="isLogin">
         <a class="nav-link" href="#" (click)="onClickLogout()" >Salir</a>
