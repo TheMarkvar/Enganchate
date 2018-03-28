@@ -32,5 +32,5 @@ export class RegisterpageComponent implements OnInit {
       this.router.navigate(['/register']);
     });
   }
-
+  
 }

@@ -25,6 +25,9 @@ export class AuthService {
       err => reject (err));
     });
   }
+  loginGoogle(){
+    return this.afAuth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  }
 
 
   //retornar si hay algún usuario conectado
