@@ -5,34 +5,34 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarColor02">
+
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" href="#" routerLink="/">Home <span class="sr-only">(current)</span></a>
       </li>
     </ul>
 
-      <form class="form-inline my-2 my-lg-0" *ngIf="isLogin">
-          <input class="form-control mr-sm-2" type="text" placeholder="Buscar expertos">
-          <button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button>
-      </form>
-      <ul class="navbar-nav ml-auto">
+    <form class="form-inline my-2 my-lg-0" *ngIf="isLogin">
+        <input class="form-control mr-sm-2" type="text" placeholder="Buscar">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Buscar</button>
+    </form>
+    <ul class="navbar-nav mx-auto">
       <li class="nav-item" *ngIf="!isLogin">
-        <a class="nav-link" href="#" routerLink="/login" >Login</a>
+        <a class="nav-link" href="#" routerLink="/login">Login</a>
       </li>
       <li class="nav-item" *ngIf="!isLogin">
-        <a class="nav-link" href="#" routerLink="/register" >Registrarse</a>
+        <a class="nav-link" href="#" routerLink="/register">Registrarse</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link">{{username}}</a>
       </li>
       <li class="nav-item" *ngIf="isLogin">
-        <img src="{{fotoUsuario}}k" alt="" class="rounded-frame">
-        <span class="badge badge pill badge-secondary">
-          {{email}}
-        </span>
+        <img src="{{fotoUsuario}}" class="rounded-circle">
+        <!--<span class="badge pill badge-secondary">{{email}}</span>-->
       </li>
       <li class="nav-item" *ngIf="isLogin">
-        <a class="nav-link" (click)="onClickLogout()" href="#">Salir</a>
+        <a class="nav-link" href="#" (click)="onClickLogout()" >Salir</a>
       </li>
-
-
     </ul>
 
   </div>
