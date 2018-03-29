@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../servicios/auth.service';
+import { DatabaseService } from '../../servicios/database.service';
 import { Router } from '@angular/router';
-import {FlashMessagesService} from 'angular2-flash-messages';
+import { FlashMessagesService } from 'angular2-flash-messages';
+
 
 @Component({
   selector: 'app-loginpage',
@@ -9,11 +11,12 @@ import {FlashMessagesService} from 'angular2-flash-messages';
   styleUrls: ['./loginpage.component.scss']
 })
 export class LoginpageComponent implements OnInit {
-  public email:string;
-  public password:string;
+  private email:string;
+  private password:string;
 
   constructor(
     public authService: AuthService,
+    public databaseService: DatabaseService,
     public router:Router,
     public flashMensaje: FlashMessagesService
   ) { }
@@ -36,6 +39,7 @@ export class LoginpageComponent implements OnInit {
   onClickGoogleLogin(){
     this.authService.loginGoogle().
     then((res)=>{
+      this.insertUser();
       this.router.navigate(['./privado']);
     }).catch( err => console.log(err.message));
   }
@@ -43,6 +47,7 @@ export class LoginpageComponent implements OnInit {
   onClickFacebookLogin(){
     this.authService.loginFacebook().
     then((res)=>{
+      this.insertUser();
       this.router.navigate(['./privado']);
     }).catch( err => console.log(err.message));
   }
@@ -50,8 +55,17 @@ export class LoginpageComponent implements OnInit {
   onClickTwitterLogin(){
     this.authService.loginTwitter().
     then((res)=>{
+      this.insertUser();
       this.router.navigate(['./privado']);
     }).catch( err => console.log(err.message));
   }
+
+  insertUser(){
+    let id = this.authService.afAuth.auth.currentUser.uid;
+    let email = this.authService.afAuth.auth.currentUser.email;
+    let displayName = this.authService.afAuth.auth.currentUser.displayName;
+    this.databaseService.insertUserDatabaseLogin(id,email, displayName);
+  }
+
 
 }

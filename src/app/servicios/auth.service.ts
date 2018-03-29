@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+import { DatabaseService } from '../servicios/database.service';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AuthService {
 
+
+
   constructor(
-    public afAuth: AngularFireAuth
+    public afAuth: AngularFireAuth,
+    public databaseService: DatabaseService
+
   ) { }
 
   registerUser(email: string, pass: string) {
