@@ -2,7 +2,10 @@ export class Usuario {
   $id: string;
   email:string;
   displayName:string;
-  edad:number;
+  direccion:string;
+  telefono:string;
+  documento:string;
+  edad:Date;
   servicios:Array<string>;
 
 

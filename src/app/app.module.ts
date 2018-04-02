@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -12,6 +12,8 @@ import { RegisterpageComponent } from './componentes/registerpage/registerpage.c
 import { LoginpageComponent } from './componentes/loginpage/loginpage.component';
 import { PrivadopageComponent } from './componentes/privadopage/privadopage.component';
 import { NotfoundpageComponent } from './componentes/notfoundpage/notfoundpage.component';
+import {EditarperfilpageComponent} from './componentes/editarperfilpage/editarperfilpage.component';
+
 
 //Firebase
 import {FlashMessagesModule} from 'angular2-flash-messages';
@@ -36,7 +38,8 @@ import {AuthGuard} from './guards/auth.guard';
     RegisterpageComponent,
     LoginpageComponent,
     PrivadopageComponent,
-    NotfoundpageComponent
+    NotfoundpageComponent,
+    EditarperfilpageComponent
   ],
   imports: [
     BrowserModule,

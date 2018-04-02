@@ -25,11 +25,15 @@
         <a class="nav-link" href="#" routerLink="/register">Registrarse</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link">{{username}}</a>
+        <a class="nav-link" routerLink="/editProfile">{{username}}</a>
       </li>
-      <li class="nav-item" *ngIf="isLogin">
-        <img src="{{fotoUsuario}}" *ngIf="fotoUsuario" class="rounded-circle">
-        <span class="badge pill badge-secondary">{{email}}</span>
+      <li class="nav-item" *ngIf="tieneFotoExterna && isLogin">
+        <input type="image" class="rounded-circle" src="{{fotoUsuario}}"
+        routerLink="/editProfile" alt="Submit">
+      </li>
+      <li class="nav-item" *ngIf="!tieneFotoExterna && isLogin">
+        <input type="image" class="rounded-circle" src="assets/images/enganchate.png"
+        routerLink="/editProfile">
       </li>
       <li class="nav-item" *ngIf="isLogin">
         <a class="nav-link" href="#" (click)="onClickLogout()" >Salir</a>

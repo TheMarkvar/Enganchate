@@ -16,7 +16,7 @@ export class RegisterpageComponent implements OnInit {
   public password2:string;
   public nombres:string;
   public apellidos:string;
-  public edad:number;
+  public edad:Date;
 
 
   constructor(

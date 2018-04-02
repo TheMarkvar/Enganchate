@@ -8,27 +8,26 @@ import { Usuario } from '../modelos/usuario';
 @Injectable()
 export class DatabaseService {
 
-  private usuarioNuevo:Usuario;
+  public usuario:Usuario;
   private listaUsuarios: AngularFireList<Usuario>;
-  private database;
-  private path:string;
+  private pathUsuarios:string;
 
   constructor(
     public afDatabase: AngularFireDatabase,
   ) {
-      this.path = 'usuarios';
+      this.pathUsuarios = 'usuarios';
   }
 
-  insertUserDatabase(id:string, email:string, displayName:string, edad:number){
+  insertUserDatabase(id:string, email:string, displayName:string, edad:Date){
     if(this.verificarUsuarioEnBaseDeDatos(id)){
       this.getUsuarios();
 
-      this.usuarioNuevo = new Usuario();
-      this.usuarioNuevo.email = email;
-      this.usuarioNuevo.displayName = displayName;
-      this.usuarioNuevo.edad = edad;
+      this.usuario = new Usuario();
+      this.usuario.email = email;
+      this.usuario.displayName = displayName;
+      this.usuario.edad = edad;
 
-      this.afDatabase.database.ref(this.path+'/'+id).set(this.usuarioNuevo);
+      this.afDatabase.database.ref(this.pathUsuarios+'/'+id).set(this.usuario);
     }
   }
 
@@ -36,27 +35,38 @@ export class DatabaseService {
     if(this.verificarUsuarioEnBaseDeDatos(id)){
       this.getUsuarios();
 
-      this.usuarioNuevo = new Usuario();
-      this.usuarioNuevo.email = email;
-      this.usuarioNuevo.displayName = displayName;
+      this.usuario = new Usuario();
+      this.usuario.email = email;
+      this.usuario.displayName = displayName;
 
-      this.afDatabase.database.ref(this.path+'/'+id).set(this.usuarioNuevo);
+      this.afDatabase.database.ref(this.pathUsuarios+'/'+id).set(this.usuario);
     }
   }
 
   verificarUsuarioEnBaseDeDatos(id:string){
-    if(!this.afDatabase.database.ref(this.path+'/'+id)){
+    if(!this.afDatabase.database.ref(this.pathUsuarios+'/'+id)){
       return true;
     }else{
       return true;
     }
   }
 
+  updateUser(id:string, documento:string, direccion:string, telefono:string, edad:Date){
+    this.getUsuarios();
+    this.usuario = new Usuario();
+    this.usuario.documento = documento;
+    this.usuario.direccion = direccion;
+    this.usuario.telefono = telefono;
+    this.usuario.edad = edad;
+    this.listaUsuarios.update(id, this.usuario);
+  }
+
   getUsuarios(){
-    return this.listaUsuarios = this.afDatabase.list(this.path);
+    return this.listaUsuarios = this.afDatabase.list(this.pathUsuarios);
   }
   getUsuario(id:string){
-    return this.listaUsuarios = this.afDatabase.list(this.path+'/'+id);
+    //return this.afDatabase.object(this.pathUsuarios+'/'+id);
+    return  this.afDatabase.database.ref(this.pathUsuarios+'/'+id).once('value');
   }
 
 

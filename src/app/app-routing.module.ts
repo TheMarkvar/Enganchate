@@ -5,6 +5,7 @@ import {HomepageComponent} from './componentes/homepage/homepage.component';
 import {LoginpageComponent} from './componentes/loginpage/loginpage.component';
 import {RegisterpageComponent} from './componentes/registerpage/registerpage.component';
 import {PrivadopageComponent} from './componentes/privadopage/privadopage.component';
+import {EditarperfilpageComponent} from './componentes/editarperfilpage/editarperfilpage.component';
 import {NotfoundpageComponent} from './componentes/notfoundpage/notfoundpage.component';
 
 import {AuthGuard} from './guards/auth.guard';
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path: '', component: HomepageComponent},
   {path: 'login', component: LoginpageComponent},
   {path: 'register', component: RegisterpageComponent},
+  {path: 'editProfile', component: EditarperfilpageComponent, canActivate: [AuthGuard]},
   {path: 'privado', component: PrivadopageComponent , canActivate: [AuthGuard]},
   {path: '**', component: NotfoundpageComponent}
 ];
