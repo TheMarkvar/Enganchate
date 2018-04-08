@@ -54,4 +54,19 @@ export class EditarperfilpageComponent implements OnInit {
     return true;
   }
 
+  cambiarContrasena(){
+
+    var email = this.authService.afAuth.auth.currentUser.email;
+    this.authService.resetPassword(email)
+    .then((res)=>{
+      this.flashMensaje.show('Se ha enviado un link al correo: '+email,
+      {cssClass: 'alert-success', timeout: 4000});
+    }).catch((err)=>{
+      this.flashMensaje.show(err.message,
+      {cssClass: 'alert-danger', timeout: 4000});
+      this.router.navigate(['']);
+    });
+
+  }
+
 }

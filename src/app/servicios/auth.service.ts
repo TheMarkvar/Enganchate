@@ -48,6 +48,10 @@ export class AuthService {
     return this.afAuth.authState.map(auth => auth);
   }
 
+  resetPassword(email:string){
+    return this.afAuth.auth.sendPasswordResetEmail(email);
+  }
+
   logout() {
   return this.afAuth.auth.signOut();
 }
