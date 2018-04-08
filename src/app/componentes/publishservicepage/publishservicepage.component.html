@@ -1,0 +1,97 @@
+<div class="row">
+  <div class="col-md-6 mx-auto mt-5">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="text-center">PUBLICAR SERVICIO</h1>
+        <form (submit)="onSubmitPublicarServicio()">
+          <div class="form-group">
+              <div class="col-xs-5 selectContainer">
+                <label for="categoria">Categoría</label>
+                 <select class="form-control" name="categoria" [(ngModel)]="categoria">
+                     <option value="">Seleccione una categoría</option>
+                     <option value="hogar">Hogar</option>
+                     <option value="educacion">Educación</option>
+                     <option value="musica">Música</option>
+                     <option value="legal">Legal</option>
+                     <option value="tecnologia">Tecnología</option>
+                     <option value="salud">Salud</option>
+                     <option value="deportes">Deportes</option>
+                     <option value="musica">Música</option>
+                     <option value="financiero">Financiero</option>
+                     <option value="veterinaria">Veterinaria</option>
+                     <option value="transporte">Transporte</option>
+                     <option value="turismo">Turismo</option>
+                     <option value="gastronomia">Gastronomía</option>
+                     <option value="eventos_sociales">Eventos Sociales</option>
+                     <option value="cuidado_infantil">Cuidado Infantil</option>
+                     <option value="diseno">Diseño</option>
+                     <option value="arte_fotografia">Arte y Fotografía</option>
+                     <option value="confeccion">Confección</option>
+                     <option value="estetica">Estética</option>
+                </select>
+               </div>
+          </div>
+          <div class="form-group">
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" id="nombre"
+            [(ngModel)]="nombre" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <input type="text" name="descripcion" id="descripcion"
+            [(ngModel)]="descripcion" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="tiempo_duracion">Tiempo de duración (horas)</label>
+            <input type="number" name="tiempo_duracion" id="tiempo_duracion"
+            [(ngModel)]="tiempo_duracion" class="form-control" min="1">
+          </div>
+          <div class="form-group">
+            <label for="precio">Precio $</label>
+            <input type="number" name="precio" id="precio"
+            [(ngModel)]="precio" class="form-control" min="1">
+          </div>
+
+          <label for="zona_cobertura">Zona de cobertura</label>
+          <div class="form-group">
+            <input type="text" name="zona_cobertura" id="zona_cobertura"
+            [(ngModel)]="zona_cobertura" class="form-control">
+          </div>
+
+          <label for="modalidad">Modalidad</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+            id="presencial" value="presencial" [(ngModel)]="modalidad">
+            <label class="form-check-label" for="presencial">Presencial</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions"
+            id="virtual" value="virtual" [(ngModel)]="modalidad">
+            <label class="form-check-label" for="virtual">Virtual</label>
+          </div>
+
+          <br>
+          <label for="tipo_pago">Tipo de pago</label>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="inlineChekboxOptions"
+             id="efectivo" value="efectivo" [(ngModel)]="efectivo">
+            <label class="form-check-label" for="efectivo">Efectivo</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="inlineChekboxOptions"
+            id="credito" value="credito" [(ngModel)]="credito">
+            <label class="form-check-label" for="credito">Tarjeta de crédito</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="inlineChekboxOptions"
+            id="debito" value="debito" [(ngModel)]="debito">
+            <label class="form-check-label" for="debito">Tarjeta débito</label>
+          </div>
+
+          <br><br><br>
+          <input type="submit" value="PUBLICAR" class="btn btn-primary btn-block btn-lg">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

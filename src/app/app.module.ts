@@ -13,6 +13,7 @@ import { LoginpageComponent } from './componentes/loginpage/loginpage.component'
 import { PrivadopageComponent } from './componentes/privadopage/privadopage.component';
 import { NotfoundpageComponent } from './componentes/notfoundpage/notfoundpage.component';
 import {EditarperfilpageComponent} from './componentes/editarperfilpage/editarperfilpage.component';
+import { PublishservicepageComponent } from './componentes/publishservicepage/publishservicepage.component';
 
 
 //Firebase
@@ -39,7 +40,8 @@ import {AuthGuard} from './guards/auth.guard';
     LoginpageComponent,
     PrivadopageComponent,
     NotfoundpageComponent,
-    EditarperfilpageComponent
+    EditarperfilpageComponent,
+    PublishservicepageComponent
   ],
   imports: [
     BrowserModule,
