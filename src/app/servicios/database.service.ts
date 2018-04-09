@@ -18,37 +18,24 @@ export class DatabaseService {
       this.pathUsuarios = 'usuarios';
   }
 
-  insertUserDatabase(id:string, email:string, displayName:string, edad:Date){
-    if(this.verificarUsuarioEnBaseDeDatos(id)){
-      this.getUsuarios();
-
-      this.usuario = new Usuario();
-      this.usuario.email = email;
-      this.usuario.displayName = displayName;
-      this.usuario.edad = edad;
-
-      this.afDatabase.database.ref(this.pathUsuarios+'/'+id).set(this.usuario);
-    }
-  }
-
   insertUserDatabaseLogin(id:string, email:string, displayName:string){
-    if(this.verificarUsuarioEnBaseDeDatos(id)){
-      this.getUsuarios();
 
-      this.usuario = new Usuario();
-      this.usuario.email = email;
-      this.usuario.displayName = displayName;
+    var user = this.getUsuario(id).then(
+      function(snapshot) {
+       var res = (snapshot.val() && snapshot.val().email)
+       return res;
+    });
+    user.then((msg: string) => {
+      if(msg==null){
+        this.getUsuarios();
 
-      this.afDatabase.database.ref(this.pathUsuarios+'/'+id).set(this.usuario);
-    }
-  }
+        this.usuario = new Usuario();
+        this.usuario.email = email;
+        this.usuario.displayName = displayName;
+        this.afDatabase.database.ref(this.pathUsuarios+'/'+id).set(this.usuario);
+      }
+    });
 
-  verificarUsuarioEnBaseDeDatos(id:string){
-    if(!this.afDatabase.database.ref(this.pathUsuarios+'/'+id)){
-      return true;
-    }else{
-      return true;
-    }
   }
 
   updateUser(id:string, documento:string, direccion:string, telefono:string, edad:Date){
@@ -64,6 +51,7 @@ export class DatabaseService {
   getUsuarios(){
     return this.listaUsuarios = this.afDatabase.list(this.pathUsuarios);
   }
+
   getUsuario(id:string){
     //return this.afDatabase.object(this.pathUsuarios+'/'+id);
     return  this.afDatabase.database.ref(this.pathUsuarios+'/'+id).once('value');
