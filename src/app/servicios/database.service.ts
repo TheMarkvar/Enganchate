@@ -18,6 +18,27 @@ export class DatabaseService {
       this.pathUsuarios = 'usuarios';
   }
 
+  insertUserDatabase(id:string, email:string, displayName:string, edad:Date){
+   if(this.verificarUsuarioEnBaseDeDatos(id)){
+     this.getUsuarios();
+
+     this.usuario = new Usuario();
+     this.usuario.email = email;
+     this.usuario.displayName = displayName;
+     this.usuario.edad = edad;
+
+     this.afDatabase.database.ref(this.pathUsuarios+'/'+id).set(this.usuario);
+   }
+ }
+
+ verificarUsuarioEnBaseDeDatos(id:string){
+  if(!this.afDatabase.database.ref(this.pathUsuarios+'/'+id)){
+    return true;
+  }else{
+    return true;
+  }
+}
+
   insertUserDatabaseLogin(id:string, email:string, displayName:string){
 
     var user = this.getUsuario(id).then(
