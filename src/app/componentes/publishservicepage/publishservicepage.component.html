@@ -31,32 +31,80 @@
                 </select>
                </div>
           </div>
+
+          <div class="form-group">
+              <div class="col-xs-5 selectContainer">
+                <label for="categoria">Ciudad de cobertura</label>
+                 <select class="form-control" name="zona_cobertura" [(ngModel)]="zona_cobertura">
+                     <option value="">Seleccione una ciudad</option>
+                     <option value="bogota">Bogotá D.C.</option>
+                     <option value="medellin">Medellín</option>
+                     <option value="cali">Cali</option>
+                     <option value="barranquilla">Barranquilla</option>
+                     <option value="cartagena">Cartagena</option>
+                     <option value="soledad">Soledad</option>
+                     <option value="cucuta">Cúcuta</option>
+                     <option value="soacha">Soacha</option>
+                     <option value="ibague">Ibagué</option>
+                     <option value="bucaramanga">Bucaramanga</option>
+                     <option value="villavicencio">Villavicencio</option>
+                     <option value="santa_marta">Santa Marta</option>
+                     <option value="bello">Bello</option>
+                     <option value="valledupar">Valledupar</option>
+                     <option value="pereira">Pereira</option>
+                     <option value="armenia">Armenia</option>
+                     <option value="buenaventura">Buenaventura</option>
+                     <option value="pasto">Pasto</option>
+                     <option value="manizales">Manizales</option>
+                     <option value="monteria">Montería</option>
+                     <option value="neiva">Neiva</option>
+                     <option value="popayan">Popayan</option>
+                     <option value="quibdo">Quibdó</option>
+                     <option value="riohacha">Riohacha</option>
+                </select>
+               </div>
+          </div>
+
           <div class="form-group">
             <label for="nombre">Nombre</label>
             <input type="text" name="nombre" id="nombre"
-            [(ngModel)]="nombre" class="form-control">
+            [(ngModel)]="nombre" class="form-control" required>
           </div>
           <div class="form-group">
             <label for="descripcion">Descripción</label>
             <input type="text" name="descripcion" id="descripcion"
-            [(ngModel)]="descripcion" class="form-control">
+            [(ngModel)]="descripcion" class="form-control" required>
           </div>
-          <div class="form-group">
-            <label for="tiempo_duracion">Tiempo de duración (horas)</label>
-            <input type="number" name="tiempo_duracion" id="tiempo_duracion"
-            [(ngModel)]="tiempo_duracion" class="form-control" min="1">
+
+
+
+          <div class="form-inline">
+              <div class="col-xs-5">
+                <label for="tiempo_duracion">Tiempo de duración</label>
+                <input type="number" name="tiempo_duracion" id="tiempo_duracion"
+                [(ngModel)]="tiempo_duracion" min="1" class="form-control" min="1" required>
+              </div>
+
+              <div class="col-xs-5 selectContainer">
+                <label for="categoria">Opción de duración</label>
+                 <select class="form-control" name="opcion_duracion" [(ngModel)]="opcion_duracion">
+                     <option value="">Seleccione una opción</option>
+                     <option value="d">Días</option>
+                     <option value="h">Horas</option>
+                     <option value="m">Minutos</option>
+                </select>
+               </div>
           </div>
+
+
+
+          <br>
           <div class="form-group">
             <label for="precio">Precio $</label>
             <input type="number" name="precio" id="precio"
-            [(ngModel)]="precio" class="form-control" min="1">
+            [(ngModel)]="precio" class="form-control" min="1" required>
           </div>
 
-          <label for="zona_cobertura">Zona de cobertura</label>
-          <div class="form-group">
-            <input type="text" name="zona_cobertura" id="zona_cobertura"
-            [(ngModel)]="zona_cobertura" class="form-control">
-          </div>
 
           <label for="modalidad">Modalidad</label>
           <div class="form-check">

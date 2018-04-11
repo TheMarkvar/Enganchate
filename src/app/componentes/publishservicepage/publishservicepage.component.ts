@@ -13,6 +13,8 @@ export class PublishservicepageComponent implements OnInit {
   private nombre:string;
   private descripcion:string;
   private tiempo_duracion:number;
+  private opcion_duracion:string;
+  private total_duracion:string;
   private precio:number;
   private zona_cobertura:string;
   private modalidad:string;
@@ -38,10 +40,13 @@ export class PublishservicepageComponent implements OnInit {
 
   onSubmitPublicarServicio(){
     if(this.verificarFormulario()){
-      console.log("**"+this.categoria + " " + this.nombre + " " + this.descripcion
-      +" "+this.tiempo_duracion+" "+this.precio+" "+ this.zona_cobertura + " "
-      +this.modalidad + " " + this.tipo_pago+ " "+ this.fecha + "**");
-      this.router.navigate(['/home']);
+      this.total_duracion = this.tiempo_duracion+this.opcion_duracion;
+      console.log("categoria: "+this.categoria + ", nombre: " + this.nombre +
+       ", descripción: " + this.descripcion + ", duracion: "+this.total_duracion+
+       ", precio: "+this.precio+", zona: "+ this.zona_cobertura + ", modalidad:  "
+      +this.modalidad + ", tipo_pago: " + this.tipo_pago+ ",  fecha: "+ this.fecha + "**");
+      //this.router.navigate(['/home']);
+      this.tipo_pago = new Array<string>();
     }
 
 
