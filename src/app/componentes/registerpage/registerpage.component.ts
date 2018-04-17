@@ -29,7 +29,7 @@ export class RegisterpageComponent implements OnInit {
   ngOnInit() {
   }
   onSubmitRegisterUser(){
-    if(this.verificarFormulario()){
+    /*if(this.verificarFormulario()){
       let displayName = this.nombres+" "+this.apellidos;
       this.authService.registerUser(this.email,this.password)
       .then((res)=>{
@@ -43,12 +43,23 @@ export class RegisterpageComponent implements OnInit {
         {cssClass: 'alert-danger', timeout: 4000});
         this.router.navigate(['/register']);
       });
+    }*/
+
+    if(this.verificarFormulario()){
+      console.log("Es verdadero");
+    }else{
+      console.log("Es falso");
     }
   }
 
   //Se debe implementar el método para que datos sean coherentes
   verificarFormulario(){
+    if(this.password===this.password2){
+      return false;
+    }
     return true;
   }
+
+
 
 }

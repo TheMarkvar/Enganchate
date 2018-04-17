@@ -1,0 +1,230 @@
+<div class="column-filter">
+
+  <div class="container">
+    <div id="accordion">
+      <div class="card">
+        <div class="card-header">
+          <a class="card-link" data-toggle="collapse" href="#collapseOne">
+            Categorias
+          </a>
+        </div>
+        <div id="collapseOne" class="collapse show" data-parent="#accordion">
+          <div class="card-body">
+            <form class="opciones_categorias">
+              <input type="checkbox" name="hogar" id="hogar">
+              <label for="hogar">Hogar</label>
+
+              <input type="checkbox" name="educacion" id="educacion">
+              <label for="educacion">Educacion</label>
+
+              <input type="checkbox" name="musica" id="musica">
+              <label for="musica">Musica</label>
+
+              <input type="checkbox" name="legal" id="legal">
+              <label for="legal">Legal</label>
+
+              <input type="checkbox" name="tecnologia" id="tecnologia">
+              <label for="tecnologia">Tecnología</label>
+
+              <input type="checkbox" name="salud" id="salud">
+              <label for="salud">Salud</label>
+
+              <input type="checkbox" name="deportes" id="deportes">
+              <label for="deportes">Deportes</label>
+
+              <input type="checkbox" name="financiero" id="financiero">
+              <label for="financiero">Financiero</label>
+
+              <input type="checkbox" name="veterinaria" id="veterinaria">
+              <label for="veterinaria">Veterinaria</label>
+
+              <input type="checkbox" name="transporte" id="transporte">
+              <label for="transporte">Transporte</label>
+
+              <input type="checkbox" name="turismo" id="turismo">
+              <label for="turismo">Turismo</label>
+
+              <input type="checkbox" name="gastronomia" id="gastronomia">
+              <label for="gastronomia">Gastronomía</label>
+
+              <input type="checkbox" name="eventos_sociales" id="eventos_sociales">
+              <label for="eventos_sociales">Eventos</label>
+
+              <input type="checkbox" name="cuidado_infantil" id="cuidado_infantil">
+              <label for="cuidado_infantil">Cuidado Infantil</label>
+
+              <input type="checkbox" name="diseno" id="diseno">
+              <label for="diseno">Diseño</label>
+
+              <input type="checkbox" name="arte_fotografia" id="arte_fotografia">
+              <label for="arte_fotografia">Arte y Fotografía</label>
+
+              <input type="checkbox" name="confeccion" id="confeccion">
+              <label for="confeccion">Confección</label>
+
+              <input type="checkbox" name="estetica" id="estetica">
+              <label for="estetica">Estética</label>
+
+              <input type="checkbox" name="otra" id="otra">
+              <label for="otra">Otra</label>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="accordion2">
+      <div class="card">
+        <div class="card-header">
+          <a class="card-link" data-toggle="collapse" href="#collapseTwo">
+            Ciudades
+          </a>
+        </div>
+        <div id="collapseTwo" class="collapse show" data-parent="#accordion2">
+          <div class="card-body">
+            <div class="form-group">
+                <div class="col-xs-5 selectContainer">
+                  <label for="categoria">Ciudad de cobertura</label>
+                   <select class="form-control" name="zona_cobertura" [(ngModel)]="zona_cobertura">
+                       <option value="">Seleccione una ciudad</option>
+                       <option value="bogota">Bogotá D.C.</option>
+                       <option value="medellin">Medellín</option>
+                       <option value="cali">Cali</option>
+                       <option value="barranquilla">Barranquilla</option>
+                       <option value="cartagena">Cartagena</option>
+                       <option value="soledad">Soledad</option>
+                       <option value="cucuta">Cúcuta</option>
+                       <option value="soacha">Soacha</option>
+                       <option value="ibague">Ibagué</option>
+                       <option value="bucaramanga">Bucaramanga</option>
+                       <option value="villavicencio">Villavicencio</option>
+                       <option value="santa_marta">Santa Marta</option>
+                       <option value="bello">Bello</option>
+                       <option value="valledupar">Valledupar</option>
+                       <option value="pereira">Pereira</option>
+                       <option value="armenia">Armenia</option>
+                       <option value="buenaventura">Buenaventura</option>
+                       <option value="pasto">Pasto</option>
+                       <option value="manizales">Manizales</option>
+                       <option value="monteria">Montería</option>
+                       <option value="neiva">Neiva</option>
+                       <option value="popayan">Popayan</option>
+                       <option value="quibdo">Quibdó</option>
+                       <option value="riohacha">Riohacha</option>
+                  </select>
+                 </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="accordion3">
+      <div class="card">
+        <div class="card-header">
+          <a class="card-link"  data-toggle="collapse" href="#collapseThree">
+            Precio
+          </a>
+        </div>
+        <div id="collapseThree" class="collapse show" data-parent="#accordion3">
+          <div class="card-body">
+              <br>
+              <div class="row">
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="Min"
+                  [(ngModel)]="precioMinimo">
+                </div>
+                <div class="col">
+                  <input type="text" class="form-control" placeholder="Max"
+                  [(ngModel)]="precioMaximo">
+                </div>
+              </div>
+              <br>
+
+              <input type="range" min="{{precioMinimo}}" max="{{precioMaximo}}"
+              value="0" class="slider" [(ngModel)]="precioActual" id="myRange">
+              valor actual: {{precioActual}}
+            </div>
+          </div>
+      </div>
+    </div>
+
+
+        <div id="accordion4">
+          <div class="card">
+            <div class="card-header">
+              <a class="card-link"  data-toggle="collapse" href="#collapseFour">
+                Método de pago
+              </a>
+            </div>
+            <div id="collapseFour" class="collapse show" data-parent="#accordion4">
+              <div class="card-body">
+                  <form class="opciones_pago" >
+
+                      <input type="checkbox" name="inlineChekboxOptions"
+                       id="efectivo" value="efectivo" [(ngModel)]="efectivo">
+                      <label for="efectivo">Efectivo</label>
+
+                      <input type="checkbox" name="inlineChekboxOptions"
+                      id="credito" value="credito" [(ngModel)]="credito">
+                      <label for="credito">Tarjeta de crédito</label>
+
+
+                      <input type="checkbox" name="inlineChekboxOptions"
+                      id="debito" value="debito" [(ngModel)]="debito">
+                      <label for="debito">Tarjeta débito</label>
+                  </form>
+                </div>
+              </div>
+          </div>
+        </div>
+
+    <div id="accordion5">
+      <div class="card">
+        <div class="card-header">
+          <a class="card-link"  data-toggle="collapse" href="#collapseFive">
+            Modalidad
+          </a>
+        </div>
+        <div id="collapseFive" class="collapse show" data-parent="#accordion5">
+          <div class="card-body">
+
+            <form class="opciones_modalidad">
+              <div class="radio">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                id="presencial" value="presencial" [(ngModel)]="modalidad">
+                <label class="form-check-label" for="presencial">Presencial</label>
+              </div>
+              <div class="radio">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions"
+                id="virtual" value="virtual" [(ngModel)]="modalidad">
+                <label class="form-check-label" for="virtual">Virtual</label>
+              </div>
+            </form>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="column-result">
+  <div class="card">
+    <div class="card-body">
+      Panel Content
+      <br>
+      <b>zona_cobertura: {{zona_cobertura}}</b>
+      <br>
+      <b>precio_minimo: {{precioMinimo}} * actual: {{precioActual}} * precio_minimo: {{precioMaximo}}</b>
+      <br>
+      <b>debito: {{debito}} * credito: {{credito}} * efectivo: {{efectivo}}</b>
+      <br>
+      <b>modalidad: {{modalidad}}</b>
+
+
+
+    </div>
+  </div>
+</div>

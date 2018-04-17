@@ -3,34 +3,50 @@
     <div class="card">
       <div class="card-body">
         <h1 class="text-center">REGISTRO</h1>
-        <form (submit)="onSubmitRegisterUser()">
+
+
+
+        <form name="registerForm"(submit)="onSubmitRegisterUser(registerForm)" >
+
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" name="email" id="email" [(ngModel)]="email" class="form-control">
+            <input type="email" name="email" placeholder="Digite su email" id="email"
+            [(ngModel)]="email" class="form-control" required>
           </div>
           <div class="form-group">
-            <label for="nombres">Nombres</label>
-            <input type="text" name="nombres" id="nombres" [(ngModel)]="nombres" class="form-control">
+            <label for="nombres">Nombre</label>
+            <input type="text" name="nombres" placeholder="Digite su nombre" id="nombres"
+            [(ngModel)]="nombres" class="form-control" required>
           </div>
           <div class="form-group">
             <label for="apellidos">Apellidos</label>
-            <input type="text" name="apellidos" id="apellidos" [(ngModel)]="apellidos" class="form-control">
+            <input type="text" name="apellidos" placeholder="Digite sus apellidos" id="apellidos"
+            [(ngModel)]="apellidos" class="form-control" required>
           </div>
           <div class="form-group">
-            <label for="password">Contraseña</label>
-            <input type="password" name="password" id="password" [(ngModel)]="password"class="form-control">
+            <label for="">Contraseña</label>
+            <input type="password" name="password" placeholder="Digite su contraseña" id="password"
+            [(ngModel)]="password" ng-minlength="6" ng-maxlength="15" class="form-control" required>
           </div>
           <div class="form-group">
-            <label for="password2">Confirmar contraseña</label>
-            <input type="password" name="password2" id="password2" [(ngModel)]="password2"class="form-control">
+            <label for="">Confirmar contraseña</label>
+            <input type="password" name="password2" placeholder="Repita la contraseña" id="password2"
+            [(ngModel)]="password2"class="form-control" required >
           </div>
 
+          <label class="mismatch" *ngIf="password2!=password">Constraseñas no coinciden</label>
+
+
           <div class="form-group">
-            <label for="edad">Edad</label>
-            <input type="date" max="1970-01-01" min="2000-01-01" name="edad" id="edad"
-            [(ngModel)]="edad" class="form-control">
+            <label for="">Fecha de Nacimiento</label>
+            <input type="date"  name="fecha_nac" id="fecha_nac"
+            [(ngModel)]="edad" class="form-control" max="1970-01-01" min="2000-01-01" required>
+
+            <div class="mismatch"
+            ng-show="registerForm.fecha_nac.$invalid">
+              Fecha de nacimiento inválida {{edad}}</div>
           </div>
-          <input type="submit" value="ENVIAR" class="btn btn-primary btn-block btn-lg">
+          <input type="submit" value="REGISTRAR" class="btn btn-primary btn-block btn-lg">
         </form>
       </div>
     </div>

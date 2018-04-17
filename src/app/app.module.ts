@@ -30,6 +30,7 @@ import { environment } from '../environments/environment';
 import { AuthService } from './servicios/auth.service';
 import { DatabaseService } from './servicios/database.service';
 import {AuthGuard} from './guards/auth.guard';
+import { AdvancedsearchpageComponent } from './componentes/advancedsearchpage/advancedsearchpage.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import {AuthGuard} from './guards/auth.guard';
     PrivadopageComponent,
     NotfoundpageComponent,
     EditarperfilpageComponent,
-    PublishservicepageComponent
+    PublishservicepageComponent,
+    AdvancedsearchpageComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,28 @@
+input.ng-valid{
+  border-left: 5px solid green;
+}
+
+input.ng-invalid{
+  border-radius:  5px solid purple;
+}
+
+
+/*input.ng-valid.ng-touched{
+  border-left: 5px solid green;
+}
+
+input.ng-invalid.ng-touched{
+  border-left: 5px solid red;
+}*/
+
+input.minlength{
+  border-radius:  5px solid red;
+}
+
+input.maxlength{
+  border-radius:  5px solid red;
+}
+
+label.mismatch{
+  color: red;
+}
