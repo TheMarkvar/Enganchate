@@ -3,19 +3,50 @@ import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
 import 'rxjs/add/operator/map';
 import { Usuario } from '../modelos/usuario';
+import { Servicio } from '../modelos/servicio';
+
 
 
 @Injectable()
 export class DatabaseService {
 
-  public usuario:Usuario;
+  public  usuario:Usuario;
   private listaUsuarios: AngularFireList<Usuario>;
   private pathUsuarios:string;
+  private pathServicios:string;
+  public servicio:Servicio;
+  private listaServicios: AngularFireList<Servicio>;
 
   constructor(
     public afDatabase: AngularFireDatabase,
   ) {
       this.pathUsuarios = 'usuarios';
+      this.pathServicios = 'servicios';
+  }
+
+  insertServiceDatabase(publicador:string,categoria:string,nombre:string,descripcion:string,tiempo_duracion:number,
+                        opcion_duracion:string,precio:number,zona_cobertura:string,modalidad:string,
+                        tipo_pago:Array<string>,fecha:Date){
+    console.log("Entra a la funcion");
+
+    this.getServicios();
+    this.servicio=new Servicio();
+
+    this.servicio.publicador=publicador;
+    this.servicio.categoria=categoria;
+    this.servicio.nombre=nombre;
+    this.servicio.descripcion=descripcion;
+    this.servicio.tiempo_duracion=tiempo_duracion;
+    this.servicio.opcion_duracion=opcion_duracion;
+    this.servicio.precio=precio;
+    this.servicio.zona_cobertura=zona_cobertura;
+    this.servicio.modalidad=modalidad;
+    this.servicio.tipo_pago=tipo_pago;
+    this.servicio.fecha=fecha.toString();
+
+    this.listaServicios.push(this.servicio);
+
+
   }
 
   insertUserDatabase(id:string, email:string, displayName:string, edad:Date){
@@ -68,7 +99,9 @@ export class DatabaseService {
     this.usuario.edad = edad;
     this.listaUsuarios.update(id, this.usuario);
   }
-
+  getServicios(){
+    return this.listaServicios = this.afDatabase.list(this.pathServicios);
+  }
   getUsuarios(){
     return this.listaUsuarios = this.afDatabase.list(this.pathUsuarios);
   }

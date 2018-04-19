@@ -3,7 +3,7 @@
     <div class="card">
       <div class="card-body">
         <h1 class="text-center">PUBLICAR SERVICIO</h1>
-        <form (submit)="onSubmitPublicarServicio()">
+        <form name="publishform" (submit)="onSubmitPublicarServicio(publishform)">
           <div class="form-group">
               <div class="col-xs-5 selectContainer">
                 <label for="categoria">Categoría</label>

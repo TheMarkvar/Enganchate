@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatabaseService } from '../../servicios/database.service';
 import { FlashMessagesService} from 'angular2-flash-messages';
+import { AuthService } from '../../servicios/auth.service';
 
 @Component({
   selector: 'app-publishservicepage',
@@ -27,27 +28,39 @@ export class PublishservicepageComponent implements OnInit {
   constructor(
     public databaseService: DatabaseService,
     public router:Router,
-    public flashMensaje: FlashMessagesService
+    public flashMensaje: FlashMessagesService,
+    public authService: AuthService
   ) {
     this.efectivo="";
     this.debito="";
     this.credito="";
     this.tipo_pago = new Array<string>();
+    this.fecha=new Date();
   }
 
   ngOnInit() {
   }
 
   onSubmitPublicarServicio(){
-    if(this.verificarFormulario()){
-      this.total_duracion = this.tiempo_duracion+this.opcion_duracion;
-      console.log("categoria: "+this.categoria + ", nombre: " + this.nombre +
-       ", descripción: " + this.descripcion + ", duracion: "+this.total_duracion+
-       ", precio: "+this.precio+", zona: "+ this.zona_cobertura + ", modalidad:  "
-      +this.modalidad + ", tipo_pago: " + this.tipo_pago+ ",  fecha: "+ this.fecha + "**");
-      //this.router.navigate(['/home']);
-      this.tipo_pago = new Array<string>();
-    }
+
+      if(this.efectivo!=""){
+        this.tipo_pago.push("EFECTIVO");
+      }
+      if(this.credito!=""){
+        this.tipo_pago.push("CREDITO");
+      }
+      if(this.debito!=""){
+        this.tipo_pago.push("DEBITO");
+      }
+
+      this.fecha = new Date();
+
+
+      this.databaseService.insertServiceDatabase(this.authService.afAuth.auth.currentUser.uid,this.categoria,this.nombre,
+      this.descripcion,this.tiempo_duracion,this.opcion_duracion,this.precio,this.zona_cobertura,
+      this.modalidad,this.tipo_pago,this.fecha);
+      this.router.navigate(['/privado']);
+
 
 
   }
