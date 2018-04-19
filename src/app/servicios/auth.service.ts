@@ -23,6 +23,10 @@ export class AuthService {
     });
   }
 
+  sendEmailVerification(){
+    this.afAuth.auth.currentUser.sendEmailVerification();
+  }
+
   loginEmail(email: string, pass: string) {
     return new Promise((resolve, reject) => {
       this.afAuth.auth.signInWithEmailAndPassword(email, pass)

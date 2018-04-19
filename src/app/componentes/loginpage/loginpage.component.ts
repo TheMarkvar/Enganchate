@@ -33,7 +33,7 @@ export class LoginpageComponent implements OnInit {
     }).catch((err)=>{
       this.flashMensaje.show(err.message,
       {cssClass: 'alert-danger', timeout: 4000});
-      this.router.navigate(['/login']);
+      this.router.navigate(['/home']);
     });
   }
   onClickGoogleLogin(){

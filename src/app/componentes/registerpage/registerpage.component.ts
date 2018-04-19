@@ -29,35 +29,33 @@ export class RegisterpageComponent implements OnInit {
   ngOnInit() {
   }
   onSubmitRegisterUser(){
-    /*if(this.verificarFormulario()){
+    if(this.verificarFormulario()){
       let displayName = this.nombres+" "+this.apellidos;
       this.authService.registerUser(this.email,this.password)
       .then((res)=>{
         this.flashMensaje.show('Usuario creado correctamente',
         {cssClass: 'alert-success', timeout: 4000});
+
+        this.authService.sendEmailVerification();
+
         this.databaseService.insertUserDatabase(this.authService.afAuth.auth.currentUser.uid,
-          this.email, displayName, this.edad);
-        this.router.navigate(['/privado']);
+        this.email, displayName, this.edad);
+
+        this.router.navigate(['/home']);
       }).catch((err)=>{
         this.flashMensaje.show(err.message,
         {cssClass: 'alert-danger', timeout: 4000});
         this.router.navigate(['/register']);
       });
-    }*/
-
-    if(this.verificarFormulario()){
-      console.log("Es verdadero");
-    }else{
-      console.log("Es falso");
     }
   }
 
   //Se debe implementar el método para que datos sean coherentes
   verificarFormulario(){
     if(this.password===this.password2){
-      return false;
+      return true;
     }
-    return true;
+    return false;
   }
 
 

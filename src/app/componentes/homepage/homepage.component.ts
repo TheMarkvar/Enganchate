@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../servicios/auth.service';
+import { DatabaseService } from '../../servicios/database.service';
+import { Router } from '@angular/router';
+import { FlashMessagesService} from 'angular2-flash-messages';
+
 
 @Component({
   selector: 'app-homepage',
@@ -7,7 +12,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomepageComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public authService: AuthService,
+    public databaseService: DatabaseService,
+    public router:Router,
+    public flashMensaje: FlashMessagesService
+  ) { }
 
   ngOnInit() {
   }

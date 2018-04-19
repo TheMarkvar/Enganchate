@@ -1,3 +1,4 @@
+
 <div class="column-filter">
 
   <div class="container">
@@ -10,65 +11,17 @@
         </div>
         <div id="collapseOne" class="collapse show" data-parent="#accordion">
           <div class="card-body">
-            <form class="opciones_categorias">
-              <input type="checkbox" name="hogar" id="hogar">
-              <label for="hogar">Hogar</label>
-
-              <input type="checkbox" name="educacion" id="educacion">
-              <label for="educacion">Educacion</label>
-
-              <input type="checkbox" name="musica" id="musica">
-              <label for="musica">Musica</label>
-
-              <input type="checkbox" name="legal" id="legal">
-              <label for="legal">Legal</label>
-
-              <input type="checkbox" name="tecnologia" id="tecnologia">
-              <label for="tecnologia">Tecnología</label>
-
-              <input type="checkbox" name="salud" id="salud">
-              <label for="salud">Salud</label>
-
-              <input type="checkbox" name="deportes" id="deportes">
-              <label for="deportes">Deportes</label>
-
-              <input type="checkbox" name="financiero" id="financiero">
-              <label for="financiero">Financiero</label>
-
-              <input type="checkbox" name="veterinaria" id="veterinaria">
-              <label for="veterinaria">Veterinaria</label>
-
-              <input type="checkbox" name="transporte" id="transporte">
-              <label for="transporte">Transporte</label>
-
-              <input type="checkbox" name="turismo" id="turismo">
-              <label for="turismo">Turismo</label>
-
-              <input type="checkbox" name="gastronomia" id="gastronomia">
-              <label for="gastronomia">Gastronomía</label>
-
-              <input type="checkbox" name="eventos_sociales" id="eventos_sociales">
-              <label for="eventos_sociales">Eventos</label>
-
-              <input type="checkbox" name="cuidado_infantil" id="cuidado_infantil">
-              <label for="cuidado_infantil">Cuidado Infantil</label>
-
-              <input type="checkbox" name="diseno" id="diseno">
-              <label for="diseno">Diseño</label>
-
-              <input type="checkbox" name="arte_fotografia" id="arte_fotografia">
-              <label for="arte_fotografia">Arte y Fotografía</label>
-
-              <input type="checkbox" name="confeccion" id="confeccion">
-              <label for="confeccion">Confección</label>
-
-              <input type="checkbox" name="estetica" id="estetica">
-              <label for="estetica">Estética</label>
-
-              <input type="checkbox" name="otra" id="otra">
-              <label for="otra">Otra</label>
-
-            </form>
+            <ng-multiselect-dropdown
+                [(ngModel)]="selectedItems"
+                [placeholder]="'Seleccione las categorias'"
+                [data]="categorias"
+                [settings]="dropdownSettings"
+                (onSelect)="onItemSelect($event)"
+                (onDeSelect)="OnItemDeSelect($event)"
+                (onSelectAll)="onSelectAll($event)"
+                (onDeSelectAll)="onDeSelectAll($event)"
+            >
+            </ng-multiselect-dropdown>
           </div>
         </div>
       </div>
@@ -133,19 +86,15 @@
               <br>
               <div class="row">
                 <div class="col">
-                  <input type="text" class="form-control" placeholder="Min"
-                  [(ngModel)]="precioMinimo">
+                  <input type="number" class="form-control" placeholder="Min"
+                  [(ngModel)]="precioMinimo" min="1">
                 </div>
                 <div class="col">
-                  <input type="text" class="form-control" placeholder="Max"
+                  <input type="number" class="form-control" placeholder="Max"
                   [(ngModel)]="precioMaximo">
                 </div>
               </div>
               <br>
-
-              <input type="range" min="{{precioMinimo}}" max="{{precioMaximo}}"
-              value="0" class="slider" [(ngModel)]="precioActual" id="myRange">
-              valor actual: {{precioActual}}
             </div>
           </div>
       </div>
@@ -166,10 +115,12 @@
                       <input type="checkbox" name="inlineChekboxOptions"
                        id="efectivo" value="efectivo" [(ngModel)]="efectivo">
                       <label for="efectivo">Efectivo</label>
+                      <br>
 
                       <input type="checkbox" name="inlineChekboxOptions"
                       id="credito" value="credito" [(ngModel)]="credito">
                       <label for="credito">Tarjeta de crédito</label>
+                      <br>
 
 
                       <input type="checkbox" name="inlineChekboxOptions"
@@ -211,20 +162,83 @@
 </div>
 
 <div class="column-result">
-  <div class="card">
-    <div class="card-body">
-      Panel Content
-      <br>
-      <b>zona_cobertura: {{zona_cobertura}}</b>
-      <br>
-      <b>precio_minimo: {{precioMinimo}} * actual: {{precioActual}} * precio_minimo: {{precioMaximo}}</b>
-      <br>
-      <b>debito: {{debito}} * credito: {{credito}} * efectivo: {{efectivo}}</b>
-      <br>
-      <b>modalidad: {{modalidad}}</b>
+
+  <div class="container">
+
+        Panel Content
+        <br>
+        <b>categorias: {{selectedItems.toString()}}</b>
+        <br>
+        <b>zona_cobertura: {{zona_cobertura}}</b>
+        <br>
+        <b>precio_minimo: {{precioMinimo}} ** precio_maximo: {{precioMaximo}}</b>
+        <br>
+        <b>debito: {{debito}} * credito: {{credito}} * efectivo: {{efectivo}}</b>
+        <br>
+        <b>modalidad: {{modalidad}}</b>
 
 
 
-    </div>
+        <ul>
+          <li class="list-inline" *ngFor="let servicio of listaServicios">
+            <div class="col-xs-12 col-sm-6 col-md-16">
+              <article class="card-wrapper">
+                <div class="image-holder">
+                  <a href="#" class="image-holder__link"></a>
+                  <div class="image-liquid image-holder--original" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/24/Blue_Tshirt.jpg')">
+                  </div>
+                </div>
+
+                <div class="product-description">
+                  <!-- title -->
+                  <h1 class="product-description__title">
+                    <a href="#">
+                      {{servicio.nombre}}
+                      </a>
+                  </h1>
+
+                  <!-- category and price -->
+                  <div class="row">
+                    <div class="col-xs-12 col-sm-8 product-description__category secondary-text">
+                      {{servicio.categoria}}
+                    </div>
+                    <div class="col-xs-12 col-sm-4 product-description__price">
+                      $ {{servicio.precio}}
+                    </div>
+                  </div>
+
+                  <!-- divider -->
+                  <hr />
+
+                  <!-- tipo_pago -->
+                  <div class="sizes-wrapper">
+                    <b>Zona de cobertura</b>
+                    <br />
+                    <span class="secondary-text text-uppercase">
+                        {{servicio.zona_cobertura}}
+                    </span>
+                  </div>
+
+
+                  <!-- tipo_pago -->
+                  <div class="sizes-wrapper">
+                    <b>Tipo de pago</b>
+                    <br />
+                    <span class="secondary-text text-uppercase">
+                        {{servicio.tipo_pago}}
+                    </span>
+                  </div>
+
+                </div>
+
+              </article>
+            </div>
+          </li>
+
+
+        </ul>
+
   </div>
+
+
 </div>
