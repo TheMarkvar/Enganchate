@@ -11,6 +11,7 @@ import {FlashMessagesService} from 'angular2-flash-messages';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 
 //Environment
 import { environment } from '../environments/environment';
@@ -18,6 +19,7 @@ import { environment } from '../environments/environment';
 //Servicios
 import { AuthService } from './servicios/auth.service';
 import { DatabaseService } from './servicios/database.service';
+import { UploadService } from './servicios/upload.service';
 import { OptionsService } from './servicios/options.service';
 import { AuthGuard } from './guards/auth.guard';
 
@@ -56,9 +58,10 @@ import { AdvancedsearchpageComponent } from './componentes/advancedsearchpage/ad
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
+    AngularFireStorageModule,
     FlashMessagesModule
   ],
-  providers: [AuthService,DatabaseService,OptionsService,AuthGuard,FlashMessagesService],
+  providers: [AuthService,DatabaseService,UploadService,OptionsService,AuthGuard,FlashMessagesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
