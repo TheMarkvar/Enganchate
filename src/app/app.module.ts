@@ -18,7 +18,8 @@ import { environment } from '../environments/environment';
 //Servicios
 import { AuthService } from './servicios/auth.service';
 import { DatabaseService } from './servicios/database.service';
-import {AuthGuard} from './guards/auth.guard';
+import { OptionsService } from './servicios/options.service';
+import { AuthGuard } from './guards/auth.guard';
 
 
 //Componentes
@@ -57,7 +58,7 @@ import { AdvancedsearchpageComponent } from './componentes/advancedsearchpage/ad
     AngularFireDatabaseModule,
     FlashMessagesModule
   ],
-  providers: [AuthService,DatabaseService,AuthGuard,FlashMessagesService],
+  providers: [AuthService,DatabaseService,OptionsService,AuthGuard,FlashMessagesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
