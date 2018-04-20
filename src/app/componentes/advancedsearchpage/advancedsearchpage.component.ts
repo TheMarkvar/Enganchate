@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { Servicio } from '../../modelos/servicio';
 
@@ -22,13 +23,19 @@ export class AdvancedsearchpageComponent implements OnInit {
   private debito:string;
   private modalidad:string;
   private zona_cobertura:string;
+  private buscar:string;
 
 
 
-  constructor() { }
+  constructor(private activatedRoute: ActivatedRoute) { }
 
 
   ngOnInit() {
+    this.activatedRoute.queryParams
+      .filter(params => params.search)
+      .subscribe(params => {
+        this.buscar = params.search;
+      });
     this.categorias = [
             { item_id: "hogar", item_text: 'Hogar' },
             { item_id: "educacion", item_text: 'Educación' },
@@ -71,7 +78,8 @@ export class AdvancedsearchpageComponent implements OnInit {
         let  s1 = new Servicio();
         s1.nombre = "Nombre servicio1";
         s1.descripcion = "Descripcion servicio1";
-        s1.zona_cobertura = ["Bogota"];
+        let ar = [];
+        ar.push("Bogota");
         s1.modalidad = "Modalidad servicio1";
         s1.categoria = "Categoria servicio1";
         s1.precio = 2000;
@@ -82,7 +90,6 @@ export class AdvancedsearchpageComponent implements OnInit {
         let  s2 = new Servicio();
         s2.nombre = "Nombre servicio2";
         s2.descripcion = "Descripcion servicio2";
-        s2.zona_cobertura = ["Bogota"];
         s2.modalidad = "Modalidad servicio2";
         s2.categoria = "Categoria servicio12";
         s2.precio = 2500;

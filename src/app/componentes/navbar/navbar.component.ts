@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../servicios/auth.service';
 import { DatabaseService } from '../../servicios/database.service';
 import { Router } from '@angular/router';
+import { FlashMessagesService } from 'angular2-flash-messages';
 import { Usuario } from '../../modelos/usuario';
 
 @Component({
@@ -21,10 +22,13 @@ export class NavbarComponent implements OnInit {
   constructor(
     public authService: AuthService,
     public databaseService: DatabaseService,
-    public router:Router
+    public router:Router,
+    public flashMensaje: FlashMessagesService
   ) { }
 
   ngOnInit() {
+    this.buscar="";
+
     this.authService.getAuth().subscribe(auth=>{
       if(auth){
         this.isLogin = true;
@@ -51,6 +55,18 @@ export class NavbarComponent implements OnInit {
         this.tieneFotoExterna = false;
       }
     })
+  }
+
+  onClickSearch(){
+
+    if(this.buscar.length>0){
+      this.router.navigate(['/advancedSearch'], { queryParams: { search: this.buscar } });
+      this.buscar = "";
+    }
+    else{
+      this.flashMensaje.show('Ingrese un valor válido en la barra de búsqueda',
+      {cssClass: 'alert-danger', timeout: 4000});
+    }
   }
 
   onClickLogout(){

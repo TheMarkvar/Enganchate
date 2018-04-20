@@ -19,6 +19,7 @@ const routes: Routes = [
   {path: 'editProfile', component: EditarperfilpageComponent, canActivate: [AuthGuard]},
   {path: 'publishService', component: PublishservicepageComponent, canActivate: [AuthGuard]},
   {path: 'advancedSearch', component: AdvancedsearchpageComponent},
+  {path: 'advancedSearch/:id', component: AdvancedsearchpageComponent},
   {path: 'privado', component: PrivadopageComponent , canActivate: [AuthGuard]},
   {path: '**', component: NotfoundpageComponent}
 ];
