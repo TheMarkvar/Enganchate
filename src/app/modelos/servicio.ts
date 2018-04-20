@@ -7,7 +7,7 @@ export class Servicio {
   tiempo_duracion:number;
   opcion_duracion:string;
   precio:number;
-  zona_cobertura:string;
+  zona_cobertura=[];
   modalidad:string;
   tipo_pago:Array<string>;
   fecha:any;

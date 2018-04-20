@@ -25,10 +25,9 @@ export class DatabaseService {
   }
 
   insertServiceDatabase(publicador:string,categoria:string,nombre:string,descripcion:string,tiempo_duracion:number,
-                        opcion_duracion:string,precio:number,zona_cobertura:string,modalidad:string,
+                        opcion_duracion:string,precio:number,zona_cobertura:Array<string>,modalidad:string,
                         tipo_pago:Array<string>,fecha:Date){
-    console.log("Entra a la funcion");
-
+  
     this.getServicios();
     this.servicio=new Servicio();
 
@@ -43,7 +42,6 @@ export class DatabaseService {
     this.servicio.modalidad=modalidad;
     this.servicio.tipo_pago=tipo_pago;
     this.servicio.fecha=fecha.toString();
-
     this.listaServicios.push(this.servicio);
 
 
@@ -69,7 +67,6 @@ export class DatabaseService {
     return true;
   }
 }
-
   insertUserDatabaseLogin(id:string, email:string, displayName:string){
 
     var user = this.getUsuario(id).then(
