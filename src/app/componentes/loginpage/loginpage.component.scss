@@ -1,3 +1,7 @@
+.btn-color{
+  color: #000080;
+}
+
 .btn-facebook, .btn-google, .btn-twitter{
   width: 32%;
 }
@@ -15,4 +19,11 @@
 .btn-twitter{
   background: #55acee;
   color: #fff;
+}
+
+.btn-crear-cuenta{
+  position: absolute;
+   right: 25px;
+   width: 100px;
+   padding: 5px;
 }

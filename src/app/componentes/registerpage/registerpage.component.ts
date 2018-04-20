@@ -33,13 +33,13 @@ export class RegisterpageComponent implements OnInit {
       let displayName = this.nombres+" "+this.apellidos;
       this.authService.registerUser(this.email,this.password)
       .then((res)=>{
-        this.flashMensaje.show('Usuario creado correctamente',
-        {cssClass: 'alert-success', timeout: 4000});
+
 
         this.authService.sendEmailVerification();
-
         this.databaseService.insertUserDatabase(this.authService.afAuth.auth.currentUser.uid,
         this.email, displayName, this.edad);
+        this.flashMensaje.show('Revisar correo para validar la cuenta',
+        {cssClass: 'alert-success', timeout: 4000});
 
         this.router.navigate(['/home']);
       }).catch((err)=>{

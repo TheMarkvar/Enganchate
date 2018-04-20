@@ -27,13 +27,13 @@ export class LoginpageComponent implements OnInit {
   onSubmitLogin(){
     this.authService.loginEmail(this.email,this.password)
     .then((res)=>{
+
       this.flashMensaje.show('Inicio de sesion satisfactorio',
       {cssClass: 'alert-success', timeout: 4000});
       this.router.navigate(['/privado']);
     }).catch((err)=>{
       this.flashMensaje.show(err.message,
       {cssClass: 'alert-danger', timeout: 4000});
-      this.router.navigate(['/home']);
     });
   }
   onClickGoogleLogin(){
@@ -41,7 +41,10 @@ export class LoginpageComponent implements OnInit {
     then((res)=>{
       this.insertUser();
       this.router.navigate(['./privado']);
-    }).catch( err => console.log(err.message));
+    }).catch((err)=>{
+      this.flashMensaje.show(err.message,
+      {cssClass: 'alert-danger', timeout: 4000});
+    })
   }
 
   onClickFacebookLogin(){
@@ -49,7 +52,10 @@ export class LoginpageComponent implements OnInit {
     then((res)=>{
       this.insertUser();
       this.router.navigate(['./privado']);
-    }).catch( err => console.log(err.message));
+    }).catch((err)=>{
+      this.flashMensaje.show(err.message,
+      {cssClass: 'alert-danger', timeout: 4000});
+    })
   }
 
   onClickTwitterLogin(){
@@ -57,7 +63,26 @@ export class LoginpageComponent implements OnInit {
     then((res)=>{
       this.insertUser();
       this.router.navigate(['./privado']);
-    }).catch( err => console.log(err.message));
+    }).catch((err)=>{
+      this.flashMensaje.show(err.message,
+      {cssClass: 'alert-danger', timeout: 4000});
+    })
+  }
+  onClickRegister(){
+    this.router.navigate(['./register']);
+  }
+
+  onClickResetPassword(){
+    console.log(this.email);
+    this.authService.resetPassword(this.email).
+    then((res)=>{
+      this.flashMensaje.show('Se ha enviado un enlace al correo: '+
+      this.email,
+      {cssClass: 'alert-success', timeout: 4000});
+    }).catch((err)=>{
+      this.flashMensaje.show(err.message,
+      {cssClass: 'alert-danger', timeout: 4000});
+    })
   }
 
   insertUser(){
