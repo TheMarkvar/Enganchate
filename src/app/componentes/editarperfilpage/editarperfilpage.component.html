@@ -3,6 +3,9 @@
     <div class="card">
       <div class="card-body">
         <h1 class="text-center">EDITAR PERFIL</h1>
+        <br>
+        <input type="file" (change)="getEvent($event)"[(ngModel)]="file" />
+
         <form (submit)="onSubmitEditarPerfilUser(EditarPerfilForm)">
           <div class="form-group">
             <div class="form-group">
@@ -32,9 +35,7 @@
         <button class="btn btn-primary" (click)="cambiarContrasena()">Cambiar Contraseña</button>
         <br><br><br>
 
-        <input type="file" (change)="uploadFile($event)" />
-        <div>{{ uploadPercent | async }}</div>
-        <a [href]="downloadURL | async">{{ downloadURL | async }}</a>
+
 
       </div>
     </div>

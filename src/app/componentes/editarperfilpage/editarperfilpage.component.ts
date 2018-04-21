@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
+import {Observable} from 'rxjs/Rx';
 import { AuthService } from '../../servicios/auth.service';
 import { DatabaseService } from '../../servicios/database.service';
+import { UploadService } from '../../servicios/upload.service';
 import { AngularFireList } from 'angularfire2/database';
 import { Router } from '@angular/router';
 import { FlashMessagesService} from 'angular2-flash-messages';
@@ -13,15 +15,21 @@ import { FlashMessagesService} from 'angular2-flash-messages';
 })
 export class EditarperfilpageComponent implements OnInit {
 
+  uploadPercent: Observable<number>;
+  downloadURL: Observable<string>;
+
   public direccion:string;
   public documento:string;
   public telefono:string;
   public edad:Date;
+  private file:File;
+  private event;
 
 
   constructor(
     public authService: AuthService,
     public databaseService: DatabaseService,
+    public uploadService: UploadService,
     public router:Router,
     public flashMensaje: FlashMessagesService
   ) { }
@@ -34,12 +42,30 @@ export class EditarperfilpageComponent implements OnInit {
 
   }
 
+  uploadFile(){;
+    //const task = this.storage.upload(filePath, file);
+    const path = "usuarios/"+this.authService.afAuth.auth.currentUser.uid;
+    const task = this.uploadService.uploadUserFile(this.event, path);
+
+    // observe percentage changes
+    this.uploadPercent = task.percentageChanges();
+
+  }
+
+  getEvent(event){
+    this.event = event;
+  }
+
+
   onSubmitEditarPerfilUser(){
     if(this.verificarFormulario()){
 
       //this.databaseService.usuario = new Usuario();
       this.databaseService.updateUser(this.authService.afAuth.auth.currentUser.uid,
       this.documento, this.direccion, this.telefono, this.edad);
+      this.uploadFile();
+
+
       this.flashMensaje.show('Información editada correctamente',
       {cssClass: 'alert-success', timeout: 4000});
       this.router.navigate(['']);
@@ -68,5 +94,7 @@ export class EditarperfilpageComponent implements OnInit {
     });
 
   }
+
+
 
 }
