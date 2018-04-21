@@ -45,7 +45,7 @@ export class EditarperfilpageComponent implements OnInit {
   uploadFile(){;
     //const task = this.storage.upload(filePath, file);
     const path = "usuarios/"+this.authService.afAuth.auth.currentUser.uid;
-    const task = this.uploadService.uploadUserFile(this.event, path);
+    const task = this.uploadService.uploadFile(this.event, path);
 
     // observe percentage changes
     this.uploadPercent = task.percentageChanges();

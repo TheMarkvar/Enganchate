@@ -10,7 +10,7 @@ export class UploadService {
 
   constructor(private storage: AngularFireStorage) { }
 
-  uploadile(event, path) {
+  uploadFile(event, path) {
     const file = event.target.files[0];
     const task = this.storage.upload(this.path_storage+path, file);
 
