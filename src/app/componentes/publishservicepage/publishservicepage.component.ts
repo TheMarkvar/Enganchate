@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DatabaseService } from '../../servicios/database.service';
+//import { DatabaseService } from '../../servicios/database.service';
 import { FlashMessagesService} from 'angular2-flash-messages';
 import { AuthService } from '../../servicios/auth.service';
 import { FormsModule } from '@angular/forms';
+import { DatabaseServicioService } from '../../servicios/database-servicio.service';
 
 @Component({
   selector: 'app-publishservicepage',
   templateUrl: './publishservicepage.component.html',
   styleUrls: ['./publishservicepage.component.scss']
 })
+
 export class PublishservicepageComponent implements OnInit {
   private categoria:string;
   private nombre:string;
@@ -30,7 +32,8 @@ export class PublishservicepageComponent implements OnInit {
   private selectedItems = [];
 
   constructor(
-    public databaseService: DatabaseService,
+    //public databaseService: DatabaseService,
+    public databaseServicio:DatabaseServicioService,
     public router:Router,
     public flashMensaje: FlashMessagesService,
     public authService: AuthService
@@ -118,7 +121,7 @@ export class PublishservicepageComponent implements OnInit {
 
       this.fecha = new Date();
 
-      this.databaseService.insertServiceDatabase(this.authService.afAuth.auth.currentUser.uid,this.categoria,this.nombre,
+      this.databaseServicio.insertServiceDatabase(this.authService.afAuth.auth.currentUser.uid,this.categoria,this.nombre,
       this.descripcion,this.tiempo_duracion,this.opcion_duracion,this.precio,this.selectedItems,
       this.modalidad,this.tipo_pago,this.fecha);
       this.router.navigate(['/privado']);

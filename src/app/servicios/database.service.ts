@@ -13,7 +13,7 @@ export class DatabaseService {
   public  usuario:Usuario;
   private listaUsuarios: AngularFireList<Usuario>;
   private pathUsuarios:string;
-  private pathServicios:string;
+  //private pathServicios:string;
   public servicio:Servicio;
   private listaServicios: AngularFireList<Servicio>;
 
@@ -21,13 +21,13 @@ export class DatabaseService {
     public afDatabase: AngularFireDatabase,
   ) {
       this.pathUsuarios = 'usuarios';
-      this.pathServicios = 'servicios';
+      //this.pathServicios = 'servicios';
   }
 
-  insertServiceDatabase(publicador:string,categoria:string,nombre:string,descripcion:string,tiempo_duracion:number,
+  /*insertServiceDatabase(publicador:string,categoria:string,nombre:string,descripcion:string,tiempo_duracion:number,
                         opcion_duracion:string,precio:number,zona_cobertura:Array<string>,modalidad:string,
                         tipo_pago:Array<string>,fecha:Date){
-  
+
     this.getServicios();
     this.servicio=new Servicio();
 
@@ -45,7 +45,7 @@ export class DatabaseService {
     this.listaServicios.push(this.servicio);
 
 
-  }
+  }*/
 
   insertUserDatabase(id:string, email:string, displayName:string, edad:Date){
    if(this.verificarUsuarioEnBaseDeDatos(id)){
@@ -96,9 +96,9 @@ export class DatabaseService {
     this.usuario.edad = edad;
     this.listaUsuarios.update(id, this.usuario);
   }
-  getServicios(){
+  /*getServicios(){
     return this.listaServicios = this.afDatabase.list(this.pathServicios);
-  }
+  }*/
   getUsuarios(){
     return this.listaUsuarios = this.afDatabase.list(this.pathUsuarios);
   }
