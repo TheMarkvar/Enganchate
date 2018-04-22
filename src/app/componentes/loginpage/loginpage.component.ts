@@ -73,7 +73,6 @@ export class LoginpageComponent implements OnInit {
   }
 
   onClickResetPassword(){
-    console.log(this.email);
     this.authService.resetPassword(this.email).
     then((res)=>{
       this.flashMensaje.show('Se ha enviado un enlace al correo: '+

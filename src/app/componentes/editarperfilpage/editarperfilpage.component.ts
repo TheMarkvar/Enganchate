@@ -23,10 +23,10 @@ export class EditarperfilpageComponent implements OnInit {
   public direccion:string;
   public documento:string;
   public telefono:string;
-  public edad:Date;
   private file:File=null;
   private nombreArchivo:string;
-  private estado:boolean = true;
+  private fotoInicial:boolean = false;
+  private cargarFoto:boolean = false;
   private iniciales:string;
 
 
@@ -46,7 +46,6 @@ export class EditarperfilpageComponent implements OnInit {
         var userDN = this.databaseService.getUsuario(auth.uid).then(
           function(snapshot) {
            var res = (snapshot.val() && snapshot.val().displayName);
-           //console.log(x);
            return res;
         });
         userDN.then((value: string) => {
@@ -88,12 +87,13 @@ export class EditarperfilpageComponent implements OnInit {
         if(auth.photoURL != null){
             this.nombreArchivo = auth.photoURL;
             //this.nombreArchivo = 'assets/images/light-sky-blue-solid-color-background.jpg';
-            this.estado = false;
         }else{
             this.nombreArchivo = 'assets/images/light-sky-blue-solid-color-background.jpg';
+            this.fotoInicial = true;
         }
+
+
         this.file = new File([""], this.nombreArchivo);
-        console.log(this.file);
 
       }
     });
@@ -105,37 +105,39 @@ export class EditarperfilpageComponent implements OnInit {
   uploadFile(){;
     //const task = this.storage.upload(filePath, file);
     const path = "usuarios/"+this.authService.afAuth.auth.currentUser.uid;
-    const task = this.uploadService.uploadFile(this.file, path);
+    //const task = this.uploadService.uploadFile(this.file, path);
+
+    if(this.cargarFoto){
+      const task = this.uploadService.uploadFile(this.file, path);
+      this.uploadPercent = task.percentageChanges();
+    }
 
 
     //this.authService.updateProfilePicture('images/'+path);
-    this.uploadPercent = task.percentageChanges();
+
 
   }
 
   getEvent(file:FileList){
     this.file = file.item(0);
 
-    console.log(this.file);
     var reader = new FileReader();
     reader.readAsDataURL(this.file);
 
     reader.onload = (event:any) => {
       this.nombreArchivo = event.target.result;
     }
-    this.estado = false;
+    this.fotoInicial = false;
+    this.cargarFoto = true;
 
   }
 
 
   onSubmitEditarPerfilUser(){
     if(this.verificarFormulario()){
-
-      //this.databaseService.usuario = new Usuario();
       this.databaseService.updateUser(this.authService.afAuth.auth.currentUser.uid,
-      this.documento, this.direccion, this.telefono, this.edad);
+      this.documento, this.direccion, this.telefono);
       this.uploadFile();
-
 
       this.flashMensaje.show('Información editada correctamente',
       {cssClass: 'alert-success', timeout: 4000});

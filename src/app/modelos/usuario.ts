@@ -5,7 +5,7 @@ export class Usuario {
   direccion:string;
   telefono:string;
   documento:string;
-  edad:any;
+  edad:Date;
   servicios:Array<string>;
 
 

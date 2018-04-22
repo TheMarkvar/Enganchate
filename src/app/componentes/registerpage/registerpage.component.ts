@@ -16,7 +16,9 @@ export class RegisterpageComponent implements OnInit {
   public password2:string;
   public nombres:string;
   public apellidos:string;
+  public mayoriaEdad:number=18;
   public edad:Date;
+  public maxDate;
 
 
   constructor(
@@ -27,7 +29,31 @@ export class RegisterpageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    var today = new Date();
+    var aux, day, month, year, format;
+
+
+    day = today.getDate();
+    month = today.getMonth()+1;
+    year = today.getFullYear() - this.mayoriaEdad;
+
+    if(day.toString().length < 2){
+      aux = day;
+      day = "0" + aux;
+    }
+    if(month.toString().length < 2){
+      aux = month;
+      month = "0" + aux;
+    }
+
+
+    format = ""+year+"-"+month+"-"+day;
+
+    //this.maxDate = format;
+    this.maxDate = "2000-12-05";
+    console.log(this.maxDate);
   }
+
   onSubmitRegisterUser(){
     if(this.verificarFormulario()){
       let displayName = this.nombres+" "+this.apellidos;
@@ -52,10 +78,14 @@ export class RegisterpageComponent implements OnInit {
 
   //Se debe implementar el método para que datos sean coherentes
   verificarFormulario(){
-    if(this.password===this.password2){
-      return true;
+    var res = true;
+    if(this.password!=this.password2){
+      res = false;
     }
-    return false;
+
+
+
+    return res;
   }
 
 

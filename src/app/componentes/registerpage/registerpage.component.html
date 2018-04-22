@@ -4,25 +4,27 @@
       <div class="card-body">
         <h1 class="text-center">REGISTRO</h1>
 
-
-
         <form name="registerForm"(submit)="onSubmitRegisterUser(registerForm)" >
 
           <div class="form-group">
+
             <label for="email">Email</label>
             <input type="email" name="email" placeholder="Digite su email" id="email"
             [(ngModel)]="email" class="form-control" required>
           </div>
+
           <div class="form-group">
             <label for="nombres">Nombre</label>
             <input type="text" name="nombres" placeholder="Digite su nombre" id="nombres"
             [(ngModel)]="nombres" class="form-control" required>
           </div>
+
           <div class="form-group">
             <label for="apellidos">Apellidos</label>
             <input type="text" name="apellidos" placeholder="Digite sus apellidos" id="apellidos"
             [(ngModel)]="apellidos" class="form-control" required>
           </div>
+
           <div class="form-group">
             <label for="">Contraseña</label>
             <input type="password" name="password" placeholder="Digite su contraseña" id="password"
@@ -40,11 +42,9 @@
           <div class="form-group">
             <label for="">Fecha de Nacimiento</label>
             <input type="date"  name="fecha_nac" id="fecha_nac"
-            [(ngModel)]="edad" class="form-control" max="1970-01-01" min="2000-01-01" required>
+            [(ngModel)]="edad" class="form-control" min="1970-01-01" max="2000-01-01"  required>
 
-            <div class="mismatch"
-            ng-show="registerForm.fecha_nac.$invalid">
-              Fecha de nacimiento inválida {{edad}}</div>
+
           </div>
           <input type="submit" value="REGISTRAR" class="btn btn-primary btn-block btn-lg">
         </form>

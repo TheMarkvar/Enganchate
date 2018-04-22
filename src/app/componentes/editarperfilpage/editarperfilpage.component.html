@@ -8,7 +8,7 @@
         <div class="custom-file">
             <input type="file" id = "file1"
             class="custom-file-input" (change)="getEvent($event.target.files)"
-            accept="image/png, image/jpeg, image/jpg">
+            accept="image/png, image/jpeg, image/jpg" max="2MB">
 
             <label class="custom-file-label">Subir imagen</label>
             <div class="invalid-feedback">Example invalid custom file feedback</div>
@@ -17,7 +17,7 @@
 
         <div class="nav-item">
           <img [src]="nombreArchivo" class="center rounded-circle" >
-          <a class="centered" *ngIf="estado">{{iniciales}}</a>
+          <a class="centered" *ngIf="fotoInicial">{{iniciales}}</a>
         </div>
         <br>
 
@@ -46,11 +46,11 @@
             <input type="number" name="telefono" id="telefono"
             [(ngModel)]="telefono" class="form-control">
           </div>
-          <div class="form-group">
+          <!--<div class="form-group">
             <label for="edad">Edad</label>
             <input type="date" max="1970-01-01" min="2000-01-01" name="edad" id="edad"
             [(ngModel)]="edad" class="form-control">
-          </div>
+          </div>-->
 
           <input type="submit" value="ENVIAR" class="btn btn-primary btn-block btn-lg">
         </form>

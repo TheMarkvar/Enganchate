@@ -87,13 +87,12 @@ export class DatabaseService {
 
   }
 
-  updateUser(id:string, documento:string, direccion:string, telefono:string, edad:Date){
+  updateUser(id:string, documento:string, direccion:string, telefono:string){
     this.getUsuarios();
     this.usuario = new Usuario();
     this.usuario.documento = documento;
     this.usuario.direccion = direccion;
     this.usuario.telefono = telefono;
-    this.usuario.edad = edad.toString();
     this.listaUsuarios.update(id, this.usuario);
   }
   /*getServicios(){
