@@ -5,7 +5,10 @@ import { FlashMessagesService} from 'angular2-flash-messages';
 import { AuthService } from '../../servicios/auth.service';
 import { FormsModule } from '@angular/forms';
 import { DatabaseServicioService } from '../../servicios/database-servicio.service';
-
+import {  OptionsService } from '../../servicios/options.service';
+//import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { Ciudad } from  '../../modelos/ciudad';
+import { Observable } from 'rxjs/Observable';
 @Component({
   selector: 'app-publishservicepage',
   templateUrl: './publishservicepage.component.html',
@@ -34,6 +37,7 @@ export class PublishservicepageComponent implements OnInit {
   constructor(
     //public databaseService: DatabaseService,
     public databaseServicio:DatabaseServicioService,
+    public OptionsService:OptionsService,
     public router:Router,
     public flashMensaje: FlashMessagesService,
     public authService: AuthService
@@ -43,41 +47,25 @@ export class PublishservicepageComponent implements OnInit {
     this.credito="";
     this.tipo_pago = new Array<string>();
     this.fecha=new Date();
+    //this.ciudades=new Array<Ciudad>();
 
   }
 
   ngOnInit() {
-    this.ciudades = [
-            { item_id: "Bogotá D.C", item_text: 'Bogotá D.C' },
-            { item_id: "Medellín", item_text: 'Medellín' },
-            { item_id: "Cali", item_text: 'Cali' },
-            { item_id: "Barranquilla", item_text: 'Barranquilla' },
-            { item_id: "Cartagena", item_text: 'Cartagena' },
-            { item_id: "Soledad", item_text: 'Soledad' },
-            { item_id: "Cúcuta", item_text: 'Cúcuta'},
-            { item_id: "Soacha", item_text: 'Soacha' },
-            { item_id: "Ibagué", item_text: 'Ibagué' },
-            { item_id: "Bucaramanga", item_text: 'Bucaramanga'},
-            { item_id: "Villavicencio", item_text: 'Villavicencio'},
-            { item_id: "Santa Marta", item_text: 'Santa Marta' },
-            { item_id: "Bello", item_text: 'Bello' },
-            { item_id: "Valledupar", item_text: 'Valledupar' },
-            { item_id: "Pereira", item_text: 'Pereira' },
-            { item_id: "Armenia", item_text: 'Armenia' },
-            { item_id: "Buenaventura", item_text: 'Buenaventura' },
-            { item_id: "Pasto", item_text: 'Pasto' },
-            { item_id: "Manizales", item_text: 'Manizales' },
-            { item_id: "Montería", item_text: 'Montería' },
-            { item_id: "Neiva", item_text: 'Neiva' },
-            { item_id: "Popayán", item_text: 'Popayán' },
-            { item_id: "Quibdo", item_text: 'Quibdo' },
-            { item_id: "Riohacha", item_text: 'Riohacha' }
+    var ciudades2 = [];
+    //this.OptionsService.getCiudades();
+    this.OptionsService.getCiudades().snapshotChanges().subscribe(item => {
+      this.ciudades = [];
 
-        ];
+      item.forEach(element => {
+      let x = element.payload.toJSON();
+      x["$key"] = element.key;
+       this.ciudades.push(x as Ciudad);});});
+
         this.dropdownSettings = {
             singleSelection: false,
-            idField: 'item_id',
-            textField: 'item_text',
+            idField: 'id',
+            textField: 'nombre',
             selectAllText: 'Seleccionar todas',
             unSelectAllText: 'Deseleccionar todas',
             searchPlaceholderText: 'Buscar',
@@ -89,11 +77,13 @@ export class PublishservicepageComponent implements OnInit {
       //console.log(item);
       this.selectedItems.push(item);
       console.log(this.selectedItems);
+      //console.log(item);
+
   }
   OnItemDeSelect(item:any){
     //console.log(item);
     var newSelectedItems = this.selectedItems.filter(function(element) {
-    return element.item_id !== item.item_id;
+    return element.nombre !== item.nombre;
     });
     //console.log("removed");
     //console.log(removed);
