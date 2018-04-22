@@ -6,9 +6,14 @@ import { AuthService } from '../../servicios/auth.service';
 import { FormsModule } from '@angular/forms';
 import { DatabaseServicioService } from '../../servicios/database-servicio.service';
 import {  OptionsService } from '../../servicios/options.service';
+import {  UploadService } from '../../servicios/upload.service';
 //import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import { Ciudad } from  '../../modelos/ciudad';
+import { Categoria } from  '../../modelos/categoria';
+import { OpcionDuracion } from  '../../modelos/opcion-duracion';
+import { TipoPago } from  '../../modelos/tipo-pago';
 import { Observable } from 'rxjs/Observable';
+import { Modalidad } from '../../modelos/modalidad';
 @Component({
   selector: 'app-publishservicepage',
   templateUrl: './publishservicepage.component.html',
@@ -16,6 +21,7 @@ import { Observable } from 'rxjs/Observable';
 })
 
 export class PublishservicepageComponent implements OnInit {
+  uploadPercent: Observable<number>;
   private categoria:string;
   private nombre:string;
   private descripcion:string;
@@ -32,12 +38,23 @@ export class PublishservicepageComponent implements OnInit {
   private fecha:Date;
   private ciudades = [];
   private dropdownSettings = {};
+  private dropdownSettings2 = {};
   private selectedItems = [];
+  private categorias = [];
+  private opcDuracion = [];
+  private tipoPago = [];
+  private selectedPayType = [];
+  private modalidades = [];
+  private gender:string;
+  private selectedItems2 = [];
+  private event;
+  private file:File;
+
 
   constructor(
-    //public databaseService: DatabaseService,
     public databaseServicio:DatabaseServicioService,
     public OptionsService:OptionsService,
+    public uploadService:UploadService,
     public router:Router,
     public flashMensaje: FlashMessagesService,
     public authService: AuthService
@@ -47,14 +64,10 @@ export class PublishservicepageComponent implements OnInit {
     this.credito="";
     this.tipo_pago = new Array<string>();
     this.fecha=new Date();
-    //this.ciudades=new Array<Ciudad>();
-
   }
 
   ngOnInit() {
-    var ciudades2 = [];
-    //this.OptionsService.getCiudades();
-    this.OptionsService.getCiudades().snapshotChanges().subscribe(item => {
+      this.OptionsService.getCiudades().snapshotChanges().subscribe(item => {
       this.ciudades = [];
 
       item.forEach(element => {
@@ -64,7 +77,7 @@ export class PublishservicepageComponent implements OnInit {
 
         this.dropdownSettings = {
             singleSelection: false,
-            idField: 'id',
+            idField: 'nombre',
             textField: 'nombre',
             selectAllText: 'Seleccionar todas',
             unSelectAllText: 'Deseleccionar todas',
@@ -72,24 +85,69 @@ export class PublishservicepageComponent implements OnInit {
             itemsShowLimit: 10,
             allowSearchFilter: true
         };
-  }
-  onItemSelect(item:any){
-      //console.log(item);
-      this.selectedItems.push(item);
-      console.log(this.selectedItems);
-      //console.log(item);
+        this.dropdownSettings2 = {
+            singleSelection: false,
+            idField: 'nombre',
+            textField: 'nombre',
+            selectAllText: 'Seleccionar todas',
+            unSelectAllText: 'Deseleccionar todas',
+            searchPlaceholderText: 'Buscar',
+            itemsShowLimit: 10,
+            allowSearchFilter: true
+        };
 
+        this.OptionsService.getCategorias().snapshotChanges().subscribe(item => {
+        this.categorias = [];
+
+        item.forEach(element => {
+        let x = element.payload.toJSON();
+        x["$key"] = element.key;
+         this.categorias.push(x as Categoria);});});
+
+         this.OptionsService.getOpcDuracion().snapshotChanges().subscribe(item => {
+         this.opcDuracion = [];
+
+         item.forEach(element => {
+         let x = element.payload.toJSON();
+         x["$key"] = element.key;
+          this.opcDuracion.push(x as OpcionDuracion);});});
+
+          this.OptionsService.getTipoPago().snapshotChanges().subscribe(item => {
+          this.tipoPago = [];
+
+          item.forEach(element => {
+          let x = element.payload.toJSON();
+          x["$key"] = element.key;
+           this.tipoPago.push(x as TipoPago);});});
+
+           this.OptionsService.getModalidad().snapshotChanges().subscribe(item => {
+           this.modalidades = [];
+
+           item.forEach(element => {
+           let x = element.payload.toJSON();
+           x["$key"] = element.key;
+            this.modalidades.push(x as Modalidad);});});
+  }
+
+  onItemSelect(item:any){
+      this.selectedItems.push(item);
+      //console.log(this.selectedItems);
   }
   OnItemDeSelect(item:any){
-    //console.log(item);
     var newSelectedItems = this.selectedItems.filter(function(element) {
     return element.nombre !== item.nombre;
     });
-    //console.log("removed");
-    //console.log(removed);
     this.selectedItems = newSelectedItems;
-
-    //console.log(this.selectedItems);
+  }
+  onItemSelect2(item:any){
+      this.selectedItems2.push(item);
+      //console.log(this.selectedItems);
+  }
+  OnItemDeSelect2(item:any){
+    var newSelectedItems = this.selectedItems2.filter(function(element) {
+    return element.nombre !== item.nombre;
+    });
+    this.selectedItems2 = newSelectedItems;
   }
   onSelectAll(items: any){
       //console.log(items);
@@ -98,7 +156,7 @@ export class PublishservicepageComponent implements OnInit {
       //console.log(items);
   }
   onSubmitPublicarServicio(){
-
+    /*
       if(this.efectivo!=""){
         this.tipo_pago.push("EFECTIVO");
       }
@@ -107,19 +165,28 @@ export class PublishservicepageComponent implements OnInit {
       }
       if(this.debito!=""){
         this.tipo_pago.push("DEBITO");
-      }
+      }*/
 
-      this.fecha = new Date();
+      //this.fecha = new Date();
 
       this.databaseServicio.insertServiceDatabase(this.authService.afAuth.auth.currentUser.uid,this.categoria,this.nombre,
       this.descripcion,this.tiempo_duracion,this.opcion_duracion,this.precio,this.selectedItems,
-      this.modalidad,this.tipo_pago,this.fecha);
+      this.modalidad,this.selectedItems2,this.fecha);
       this.router.navigate(['/privado']);
+      //this.uploadFile();
 
 
 
   }
-
+  uploadFile(){
+    //const task = this.storage.upload(filePath, file);
+    const path = "servicios/"+this.authService.afAuth.auth.currentUser.uid;
+    const task = this.uploadService.uploadFile(this.event, path);
+    this.uploadPercent = task.percentageChanges();
+  }
+  getEvent(event){
+    this.event = event;
+  }
   verificarFormulario(){
     this.fecha = new Date();
 

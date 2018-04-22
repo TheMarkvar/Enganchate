@@ -9,6 +9,6 @@ export class Servicio {
   precio:number;
   zona_cobertura=[];
   modalidad:string;
-  tipo_pago:Array<string>;
+  tipo_pago = [];
   fecha:any;
 }
