@@ -110,11 +110,12 @@ export class EditarperfilpageComponent implements OnInit {
     if(this.cargarFoto){
       const task = this.uploadService.uploadFile(this.file, path);
       this.uploadPercent = task.percentageChanges();
+
+      this.uploadService.downloadFile(path).subscribe(URL=>{
+        //console.log(URL.toString());
+        this.authService.updateProfile(URL.toString(), this.displayName);
+      });
     }
-
-
-    //this.authService.updateProfilePicture('images/'+path);
-
 
   }
 
@@ -136,7 +137,7 @@ export class EditarperfilpageComponent implements OnInit {
   onSubmitEditarPerfilUser(){
     if(this.verificarFormulario()){
       this.databaseService.updateUser(this.authService.afAuth.auth.currentUser.uid,
-      this.documento, this.direccion, this.telefono);
+      this.displayName, this.documento, this.direccion, this.telefono);
       this.uploadFile();
 
       this.flashMensaje.show('Información editada correctamente',
