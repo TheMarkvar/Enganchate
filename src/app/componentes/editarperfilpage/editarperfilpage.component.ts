@@ -19,15 +19,15 @@ export class EditarperfilpageComponent implements OnInit {
   uploadPercent: Observable<number>;
   downloadURL: Observable<string>;
 
+  public displayName:string;
   public direccion:string;
   public documento:string;
   public telefono:string;
   public edad:Date;
   private file:File=null;
-  private nombre:string;
-  private event;
-  private inputFileModel;
-  private name:string;
+  private nombreArchivo:string;
+  private estado:boolean = true;
+  private iniciales:string;
 
 
   constructor(
@@ -39,10 +39,66 @@ export class EditarperfilpageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    /*this.listaUsuarios = this.databaseService.getUsuarios();
-    this.usuario = new Usuario();
-    this.usuario.displayName = "Pepe Torres";
-    this.listaUsuarios.update(this.authService.afAuth.auth.currentUser.uid, this.usuario);*/
+
+
+    this.authService.getAuth().subscribe(auth=>{
+      if(auth){
+        var userDN = this.databaseService.getUsuario(auth.uid).then(
+          function(snapshot) {
+           var res = (snapshot.val() && snapshot.val().displayName);
+           //console.log(x);
+           return res;
+        });
+        userDN.then((value: string) => {
+          this.displayName = value;
+
+          if(this.displayName!=null){
+            let aux = this.displayName.split(" ");
+            this.iniciales = aux[0].toUpperCase().charAt(0) + aux[1].toUpperCase().charAt(0);
+          }
+        });
+
+        var userDoc = this.databaseService.getUsuario(auth.uid).then(
+          function(snapshot) {
+           var res = (snapshot.val() && snapshot.val().documento);
+           return res;
+        });
+        userDoc.then((value: string) => {
+          this.documento = value;
+        });
+
+        var userDir = this.databaseService.getUsuario(auth.uid).then(
+          function(snapshot) {
+           var res = (snapshot.val() && snapshot.val().direccion);
+           return res;
+        });
+        userDir.then((value: string) => {
+          this.direccion = value;
+        });
+
+        var userTel = this.databaseService.getUsuario(auth.uid).then(
+          function(snapshot) {
+           var res = (snapshot.val() && snapshot.val().telefono);
+           return res;
+        });
+        userTel.then((value: string) => {
+          this.telefono = value;
+        });
+
+        if(auth.photoURL != null){
+            this.nombreArchivo = auth.photoURL;
+            //this.nombreArchivo = 'assets/images/light-sky-blue-solid-color-background.jpg';
+            this.estado = false;
+        }else{
+            this.nombreArchivo = 'assets/images/light-sky-blue-solid-color-background.jpg';
+        }
+        this.file = new File([""], this.nombreArchivo);
+        console.log(this.file);
+
+      }
+    });
+
+
 
   }
 
@@ -51,7 +107,8 @@ export class EditarperfilpageComponent implements OnInit {
     const path = "usuarios/"+this.authService.afAuth.auth.currentUser.uid;
     const task = this.uploadService.uploadFile(this.file, path);
 
-    // observe percentage changes
+
+    //this.authService.updateProfilePicture('images/'+path);
     this.uploadPercent = task.percentageChanges();
 
   }
@@ -59,28 +116,14 @@ export class EditarperfilpageComponent implements OnInit {
   getEvent(file:FileList){
     this.file = file.item(0);
 
-    //Show image preview
-    var reader = new FileReader();
-    reader.onload = (event:any) => {
-      this.name = event.target.result;
-    }
-    reader.readAsDataURL(this.file);
     console.log(this.file);
+    var reader = new FileReader();
+    reader.readAsDataURL(this.file);
 
-    /*if (event.target.files && event.target.files[0]) {
-        var reader = new FileReader();
-
-        reader.readAsDataURL(event.target.files[0]); // read file as data url
-        console.log('aaaaaaaaaaaaaaaaaaaaaaaa');
-
-        console.log('aaaaaaaaaaaaaaaaaaaaaaaa');
-
-        reader.onload = (event:any) => { // called once readAsDataURL is completed
-          this.name = event.target.result;
-        }
-    }*/
-
-
+    reader.onload = (event:any) => {
+      this.nombreArchivo = event.target.result;
+    }
+    this.estado = false;
 
   }
 

@@ -56,6 +56,10 @@ export class AuthService {
     return this.afAuth.auth.sendPasswordResetEmail(email);
   }
 
+  updateProfilePicture(photoURL){
+    this.afAuth.auth.currentUser.photoURL = photoURL;
+  }
+
   logout() {
   return this.afAuth.auth.signOut();
 }

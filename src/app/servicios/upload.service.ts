@@ -19,7 +19,6 @@ export class UploadService {
   downloadFile(path) {
     const ref = this.storage.ref(path);
     return ref.getDownloadURL();
-
   }
 
 
