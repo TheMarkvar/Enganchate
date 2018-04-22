@@ -23,11 +23,11 @@ export class EditarperfilpageComponent implements OnInit {
   public documento:string;
   public telefono:string;
   public edad:Date;
-  private file:File;
+  private file:File=null;
   private nombre:string;
   private event;
   private inputFileModel;
-  private name;
+  private name:string;
 
 
   constructor(
@@ -49,19 +49,39 @@ export class EditarperfilpageComponent implements OnInit {
   uploadFile(){;
     //const task = this.storage.upload(filePath, file);
     const path = "usuarios/"+this.authService.afAuth.auth.currentUser.uid;
-    const task = this.uploadService.uploadFile(this.event, path);
+    const task = this.uploadService.uploadFile(this.file, path);
 
     // observe percentage changes
     this.uploadPercent = task.percentageChanges();
 
   }
 
-  getEvent(event){
-    this.event = event;
-    //this.name= event.target.files[0].name;
-    this.name= event.target.files[0];
-    console.log(event);
-    console.log(this.name);
+  getEvent(file:FileList){
+    this.file = file.item(0);
+
+    //Show image preview
+    var reader = new FileReader();
+    reader.onload = (event:any) => {
+      this.name = event.target.result;
+    }
+    reader.readAsDataURL(this.file);
+    console.log(this.file);
+
+    /*if (event.target.files && event.target.files[0]) {
+        var reader = new FileReader();
+
+        reader.readAsDataURL(event.target.files[0]); // read file as data url
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaa');
+
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaa');
+
+        reader.onload = (event:any) => { // called once readAsDataURL is completed
+          this.name = event.target.result;
+        }
+    }*/
+
+
+
   }
 
 

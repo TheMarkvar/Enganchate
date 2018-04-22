@@ -10,17 +10,14 @@ export class UploadService {
 
   constructor(private storage: AngularFireStorage) { }
 
-  uploadFile(event, path) {
-    const file = event.target.files[0];
+  uploadFile(file, path) {
     const task = this.storage.upload(this.path_storage+path, file);
 
     return task;
   }
 
   downloadFile(path) {
-    //const file = event.target.files[0];
-    //const task = this.storage.upload(this.path_storage+path, file);
-    const ref = this.storage.ref('users/davideast.jpg');
+    const ref = this.storage.ref(path);
     return ref.getDownloadURL();
 
   }
