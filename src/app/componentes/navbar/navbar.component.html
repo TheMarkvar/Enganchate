@@ -22,7 +22,7 @@
 
     <form class="form-inline my-2 my-lg-0" *ngIf="isLogin">
         <input class="form-control mr-sm-2" name="buscar" id="buscar" [(ngModel)]="buscar" type="text" placeholder="Buscar servicios">
-        <button class="btn btn-secondary my-2 my-sm-0" (click)="onClickSearch()" 
+        <button class="btn btn-secondary my-2 my-sm-0" (click)="onClickSearch()"
         type="submit">Buscar</button>
     </form>
 
@@ -40,10 +40,13 @@
         <input type="image" class="rounded-circle" src="{{fotoUsuario}}"
         routerLink="/editProfile" alt="Submit">
       </li>
+
       <li class="nav-item" *ngIf="!tieneFotoExterna && isLogin">
-        <input type="image" class="rounded-circle" src="assets/images/enganchate.png"
+        <input type="image" class="rounded-circle" src="assets/images/light-sky-blue-solid-color-background.jpg"
         routerLink="/editProfile">
+        <a class="nav-link centered" routerLink="/editProfile">{{iniciales}}</a>
       </li>
+
       <li class="nav-item" *ngIf="isLogin">
         <a class="nav-link" href="#" (click)="onClickLogout()" >Salir</a>
       </li>

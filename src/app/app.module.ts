@@ -17,11 +17,12 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 import { environment } from '../environments/environment';
 
 //Servicios
+import { AuthGuard } from './guards/auth.guard';
+import { LoginGuard } from './guards/login.guard';
 import { AuthService } from './servicios/auth.service';
 import { DatabaseService } from './servicios/database.service';
 import { UploadService } from './servicios/upload.service';
 import { OptionsService } from './servicios/options.service';
-import { AuthGuard } from './guards/auth.guard';
 import { DatabaseServicioService } from './servicios/database-servicio.service';
 
 
@@ -62,7 +63,8 @@ import { AdvancedsearchpageComponent } from './componentes/advancedsearchpage/ad
     AngularFireStorageModule,
     FlashMessagesModule
   ],
-  providers: [AuthService,DatabaseService,DatabaseServicioService,UploadService,OptionsService,AuthGuard,FlashMessagesService],
+  providers: [AuthService,DatabaseService,DatabaseServicioService,UploadService,
+              OptionsService,AuthGuard,LoginGuard,FlashMessagesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

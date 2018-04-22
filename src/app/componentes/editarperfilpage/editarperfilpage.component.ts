@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { FormsModule, NgForm } from '@angular/forms';
 import {Observable} from 'rxjs/Rx';
 import { AuthService } from '../../servicios/auth.service';
@@ -23,7 +24,10 @@ export class EditarperfilpageComponent implements OnInit {
   public telefono:string;
   public edad:Date;
   private file:File;
+  private nombre:string;
   private event;
+  private inputFileModel;
+  private name;
 
 
   constructor(
@@ -54,6 +58,10 @@ export class EditarperfilpageComponent implements OnInit {
 
   getEvent(event){
     this.event = event;
+    //this.name= event.target.files[0].name;
+    this.name= event.target.files[0];
+    console.log(event);
+    console.log(this.name);
   }
 
 

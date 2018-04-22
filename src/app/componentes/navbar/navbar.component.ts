@@ -14,6 +14,7 @@ export class NavbarComponent implements OnInit {
   public isLogin:boolean;
   public tieneFotoExterna:boolean;
   public username:string;
+  public iniciales:string;
   public email:string;
   public fotoUsuario:string;
   public buscar:string;
@@ -39,7 +40,13 @@ export class NavbarComponent implements OnInit {
            //console.log(x);
            return res;
         });
-        user.then((msg: string) => { this.username = msg; });
+        user.then((msg: string) => {
+          this.username = msg;
+          if(this.username!=null){
+            let aux = this.username.split(" ");
+            this.iniciales = aux[0].toUpperCase().charAt(0) + aux[1].toUpperCase().charAt(0);
+          }
+        });
 
         this.email = auth.email;
 

@@ -17,5 +17,13 @@ export class UploadService {
     return task;
   }
 
+  downloadFile(path) {
+    //const file = event.target.files[0];
+    //const task = this.storage.upload(this.path_storage+path, file);
+    const ref = this.storage.ref('users/davideast.jpg');
+    return ref.getDownloadURL();
+
+  }
+
 
 }

@@ -11,11 +11,13 @@ import {AdvancedsearchpageComponent} from './componentes/advancedsearchpage/adva
 import {NotfoundpageComponent} from './componentes/notfoundpage/notfoundpage.component';
 
 import {AuthGuard} from './guards/auth.guard';
+import {LoginGuard} from './guards/login.guard';
+
 const routes: Routes = [
   {path: '', component: HomepageComponent},
   {path: 'home', component: HomepageComponent},
-  {path: 'login', component: LoginpageComponent},
-  {path: 'register', component: RegisterpageComponent},
+  {path: 'login', component: LoginpageComponent, canActivate: [LoginGuard]},
+  {path: 'register', component: RegisterpageComponent, canActivate: [LoginGuard]},
   {path: 'editProfile', component: EditarperfilpageComponent, canActivate: [AuthGuard]},
   {path: 'publishService', component: PublishservicepageComponent, canActivate: [AuthGuard]},
   {path: 'advancedSearch', component: AdvancedsearchpageComponent},
