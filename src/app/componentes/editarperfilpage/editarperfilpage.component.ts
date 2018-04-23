@@ -39,8 +39,6 @@ export class EditarperfilpageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-
     this.authService.getAuth().subscribe(auth=>{
       if(auth){
         var userDN = this.databaseService.getUsuario(auth.uid).then(
@@ -135,8 +133,6 @@ export class EditarperfilpageComponent implements OnInit {
     this.cargarFoto = true;
 
   }
-
-
   onSubmitEditarPerfilUser(){
     if(this.verificarFormulario()){
       this.databaseService.updateUser(this.authService.afAuth.auth.currentUser.uid,

@@ -50,7 +50,13 @@ export class PublishservicepageComponent implements OnInit {
   private selectedItems2 = [];
   private selectedItems3 = [];
   private event;
-  private file:File;
+  //private file:File;
+  private file:File=null;
+  private nombreArchivo:string;
+  private fotoInicial:boolean = false;
+  private cargarFoto:boolean = false;
+  //private iniciales:string;
+
 
 
   constructor(
@@ -177,9 +183,11 @@ export class PublishservicepageComponent implements OnInit {
       //console.log(items);
   }
   onSubmitPublicarServicio(){
+    if(this.verificarFormulario()){
       var ciudades = [];
       var modalidades = [];
       var pagos = [];
+      var path2:string;
       for (let entry of this.selectedItems) {
            ciudades.push(entry.nombre);
       }
@@ -189,35 +197,46 @@ export class PublishservicepageComponent implements OnInit {
       for (let entry of this.selectedItems3) {
            modalidades.push(entry.nombre);
       }
-      this.databaseServicio.insertServiceDatabase(this.authService.afAuth.auth.currentUser.uid,this.categoria,this.nombre,
+      path2=this.databaseServicio.insertServiceDatabase(this.authService.afAuth.auth.currentUser.uid,this.categoria,this.nombre,
       this.descripcion,this.tiempo_duracion,this.opcion_duracion,this.precio,ciudades,
       modalidades,pagos,this.fecha);
+
+      this.uploadFile(path2);
       this.router.navigate(['/privado']);
-      //this.uploadFile();
-
-
-
+    }
   }
-  uploadFile(){
+  uploadFile(idServicio:string){;
     //const task = this.storage.upload(filePath, file);
-    const path = "servicios/"+this.authService.afAuth.auth.currentUser.uid;
-    console.log(path);
-    const task = this.uploadService.uploadFile(this.event, path);
-    this.uploadPercent = task.percentageChanges();
+    //const path = "servicios/"+this.authService.afAuth.auth.currentUser.uid;
+      const path = "servicios/"+idServicio;
+    //const task = this.uploadService.uploadFile(this.file, path);
+
+    if(this.cargarFoto){
+      const task = this.uploadService.uploadFile(this.file, path);
+      this.uploadPercent = task.percentageChanges();
+
+      /*this.uploadService.downloadFile(path).subscribe(URL=>{
+        //console.log(URL.toString());
+        this.authService.updateProfile(URL.toString(), this.displayName);
+      });*/
+    }
+
   }
-  getEvent(event){
-    this.event = event;
-  }
+
+    getEvent(file:FileList){
+      this.file = file.item(0);
+
+      var reader = new FileReader();
+      reader.readAsDataURL(this.file);
+
+      reader.onload = (event:any) => {
+        this.nombreArchivo = event.target.result;
+      }
+      this.fotoInicial = false;
+      this.cargarFoto = true;
+
+    }
   verificarFormulario(){
-    this.fecha = new Date();
-
-    if(this.efectivo!="")
-      this.tipo_pago.push('Efectivo');
-    if(this.debito!="")
-      this.tipo_pago.push('Debito');
-    if(this.credito!="")
-      this.tipo_pago.push('Credito');
-
     return true;
   }
 

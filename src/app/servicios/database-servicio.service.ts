@@ -19,6 +19,7 @@ export class DatabaseServicioService {
                         opcion_duracion:string,precio:number,zona_cobertura:Array<string>,modalidad:Array<string>,
                         tipo_pago:Array<string>,fecha:Date){
 
+    var variable;
     this.getServicios();
     this.servicio=new Servicio();
 
@@ -33,8 +34,9 @@ export class DatabaseServicioService {
     this.servicio.modalidad=modalidad;
     this.servicio.tipo_pago=tipo_pago;
     this.servicio.fecha=fecha.toString();
-    this.listaServicios.push(this.servicio);
-
+    variable=this.listaServicios.push(this.servicio);
+    return variable.path.pieces_[1];
+    //console.log(a);
 
   }
   getServicios(){

@@ -74,17 +74,7 @@
               (onDeSelectAll)="onDeSelectAll($event)"
               >
           </ng-multiselect-dropdown><br>
-          <!--<div class="form-group">
-              <div class="col-xs-5 selectContainer">
-                <label for="modalidad">Modalidad</label>
-                 <select class="form-control" name="modalidad" [(ngModel)]="modalidad">
-                   <option *ngFor="let mod of modalidades" [value]="mod.nombre">
-                      {{mod.nombre}}
-                   </option>
 
-                </select>
-               </div>
-          </div>-->
           <br>
 
           <ng-multiselect-dropdown
@@ -107,11 +97,7 @@
               <label class="custom-file-label">Subir imagen</label>
               <div class="invalid-feedback">Example invalid custom file feedback</div>
           </div>
-          <!--<div class="custom-file">
-            <input type="file" class="custom-file-input" id="validatedCustomFile" required>
-            <label class="custom-file-label" for="validatedCustomFile">Subir imagen</label>
-            <div class="invalid-feedback">Example invalid custom file feedback</div>
-          </div>-->
+
           <form name="publishform" (submit)="onSubmitPublicarServicio(publishform)">
           <br><br><br>
           <input type="submit" value="PUBLICAR" class="btn btn-primary btn-block btn-lg">
