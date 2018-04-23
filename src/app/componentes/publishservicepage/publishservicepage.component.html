@@ -88,7 +88,14 @@
           >
         </ng-multiselect-dropdown><br>
           <br>
-          <input type="file" (change)="getEvent($event)"[(ngModel)]="file" />
+          <div class="custom-file">
+              <input type="file" id = "file1"
+              class="custom-file-input" (change)="getEvent($event.target.files)"
+              accept="image/png, image/jpeg, image/jpg" max="2MB">
+
+              <label class="custom-file-label">Subir imagen</label>
+              <div class="invalid-feedback">Example invalid custom file feedback</div>
+          </div>
           <!--<div class="custom-file">
             <input type="file" class="custom-file-input" id="validatedCustomFile" required>
             <label class="custom-file-label" for="validatedCustomFile">Subir imagen</label>

@@ -77,7 +77,7 @@ export class PublishservicepageComponent implements OnInit {
 
         this.dropdownSettings = {
             singleSelection: false,
-            idField: 'nombre',
+            idField: 'id',
             textField: 'nombre',
             selectAllText: 'Seleccionar todas',
             unSelectAllText: 'Deseleccionar todas',
@@ -87,7 +87,7 @@ export class PublishservicepageComponent implements OnInit {
         };
         this.dropdownSettings2 = {
             singleSelection: false,
-            idField: 'nombre',
+            idField: 'id',
             textField: 'nombre',
             selectAllText: 'Seleccionar todas',
             unSelectAllText: 'Deseleccionar todas',
@@ -181,6 +181,7 @@ export class PublishservicepageComponent implements OnInit {
   uploadFile(){
     //const task = this.storage.upload(filePath, file);
     const path = "servicios/"+this.authService.afAuth.auth.currentUser.uid;
+    console.log(path);
     const task = this.uploadService.uploadFile(this.event, path);
     this.uploadPercent = task.percentageChanges();
   }
