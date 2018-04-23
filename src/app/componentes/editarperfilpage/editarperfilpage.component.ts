@@ -20,9 +20,9 @@ export class EditarperfilpageComponent implements OnInit {
   downloadURL: Observable<string>;
 
   public displayName:string;
-  public direccion:string;
-  public documento:string;
-  public telefono:string;
+  public direccion:string="";
+  public documento:string="";
+  public telefono:string="";
   private file:File=null;
   private nombreArchivo:string;
   private fotoInicial:boolean = false;
@@ -63,7 +63,8 @@ export class EditarperfilpageComponent implements OnInit {
            return res;
         });
         userDoc.then((value: string) => {
-          this.documento = value;
+          if(value!=null)
+            this.documento = value;
         });
 
         var userDir = this.databaseService.getUsuario(auth.uid).then(
@@ -72,7 +73,8 @@ export class EditarperfilpageComponent implements OnInit {
            return res;
         });
         userDir.then((value: string) => {
-          this.direccion = value;
+          if(value!=null)
+            this.direccion = value;
         });
 
         var userTel = this.databaseService.getUsuario(auth.uid).then(
@@ -81,7 +83,8 @@ export class EditarperfilpageComponent implements OnInit {
            return res;
         });
         userTel.then((value: string) => {
-          this.telefono = value;
+          if(value!=null)
+            this.telefono = value;
         });
 
         if(auth.photoURL != null){
@@ -138,7 +141,16 @@ export class EditarperfilpageComponent implements OnInit {
     if(this.verificarFormulario()){
       this.databaseService.updateUser(this.authService.afAuth.auth.currentUser.uid,
       this.displayName, this.documento, this.direccion, this.telefono);
-      this.uploadFile();
+      //console.log(this.authService.afAuth.auth.currentUser.uid);
+      //console.log(this.displayName);
+      //console.log(this.documento);
+      //console.log(this.direccion);
+      //console.log(this.telefono);
+
+      if(!this.fotoInicial){
+          this.uploadFile();
+      }
+
 
       this.flashMensaje.show('Información editada correctamente',
       {cssClass: 'alert-success', timeout: 4000});
