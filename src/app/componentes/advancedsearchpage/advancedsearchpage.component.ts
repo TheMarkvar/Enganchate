@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FlashMessagesService} from 'angular2-flash-messages';
 import { FormsModule } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute,NavigationEnd } from '@angular/router';
 import { DatabaseServicioService } from '../../servicios/database-servicio.service';
 import { OptionsService } from '../../servicios/options.service';
 
@@ -42,6 +42,7 @@ export class AdvancedsearchpageComponent implements OnInit {
   private precioMaximo: number;
   private buscar:string;
 
+  private navigationSubscription:any=null;
 
 
   constructor(
@@ -49,8 +50,15 @@ export class AdvancedsearchpageComponent implements OnInit {
     private optionsService:OptionsService,
     private databaseServicioService:DatabaseServicioService,
     public flashMensaje: FlashMessagesService,
-  ) { }
+    public router:Router,
+  ) {
 
+    this.navigationSubscription = this.router.events.subscribe((e: any) => {
+      if (e instanceof NavigationEnd) {
+        this.initialiseInvites();
+      }
+    });
+  }
 
   ngOnInit() {
     this.activatedRoute.queryParams
@@ -394,7 +402,15 @@ export class AdvancedsearchpageComponent implements OnInit {
       //console.log(items);
   }
 
+  initialiseInvites() {
+    this.filtrarServiciosBarraBusqueda();
+  }
 
+  ngOnDestroy() {
+     if (this.navigationSubscription) {
+        this.navigationSubscription.unsubscribe();
+     }
+   }
 
 
 
