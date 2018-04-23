@@ -16,7 +16,7 @@ export class DatabaseServicioService {
     this.pathServicios = 'servicios';
   }
   insertServiceDatabase(publicador:string,categoria:string,nombre:string,descripcion:string,tiempo_duracion:number,
-                        opcion_duracion:string,precio:number,zona_cobertura:Array<string>,modalidad:string,
+                        opcion_duracion:string,precio:number,zona_cobertura:Array<string>,modalidad:Array<string>,
                         tipo_pago:Array<string>,fecha:Date){
 
     this.getServicios();

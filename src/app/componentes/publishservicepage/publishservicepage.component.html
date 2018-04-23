@@ -62,8 +62,19 @@
             <input type="number" name="precio" id="precio"
             [(ngModel)]="precio" class="form-control" min="1" required>
           </div>
-
-          <div class="form-group">
+        </form>
+          <ng-multiselect-dropdown
+              [(ngModel)]="selectedItems3"
+              [placeholder]="'Seleccione las modalidades'"
+              [data]="modalidades"
+              [settings]="dropdownSettings3"
+              (onSelect)="onItemSelect3($event)"
+              (onDeSelect)="OnItemDeSelect3($event)"
+              (onSelectAll)="onSelectAll($event)"
+              (onDeSelectAll)="onDeSelectAll($event)"
+              >
+          </ng-multiselect-dropdown><br>
+          <!--<div class="form-group">
               <div class="col-xs-5 selectContainer">
                 <label for="modalidad">Modalidad</label>
                  <select class="form-control" name="modalidad" [(ngModel)]="modalidad">
@@ -73,9 +84,9 @@
 
                 </select>
                </div>
-          </div>
+          </div>-->
           <br>
-          </form>
+
           <ng-multiselect-dropdown
               [(ngModel)]="selectedItems2"
               [placeholder]="'Seleccione los tipos de pago'"

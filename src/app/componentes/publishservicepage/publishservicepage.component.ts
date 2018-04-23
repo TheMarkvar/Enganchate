@@ -39,6 +39,7 @@ export class PublishservicepageComponent implements OnInit {
   private ciudades = [];
   private dropdownSettings = {};
   private dropdownSettings2 = {};
+  private dropdownSettings3 = {};
   private selectedItems = [];
   private categorias = [];
   private opcDuracion = [];
@@ -47,6 +48,7 @@ export class PublishservicepageComponent implements OnInit {
   private modalidades = [];
   private gender:string;
   private selectedItems2 = [];
+  private selectedItems3 = [];
   private event;
   private file:File;
 
@@ -95,7 +97,16 @@ export class PublishservicepageComponent implements OnInit {
             itemsShowLimit: 10,
             allowSearchFilter: true
         };
-
+        this.dropdownSettings3 = {
+            singleSelection: false,
+            idField: 'id',
+            textField: 'nombre',
+            selectAllText: 'Seleccionar todas',
+            unSelectAllText: 'Deseleccionar todas',
+            searchPlaceholderText: 'Buscar',
+            itemsShowLimit: 10,
+            allowSearchFilter: true
+        };
         this.OptionsService.getCategorias().snapshotChanges().subscribe(item => {
         this.categorias = [];
 
@@ -149,6 +160,16 @@ export class PublishservicepageComponent implements OnInit {
     });
     this.selectedItems2 = newSelectedItems;
   }
+  onItemSelect3(item:any){
+      this.selectedItems3.push(item);
+      //console.log(this.selectedItems);
+  }
+  OnItemDeSelect3(item:any){
+    var newSelectedItems = this.selectedItems3.filter(function(element) {
+    return element.nombre !== item.nombre;
+    });
+    this.selectedItems3 = newSelectedItems;
+  }
   onSelectAll(items: any){
       //console.log(items);
   }
@@ -156,22 +177,21 @@ export class PublishservicepageComponent implements OnInit {
       //console.log(items);
   }
   onSubmitPublicarServicio(){
-    /*
-      if(this.efectivo!=""){
-        this.tipo_pago.push("EFECTIVO");
+      var ciudades = [];
+      var modalidades = [];
+      var pagos = [];
+      for (let entry of this.selectedItems) {
+           ciudades.push(entry.nombre);
       }
-      if(this.credito!=""){
-        this.tipo_pago.push("CREDITO");
+      for (let entry of this.selectedItems2) {
+           pagos.push(entry.nombre);
       }
-      if(this.debito!=""){
-        this.tipo_pago.push("DEBITO");
-      }*/
-
-      //this.fecha = new Date();
-
+      for (let entry of this.selectedItems3) {
+           modalidades.push(entry.nombre);
+      }
       this.databaseServicio.insertServiceDatabase(this.authService.afAuth.auth.currentUser.uid,this.categoria,this.nombre,
-      this.descripcion,this.tiempo_duracion,this.opcion_duracion,this.precio,this.selectedItems,
-      this.modalidad,this.selectedItems2,this.fecha);
+      this.descripcion,this.tiempo_duracion,this.opcion_duracion,this.precio,ciudades,
+      modalidades,pagos,this.fecha);
       this.router.navigate(['/privado']);
       //this.uploadFile();
 
