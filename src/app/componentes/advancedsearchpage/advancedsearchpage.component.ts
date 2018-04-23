@@ -58,6 +58,7 @@ export class AdvancedsearchpageComponent implements OnInit {
       .subscribe(params => {
         this.buscar = params.search;
       });
+      console.log(this.buscar);
 
     this.cargarCategorias();
     this.cargarCiudades();
@@ -130,7 +131,6 @@ export class AdvancedsearchpageComponent implements OnInit {
           }
           else if(key === "descripcion"){
             servicioFiltro.descripcion = value;
-            console.log(key + " "+ this.buscar);
             if(value.toUpperCase().includes(this.buscar.toUpperCase())
             || this.buscar.toUpperCase().includes(value.toUpperCase())){
               servicioValido = true;
@@ -141,7 +141,84 @@ export class AdvancedsearchpageComponent implements OnInit {
           }
 
       }
-      console.log(servicioFiltro);
+      if(servicioValido){
+          this.listaServicios.push(servicioFiltro);
+      }
+     ;});});
+  }
+
+  filtrarServiciosParametros(){
+
+    this.databaseServicioService.getServicios().snapshotChanges().subscribe(item => {
+      this.listaServicios = [];
+
+      item.forEach(element => {
+      let x = element.payload.toJSON();
+      x["$key"] = element.key;
+
+      let servicioFiltro:Servicio = new Servicio();
+      var servicioValido:boolean = false;
+
+
+      for(var key in x) {
+
+          var value = x[key];
+
+          if(key === "zona_cobertura"){
+            let value2 = [];
+            for (let key2 in value) {
+                value2.push(value[key2]);
+                if(value[key2].toUpperCase().includes(this.buscar.toUpperCase())
+                || this.buscar.toUpperCase().includes(value[key2].toUpperCase())){
+                  servicioValido = true;
+                }
+            }
+            servicioFiltro.zona_cobertura = value2;
+          }
+          if(key === "modalidad"){
+            let value2 = [];
+            for (let key2 in value) {
+                value2.push(value[key2]);
+                if(value[key2].toUpperCase().includes(this.buscar.toUpperCase())
+                || this.buscar.toUpperCase().includes(value[key2].toUpperCase())){
+                  servicioValido = true;
+                }
+            }
+            servicioFiltro.modalidad = value2;
+          }
+          else if(key === "tipo_pago"){
+            let value2 = [];
+            for (let key2 in value) {
+                value2.push(value[key2]);
+            }
+            servicioFiltro.tipo_pago = value2;
+          }
+          else if(key === "nombre"){
+            servicioFiltro.nombre = value;
+            if(value.toUpperCase().includes(this.buscar.toUpperCase())
+            || this.buscar.toUpperCase().includes(value.toUpperCase())){
+              servicioValido = true;
+            }
+          }
+          else if(key === "categoria"){
+            servicioFiltro.categoria = value;
+            if(value.toUpperCase().includes(this.buscar.toUpperCase())
+             || this.buscar.toUpperCase().includes(value.toUpperCase())){
+              servicioValido = true;
+            }
+          }
+          else if(key === "descripcion"){
+            servicioFiltro.descripcion = value;
+            if(value.toUpperCase().includes(this.buscar.toUpperCase())
+            || this.buscar.toUpperCase().includes(value.toUpperCase())){
+              servicioValido = true;
+            }
+          }
+          else if(key === "precio"){
+            servicioFiltro.precio = value;
+          }
+
+      }
       if(servicioValido){
           this.listaServicios.push(servicioFiltro);
       }
