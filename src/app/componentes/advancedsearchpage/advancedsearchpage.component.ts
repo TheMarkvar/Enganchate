@@ -63,12 +63,12 @@ export class AdvancedsearchpageComponent implements OnInit {
     this.cargarCiudades();
     this.cargarTiposPago();
     this.cargarModalidades();
-    this.filtrarServicios();
+    this.filtrarServiciosBarraBusqueda();
 
 
   }
 
-  filtrarServicios(){
+  filtrarServiciosBarraBusqueda(){
 
     this.databaseServicioService.getServicios().snapshotChanges().subscribe(item => {
       this.listaServicios = [];
@@ -78,6 +78,9 @@ export class AdvancedsearchpageComponent implements OnInit {
       x["$key"] = element.key;
 
       let servicioFiltro:Servicio = new Servicio();
+      var servicioValido:boolean = false;
+
+
       for(var key in x) {
 
           var value = x[key];
@@ -86,8 +89,23 @@ export class AdvancedsearchpageComponent implements OnInit {
             let value2 = [];
             for (let key2 in value) {
                 value2.push(value[key2]);
+                if(value[key2].toUpperCase().includes(this.buscar.toUpperCase())
+                || this.buscar.toUpperCase().includes(value[key2].toUpperCase())){
+                  servicioValido = true;
+                }
             }
             servicioFiltro.zona_cobertura = value2;
+          }
+          if(key === "modalidad"){
+            let value2 = [];
+            for (let key2 in value) {
+                value2.push(value[key2]);
+                if(value[key2].toUpperCase().includes(this.buscar.toUpperCase())
+                || this.buscar.toUpperCase().includes(value[key2].toUpperCase())){
+                  servicioValido = true;
+                }
+            }
+            servicioFiltro.modalidad = value2;
           }
           else if(key === "tipo_pago"){
             let value2 = [];
@@ -98,12 +116,25 @@ export class AdvancedsearchpageComponent implements OnInit {
           }
           else if(key === "nombre"){
             servicioFiltro.nombre = value;
+            if(value.toUpperCase().includes(this.buscar.toUpperCase())
+            || this.buscar.toUpperCase().includes(value.toUpperCase())){
+              servicioValido = true;
+            }
           }
           else if(key === "categoria"){
             servicioFiltro.categoria = value;
+            if(value.toUpperCase().includes(this.buscar.toUpperCase())
+             || this.buscar.toUpperCase().includes(value.toUpperCase())){
+              servicioValido = true;
+            }
           }
           else if(key === "descripcion"){
             servicioFiltro.descripcion = value;
+            console.log(key + " "+ this.buscar);
+            if(value.toUpperCase().includes(this.buscar.toUpperCase())
+            || this.buscar.toUpperCase().includes(value.toUpperCase())){
+              servicioValido = true;
+            }
           }
           else if(key === "precio"){
             servicioFiltro.precio = value;
@@ -111,7 +142,10 @@ export class AdvancedsearchpageComponent implements OnInit {
 
       }
       console.log(servicioFiltro);
-     this.listaServicios.push(servicioFiltro);});});
+      if(servicioValido){
+          this.listaServicios.push(servicioFiltro);
+      }
+     ;});});
   }
 
 
