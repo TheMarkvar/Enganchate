@@ -47,7 +47,7 @@ export class AdvancedsearchpageComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private optionsService:OptionsService,
-    private databaseService:DatabaseServicioService,
+    private databaseServicioService:DatabaseServicioService,
     public flashMensaje: FlashMessagesService,
   ) { }
 
@@ -63,41 +63,19 @@ export class AdvancedsearchpageComponent implements OnInit {
     this.cargarCiudades();
     this.cargarTiposPago();
     this.cargarModalidades();
+    this.filtrarServicios();
 
-
-    let tipo_pago = new Array<string>();
-
-    tipo_pago.push("debito");
-    tipo_pago.push("credito");
-
-    let  s1 = new Servicio();
-    s1.nombre = "Nombre servicio1";
-    s1.descripcion = "Descripcion servicio1";
-    let ar = [];
-    ar.push("Bogota");
-    s1.modalidad = "Modalidad servicio1";
-    s1.categoria = "Categoria servicio1";
-    s1.precio = 2000;
-    s1.tipo_pago = tipo_pago;
-
-    tipo_pago.push("efectivo");
-
-    let  s2 = new Servicio();
-    s2.nombre = "Nombre servicio2";
-    s2.descripcion = "Descripcion servicio2";
-    s2.modalidad = "Modalidad servicio2";
-    s2.categoria = "Categoria servicio12";
-    s2.precio = 2500;
-    s2.tipo_pago = tipo_pago;
-
-
-    this.listaServicios.push(s1);
-    this.listaServicios.push(s2);
 
   }
 
   filtrarServicios(){
-    
+    this.databaseServicioService.getServicios().snapshotChanges().subscribe(item => {
+      this.listaServicios = [];
+
+      item.forEach(element => {
+      let x = element.payload.toJSON();
+      x["$key"] = element.key;
+     this.listaServicios.push(x as Servicio);});});
   }
 
 
@@ -108,7 +86,7 @@ export class AdvancedsearchpageComponent implements OnInit {
     item.forEach(element => {
     let x = element.payload.toJSON();
     x["$key"] = element.key;
-     this.categorias.push(x as Categoria);}); console.log(this.categorias)});
+     this.categorias.push(x as Categoria);});});
 
     this.dropdownSettings = {
         singleSelection: false,

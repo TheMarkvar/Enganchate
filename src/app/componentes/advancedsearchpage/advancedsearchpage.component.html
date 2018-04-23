@@ -137,21 +137,7 @@
 
   <div class="container">
 
-        Panel Content
-        <br>
-        <b>dato buscar: {{buscar}}</b>
-        <br>
-        <b>categorias: {{selectedItems.toString()}}</b>
-        <br>
-        <b>zona_cobertura: {{selectedItems2.toString()}}</b>
-        <br>
-        <b>precio_minimo: {{precioMinimo}} ** precio_maximo: {{precioMaximo}}</b>
-        <br>
-        <b>debito: {{selectedItems3.toString()}}</b>
-        <br>
-        <b>modalidad: {{selectedItems4.toString()}}</b>
-
-
+        Resultados de la Búsqueda
 
         <ul>
           <li class="list-inline" *ngFor="let servicio of listaServicios">
@@ -184,12 +170,13 @@
                   <!-- divider -->
                   <hr />
 
-                  <!-- tipo_pago -->
+                  <!-- zona_cobertura -->
+
                   <div class="sizes-wrapper">
                     <b>Zona de cobertura</b>
                     <br />
                     <span class="secondary-text text-uppercase">
-                        {{servicio.zona_cobertura}}
+                        {{servicio.zona_cobertura.toString()}}
                     </span>
                   </div>
 
@@ -199,7 +186,7 @@
                     <b>Tipo de pago</b>
                     <br />
                     <span class="secondary-text text-uppercase">
-                        {{servicio.tipo_pago}}
+                        {{servicio.tipo_pago.toString()}}
                     </span>
                   </div>
 
