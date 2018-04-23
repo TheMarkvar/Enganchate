@@ -69,13 +69,49 @@ export class AdvancedsearchpageComponent implements OnInit {
   }
 
   filtrarServicios(){
+
     this.databaseServicioService.getServicios().snapshotChanges().subscribe(item => {
       this.listaServicios = [];
 
       item.forEach(element => {
       let x = element.payload.toJSON();
       x["$key"] = element.key;
-     this.listaServicios.push(x as Servicio);});});
+
+      let servicioFiltro:Servicio = new Servicio();
+      for(var key in x) {
+
+          var value = x[key];
+
+          if(key === "zona_cobertura"){
+            let value2 = [];
+            for (let key2 in value) {
+                value2.push(value[key2]);
+            }
+            servicioFiltro.zona_cobertura = value2;
+          }
+          else if(key === "tipo_pago"){
+            let value2 = [];
+            for (let key2 in value) {
+                value2.push(value[key2]);
+            }
+            servicioFiltro.tipo_pago = value2;
+          }
+          else if(key === "nombre"){
+            servicioFiltro.nombre = value;
+          }
+          else if(key === "categoria"){
+            servicioFiltro.categoria = value;
+          }
+          else if(key === "descripcion"){
+            servicioFiltro.descripcion = value;
+          }
+          else if(key === "precio"){
+            servicioFiltro.precio = value;
+          }
+
+      }
+      console.log(servicioFiltro);
+     this.listaServicios.push(servicioFiltro);});});
   }
 
 
