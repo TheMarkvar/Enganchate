@@ -49,6 +49,8 @@ export class LoginpageComponent implements OnInit {
     this.authService.loginGoogle().
     then((res)=>{
       this.insertUser();
+      if(!this.authService.getVerficationAccount())
+        this.authService.sendEmailVerification();
       this.router.navigate(['./privado']);
     }).catch((err)=>{
       this.flashMensaje.show(err.message,
@@ -60,6 +62,8 @@ export class LoginpageComponent implements OnInit {
     this.authService.loginFacebook().
     then((res)=>{
       this.insertUser();
+      if(!this.authService.getVerficationAccount())
+        this.authService.sendEmailVerification();
       this.router.navigate(['./privado']);
     }).catch((err)=>{
       this.flashMensaje.show(err.message,
@@ -71,6 +75,8 @@ export class LoginpageComponent implements OnInit {
     this.authService.loginTwitter().
     then((res)=>{
       this.insertUser();
+      if(!this.authService.getVerficationAccount())
+        this.authService.sendEmailVerification();
       this.router.navigate(['./privado']);
     }).catch((err)=>{
       this.flashMensaje.show(err.message,
