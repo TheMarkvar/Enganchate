@@ -32,37 +32,9 @@ export class RegisterpageComponent implements OnInit {
 
   ngOnInit() {
 
-    /*var today = new Date();
-    var aux, day, month, year, format;
-
-
-    day = today.getDate();
-    month = today.getMonth()+1;
-    year = today.getFullYear() - this.mayoriaEdad;
-
-    if(day.toString().length < 2){
-      aux = day;
-      day = "0" + aux;
-    }
-    if(month.toString().length < 2){
-      aux = month;
-      month = "0" + aux;
-    }
-
-
-    format = ""+year+"-"+month+"-"+day;
-
-    //this.maxDate = format;
-    this.maxDate = "2000-12-05";
-    //console.log(this.maxDate);
-    */
-
   }
 
   onSubmitRegisterUser(registerForm){
-
-    //console.log(registerForm.value);
-
 
     if(registerForm.valid){
 
@@ -126,8 +98,8 @@ export class RegisterpageComponent implements OnInit {
     var res = false;
 
 
-    if( (date2.getFullYear() - date1.getFullYear() -1)  > 18 &&
-        (date2.getFullYear() - date1.getFullYear() -1 )  < 70){
+    if( (date2.getFullYear() - date1.getFullYear() -1)  >= 18 &&
+        (date2.getFullYear() - date1.getFullYear() -1 )  <= 70){
       res = true
     }
     return res;
