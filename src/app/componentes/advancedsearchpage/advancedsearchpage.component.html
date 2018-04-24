@@ -1,212 +1,208 @@
-<div class="column-filter">
-
-  <div class="container">
-    <div id="accordion">
-      <div class="card">
-        <div class="card-header">
-          <a class="card-link" data-toggle="collapse" href="#collapseOne">
-            Categorias
-          </a>
-        </div>
-        <div id="collapseOne" class="collapse show" data-parent="#accordion">
-          <div class="card-body">
-            <ng-multiselect-dropdown
-                [(ngModel)]="selectedItems"
-                [placeholder]="'Seleccione las categorias'"
-                [data]="categorias"
-                [settings]="dropdownSettings"
-                (onSelect)="onItemSelect($event)"
-                (onDeSelect)="OnItemDeSelect($event)"
-                (onSelectAll)="onSelectAll($event)"
-                (onDeSelectAll)="onDeSelectAll($event)"
-            >
-            </ng-multiselect-dropdown>
+<div class="form-row">
+  <div class="col-md-3">
+    <div class="container">
+      <div id="accordion">
+        <div class="card">
+          <div class="card-header">
+            <a class="card-link" data-toggle="collapse" href="#collapseOne">
+              Categorias
+            </a>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="accordion2">
-      <div class="card">
-        <div class="card-header">
-          <a class="card-link" data-toggle="collapse" href="#collapseTwo">
-            Ciudades
-          </a>
-        </div>
-        <div id="collapseTwo" class="collapse show" data-parent="#accordion2">
-          <div class="card-body">
-
+          <div id="collapseOne" class="collapse show" data-parent="#accordion">
+            <div class="card-body">
               <ng-multiselect-dropdown
-                  [(ngModel)]="selectedItems2"
-                  [placeholder]="'Seleccione las ciudades'"
-                  [data]="ciudades"
-                  [settings]="dropdownSettings2"
-                  (onSelect)="onItemSelect2($event)"
-                  (onDeSelect)="OnItemDeSelect2($event)"
-                  (onSelectAll)="onSelectAll2($event)"
-                  (onDeSelectAll)="onDeSelectAll2($event)"
-                >
-              </ng-multiselect-dropdown><br>
-
+                  [(ngModel)]="selectedItems"
+                  [placeholder]="'Seleccione las categorias'"
+                  [data]="categorias"
+                  [settings]="dropdownSettings"
+                  (onSelect)="onItemSelect($event)"
+                  (onDeSelect)="OnItemDeSelect($event)"
+                  (onSelectAll)="onSelectAll($event)"
+                  (onDeSelectAll)="onDeSelectAll($event)"
+              >
+              </ng-multiselect-dropdown>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
+      <div id="accordion2">
+        <div class="card">
+          <div class="card-header">
+            <a class="card-link" data-toggle="collapse" href="#collapseTwo">
+              Ciudades
+            </a>
+          </div>
+          <div id="collapseTwo" class="collapse show" data-parent="#accordion2">
+            <div class="card-body">
 
-    <div id="accordion3">
-      <div class="card">
-        <div class="card-header">
-          <a class="card-link"  data-toggle="collapse" href="#collapseThree">
-            Precio
-          </a>
-        </div>
-        <div id="collapseThree" class="collapse show" data-parent="#accordion3">
-          <div class="card-body">
-              <br>
-              <div class="row">
-                <div class="col">
-                  <input type="number" class="form-control" placeholder="Min"
-                  [(ngModel)]="precioMinimo" min="1">
-                </div>
-                <div class="col">
-                  <input type="number" class="form-control" placeholder="Max"
-                  [(ngModel)]="precioMaximo">
-                </div>
-              </div>
-              <br>
+                <ng-multiselect-dropdown
+                    [(ngModel)]="selectedItems2"
+                    [placeholder]="'Seleccione las ciudades'"
+                    [data]="ciudades"
+                    [settings]="dropdownSettings2"
+                    (onSelect)="onItemSelect2($event)"
+                    (onDeSelect)="OnItemDeSelect2($event)"
+                    (onSelectAll)="onSelectAll2($event)"
+                    (onDeSelectAll)="onDeSelectAll2($event)"
+                  >
+                </ng-multiselect-dropdown><br>
+
             </div>
           </div>
+        </div>
       </div>
-    </div>
 
 
-        <div id="accordion4">
-          <div class="card">
-            <div class="card-header">
-              <a class="card-link"  data-toggle="collapse" href="#collapseFour">
-                Método de pago
-              </a>
-            </div>
-            <div id="collapseFour" class="collapse show" data-parent="#accordion4">
-              <div class="card-body">
-                  <ng-multiselect-dropdown
-                      [(ngModel)]="selectedItems3"
-                      [placeholder]="'Seleccione los tipo de pago'"
-                      [data]="tipos_pago"
-                      [settings]="dropdownSettings3"
-                      (onSelect)="onItemSelect3($event)"
-                      (onDeSelect)="OnItemDeSelect3($event)"
-                      (onSelectAll)="onSelectAll3($event)"
-                      (onDeSelectAll)="onDeSelectAll3($event)"
-                    >
-                  </ng-multiselect-dropdown><br>
+      <div id="accordion3">
+        <div class="card">
+          <div class="card-header">
+            <a class="card-link"  data-toggle="collapse" href="#collapseThree">
+              Precio
+            </a>
+          </div>
+          <div id="collapseThree" class="collapse show" data-parent="#accordion3">
+            <div class="card-body">
+                <br>
+                <div class="row">
+                  <div class="col">
+                    <input type="number" class="form-control" placeholder="Min"
+                    [(ngModel)]="precioMinimo" min="1">
+                  </div>
+                  <div class="col">
+                    <input type="number" class="form-control" placeholder="Max"
+                    [(ngModel)]="precioMaximo">
+                  </div>
                 </div>
+                <br>
               </div>
-          </div>
+            </div>
         </div>
+      </div>
 
-    <div id="accordion5">
-      <div class="card">
-        <div class="card-header">
-          <a class="card-link"  data-toggle="collapse" href="#collapseFive">
-            Modalidad
-          </a>
-        </div>
-        <div id="collapseFive" class="collapse show" data-parent="#accordion5">
-          <div class="card-body">
-              <ng-multiselect-dropdown
-                  [(ngModel)]="selectedItems4"
-                  [placeholder]="'Seleccione las modalidades'"
-                  [data]="modalidades_pago"
-                  [settings]="dropdownSettings4"
-                  (onSelect)="onItemSelect4($event)"
-                  (onDeSelect)="OnItemDeSelect4($event)"
-                  (onSelectAll)="onSelectAll4($event)"
-                  (onDeSelectAll)="onDeSelectAll4($event)"
-                >
-              </ng-multiselect-dropdown><br>
+
+          <div id="accordion4">
+            <div class="card">
+              <div class="card-header">
+                <a class="card-link"  data-toggle="collapse" href="#collapseFour">
+                  Método de pago
+                </a>
+              </div>
+              <div id="collapseFour" class="collapse show" data-parent="#accordion4">
+                <div class="card-body">
+                    <ng-multiselect-dropdown
+                        [(ngModel)]="selectedItems3"
+                        [placeholder]="'Seleccione los tipo de pago'"
+                        [data]="tipos_pago"
+                        [settings]="dropdownSettings3"
+                        (onSelect)="onItemSelect3($event)"
+                        (onDeSelect)="OnItemDeSelect3($event)"
+                        (onSelectAll)="onSelectAll3($event)"
+                        (onDeSelectAll)="onDeSelectAll3($event)"
+                      >
+                    </ng-multiselect-dropdown><br>
+                  </div>
+                </div>
             </div>
           </div>
+
+      <div id="accordion5">
+        <div class="card">
+          <div class="card-header">
+            <a class="card-link"  data-toggle="collapse" href="#collapseFive">
+              Modalidad
+            </a>
+          </div>
+          <div id="collapseFive" class="collapse show" data-parent="#accordion5">
+            <div class="card-body">
+                <ng-multiselect-dropdown
+                    [(ngModel)]="selectedItems4"
+                    [placeholder]="'Seleccione las modalidades'"
+                    [data]="modalidades_pago"
+                    [settings]="dropdownSettings4"
+                    (onSelect)="onItemSelect4($event)"
+                    (onDeSelect)="OnItemDeSelect4($event)"
+                    (onSelectAll)="onSelectAll4($event)"
+                    (onDeSelectAll)="onDeSelectAll4($event)"
+                  >
+                </ng-multiselect-dropdown><br>
+              </div>
+            </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="column-result">
+  <div class="col-md-9">
+    <div class="container">
 
-  <div class="container">
+          Resultados de la Búsqueda
+          <br>
+          <ul>
 
-        Resultados de la Búsqueda
-        <br>
-        <ul>
-
-          <li class="list-inline" *ngFor="let servicio of listaServicios">
+            <li class="list-inline" *ngFor="let servicio of listaServicios">
 
 
-            <div class="col-xs-12 col-sm-6 col-md-16">
-              {{servicio.pathImagen}}
-              <article class="card-wrapper">
-                <div class="image-holder">
-                  <a href="#" class="image-holder__link"></a>
-                  <!--<div class="image-liquid image-holder--original" style="background-image: url('https://firebasestorage.googleapis.com/v0/b/enganchate-3a0f1.appspot.com/o/images%2Fservicios%2F-LAol3HmG0BOVcJSHMN0?alt=media&token=f751c9c4-f6aa-4eed-8e62-270cfdef9eef')">-->
-                  <div class="image-liquid image-holder--original">
-                    <img src="cargarImagen(servicio.pathImagen)">
-                  </div>
-                </div>
-
-                <div class="product-description">
-                  <!-- title -->
-                  <h1 class="product-description__title">
-                    <a href="#">
-                      {{servicio.nombre}}
-                      </a>
-                  </h1>
-
-                  <!-- category and price -->
-                  <div class="row">
-                    <div class="col-xs-12 col-sm-8 product-description__category secondary-text">
-                      {{servicio.categoria}}
-                    </div>
-                    <div class="col-xs-12 col-sm-4 product-description__price">
-                      $ {{servicio.precio}}
+              <div class="col-xs-12 col-sm-6 col-md-16">
+                <article class="card-wrapper">
+                  <div class="image-holder">
+                    <a href="#" class="image-holder__link"></a>
+                    <div class="image-liquid image-holder--original" style="background-image: url('https://firebasestorage.googleapis.com/v0/b/enganchate-3a0f1.appspot.com/o/images%2Fservicios%2F-LAol3HmG0BOVcJSHMN0?alt=media&token=f751c9c4-f6aa-4eed-8e62-270cfdef9eef')">
                     </div>
                   </div>
 
-                  <!-- divider -->
-                  <hr />
+                  <div class="product-description">
+                    <!-- title -->
+                    <h1 class="product-description__title">
+                      <a href="#">
+                        {{servicio.nombre}}
+                        </a>
+                    </h1>
 
-                  <!-- zona_cobertura -->
-
-                      <div class="sizes-wrapper">
-                        <b>Zona de cobertura</b>
-                        <br />
-                        <span class="secondary-text text-uppercase">
-
-                            {{servicio.zona_cobertura.toString()}}
-                        </span>
+                    <!-- category and price -->
+                    <div class="row">
+                      <div class="col-xs-12 col-sm-8 product-description__category secondary-text">
+                        {{servicio.categoria}}
                       </div>
-                  <!-- tipo_pago -->
-                  <div class="sizes-wrapper">
-                    <b>Tipo de pago</b>
-                    <br />
-                    <span class="secondary-text text-uppercase">
-                        {{servicio.tipo_pago.toString()}}
-                    </span>
+                      <div class="col-xs-12 col-sm-4 product-description__price">
+                        $ {{servicio.precio}}
+                      </div>
+                    </div>
+
+                    <!-- divider -->
+                    <hr />
+
+                    <!-- zona_cobertura -->
+
+                        <div class="sizes-wrapper">
+                          <b>Zona de cobertura</b>
+                          <br />
+                          <span class="secondary-text text-uppercase">
+
+                              {{servicio.zona_cobertura.toString()}}
+                          </span>
+                        </div>
+                    <!-- tipo_pago -->
+                    <div class="sizes-wrapper">
+                      <b>Tipo de pago</b>
+                      <br />
+                      <span class="secondary-text text-uppercase">
+                          {{servicio.tipo_pago.toString()}}
+                      </span>
+                    </div>
+
                   </div>
 
-                </div>
-
-              </article>
-            </div>
+                </article>
+              </div>
 
 
-          </li>
+            </li>
 
 
-        </ul>
+          </ul>
 
+    </div>
   </div>
-
 
 </div>
