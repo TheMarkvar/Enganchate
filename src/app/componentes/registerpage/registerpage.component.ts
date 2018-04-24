@@ -61,7 +61,7 @@ export class RegisterpageComponent implements OnInit {
 
   onSubmitRegisterUser(registerForm){
 
-    console.log(registerForm.value);
+    //console.log(registerForm.value);
 
 
     if(registerForm.valid){
@@ -76,7 +76,7 @@ export class RegisterpageComponent implements OnInit {
       }
       if((valor) && (!this.verificarFecha(new Date(registerForm.controls.fecha_nac.value),
       new Date())) ){
-
+        valor = false;
         this.flashMensaje.show("Debe ser mayor de 18 años y menor de 70 años",
         {cssClass: 'alert-danger', timeout: 4000});
       }
@@ -109,7 +109,7 @@ export class RegisterpageComponent implements OnInit {
 
     }
     else if(registerForm.invalid){
-      this.flashMensaje.show("Formulario tiene campos incompletos",
+      this.flashMensaje.show("Formulario tiene campos incompletos o inválidos",
       {cssClass: 'alert-danger', timeout: 4000});
     }
 

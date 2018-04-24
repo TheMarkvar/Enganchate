@@ -24,17 +24,26 @@ export class LoginpageComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmitLogin(){
-    this.authService.loginEmail(this.email,this.password)
-    .then((res)=>{
+  onSubmitLogin(loginForm){
 
-      this.flashMensaje.show('Inicio de sesion satisfactorio',
-      {cssClass: 'alert-success', timeout: 4000});
-      this.router.navigate(['/privado']);
-    }).catch((err)=>{
-      this.flashMensaje.show(err.message,
+    if(loginForm.valid){
+      this.email = loginForm.controls.email.value;
+      this.password = loginForm.controls.password.value;
+      this.authService.loginEmail(this.email,this.password)
+      .then((res)=>{
+
+        this.flashMensaje.show('Inicio de sesion satisfactorio',
+        {cssClass: 'alert-success', timeout: 4000});
+        this.router.navigate(['/privado']);
+      }).catch((err)=>{
+        this.flashMensaje.show(err.message,
+        {cssClass: 'alert-danger', timeout: 4000});
+      });
+    }else{
+      this.flashMensaje.show("Formulario tiene campos incompletos o inválidos",
       {cssClass: 'alert-danger', timeout: 4000});
-    });
+    }
+
   }
   onClickGoogleLogin(){
     this.authService.loginGoogle().
@@ -72,11 +81,13 @@ export class LoginpageComponent implements OnInit {
     this.router.navigate(['./register']);
   }
 
-  onClickResetPassword(){
+  onClickResetPassword(loginForm){
+    this.email = loginForm.controls.email.value;
     this.authService.resetPassword(this.email).
     then((res)=>{
       this.flashMensaje.show('Se ha enviado un enlace al correo: '+
-      this.email,
+      this.email +
+      ". La clave debe contener al menos un número, una mayúscula, una minúscula y al menos 8 caracteres o más",
       {cssClass: 'alert-success', timeout: 4000});
     }).catch((err)=>{
       this.flashMensaje.show(err.message,
