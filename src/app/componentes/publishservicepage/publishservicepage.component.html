@@ -3,108 +3,117 @@
     <div class="card">
       <div class="card-body">
         <h1 class="text-center">PUBLICAR SERVICIO</h1>
-        <ng-multiselect-dropdown
-            [(ngModel)]="selectedItems"
-            [placeholder]="'Seleccione las ciudades'"
-            [data]="ciudades"
-            [settings]="dropdownSettings"
-            (onSelect)="onItemSelect($event)"
-            (onDeSelect)="OnItemDeSelect($event)"
-            (onSelectAll)="onSelectAll($event)"
-            (onDeSelectAll)="onDeSelectAll($event)"
-        >
-      </ng-multiselect-dropdown><br>
-        <form name="publishform" (submit)="onSubmitPublicarServicio(publishform)">
-          <div class="form-group">
-              <div class="col-xs-5 selectContainer">
-                <label for="categoria">Categoría</label>
-                 <select class="form-control" name="categoria" [(ngModel)]="categoria">
-                   <option *ngFor="let cat of categorias" [value]="cat.nombre">
-                      {{cat.nombre}}
-                   </option>
-                </select>
-               </div>
-          </div>
-          <div class="form-group">
-            <label for="nombre">Nombre</label>
-            <input type="text" name="nombre" id="nombre"
-            [(ngModel)]="nombre" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label for="descripcion">Descripción</label>
-            <input type="text" name="descripcion" id="descripcion"
-            [(ngModel)]="descripcion" class="form-control" required>
-          </div>
 
-                    <div class="form-inline">
-              <div class="col-xs-5">
-                <label for="tiempo_duracion">Tiempo de duración</label>
-                <input type="number" name="tiempo_duracion" id="tiempo_duracion"
-                [(ngModel)]="tiempo_duracion" min="1" class="form-control" min="1" required>
-              </div>
+        <br>
 
-              <div class="col-xs-5 selectContainer">
-                <label for="categoria">Opción de duración</label>
-                 <select class="form-control" name="opcion_duracion" [(ngModel)]="opcion_duracion">
-                   <option *ngFor="let opc of opcDuracion" [value]="opc.nombre">
-                      {{opc.nombre}}
-                   </option>
 
-                </select>
-               </div>
-          </div>
-          <br>
-          <div class="form-group">
-            <label for="precio">Precio $</label>
-            <input type="number" name="precio" id="precio"
-            [(ngModel)]="precio" class="form-control" min="1" required>
-          </div>
-        </form>
-          <ng-multiselect-dropdown
-              [(ngModel)]="selectedItems3"
-              [placeholder]="'Seleccione las modalidades'"
-              [data]="modalidades"
-              [settings]="dropdownSettings3"
-              (onSelect)="onItemSelect3($event)"
-              (onDeSelect)="OnItemDeSelect3($event)"
-              (onSelectAll)="onSelectAll($event)"
-              (onDeSelectAll)="onDeSelectAll($event)"
-              >
-          </ng-multiselect-dropdown><br>
 
-          <br>
 
-          <ng-multiselect-dropdown
-              [(ngModel)]="selectedItems2"
-              [placeholder]="'Seleccione los tipos de pago'"
-              [data]="tipoPago"
-              [settings]="dropdownSettings2"
-              (onSelect)="onItemSelect2($event)"
-              (onDeSelect)="OnItemDeSelect2($event)"
-              (onSelectAll)="onSelectAll($event)"
-              (onDeSelectAll)="onDeSelectAll($event)"
-          >
-        </ng-multiselect-dropdown><br>
-          <br>
+        <form #publishform="ngForm" (submit)="onSubmitPublicarServicio(publishform)">
+
           <div class="custom-file">
-              <input type="file" id = "file1"
+              <input type="file" id = "file1" name="file1"
               class="custom-file-input" (change)="getEvent($event.target.files)"
-              accept="image/png, image/jpeg, image/jpg" max="2MB">
+              accept="image/png, image/jpeg, image/jpg" max="2MB" required>
 
               <label class="custom-file-label">Subir imagen</label>
               <div class="invalid-feedback">Example invalid custom file feedback</div>
           </div>
-
+            <br>
             <div class="nav-item">
-                <img [src]="nombreArchivo" class="center rounded-circle" >
-                <a class="centered" *ngIf="fotoInicial">{{iniciales}}</a>
+                <br>
+                <img [src]="nombreArchivo" *ngIf="fotoDisponible" class="center rounded-circle" >
+                <a class="centered" *ngIf="fotoDisponible">{{iniciales}}</a>
             </div>
+            <br>
+
+              <ng-multiselect-dropdown name="ciudades"
+                    [(ngModel)]="selectedItems"
+                    [placeholder]="'Seleccione las ciudades'"
+                    [data]="ciudades"
+                    [settings]="dropdownSettings"
+                    (onSelect)="onItemSelect($event)"
+                    (onDeSelect)="OnItemDeSelect($event)"
+                    (onSelectAll)="onSelectAll($event)"
+                    (onDeSelectAll)="onDeSelectAll($event)"
+                >
+              </ng-multiselect-dropdown><br>
 
 
-          <form name="publishform" (submit)="onSubmitPublicarServicio(publishform)">
-          <br><br><br>
-          <input type="submit" value="PUBLICAR" class="btn btn-primary btn-block btn-lg">
+              <div class="form-group">
+                  <div class="col-xs-5 selectContainer">
+                    <label for="categoria">Categoría</label>
+                     <select class="form-control" name="categoria" ngModel required>
+                       <option *ngFor="let cat of categorias" [value]="cat.nombre">
+                          {{cat.nombre}}
+                       </option>
+                    </select>
+                   </div>
+              </div>
+              <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" id="nombre"
+                ngModel class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <input type="text" name="descripcion" id="descripcion"
+                ngModel class="form-control" required>
+              </div>
+
+             <div class="form-row">
+                 <div class="col">
+                   <label for="precio">Precio $</label>
+                   <input type="number" name="precio" id="precio"
+                   ngModel class="form-control" min='1' required>
+                 </div>
+                  <div class="col">
+                    <label for="tiempo_duracion">Tiempo</label>
+                    <input type="number" name="tiempo_duracion" id="tiempo_duracion"
+                    ngModel  class="form-control" min='1' required>
+                  </div>
+
+                  <div class="col selectContainer">
+                    <label for="categoria">Opción</label>
+                     <select class="form-control" name="opcion_duracion" ngModel required>
+                       <option *ngFor="let opc of opcDuracion" [value]="opc.nombre">
+                          {{opc.nombre}}
+                       </option>
+                    </select>
+                  </div>
+              </div>
+              <br>
+
+
+             <ng-multiselect-dropdown name="tipos_pago"
+                 [(ngModel)]="selectedItems2"
+                 [placeholder]="'Seleccione los tipos de pago'"
+                 [data]="tipoPago"
+                 [settings]="dropdownSettings2"
+                 (onSelect)="onItemSelect2($event)"
+                 (onDeSelect)="OnItemDeSelect2($event)"
+                 (onSelectAll)="onSelectAll($event)"
+                 (onDeSelectAll)="onDeSelectAll($event)"
+             >
+             </ng-multiselect-dropdown><br>
+              <br>
+
+              <ng-multiselect-dropdown name="modalidades"
+                 [(ngModel)]="selectedItems3"
+                 [placeholder]="'Seleccione las modalidades'"
+                 [data]="modalidades"
+                 [settings]="dropdownSettings3"
+                 (onSelect)="onItemSelect3($event)"
+                 (onDeSelect)="OnItemDeSelect3($event)"
+                 (onSelectAll)="onSelectAll($event)"
+                 (onDeSelectAll)="onDeSelectAll($event)"
+                 >
+             </ng-multiselect-dropdown><br>
+
+              <br>
+              <input type="submit" value="PUBLICAR" class="btn btn-primary btn-block btn-lg">
         </form>
+
       </div>
     </div>
   </div>

@@ -53,7 +53,7 @@ export class PublishservicepageComponent implements OnInit {
   //private file:File;
   private file:File=null;
   private nombreArchivo:string;
-  private fotoInicial:boolean = false;
+  private fotoDisponible:boolean = false;
   private cargarFoto:boolean = false;
   //private iniciales:string;
 
@@ -182,31 +182,94 @@ export class PublishservicepageComponent implements OnInit {
   onDeSelectAll(items: any){
       //console.log(items);
   }
-  onSubmitPublicarServicio(){
-    if(this.verificarFormulario()){
+  onSubmitPublicarServicio(publishform){
+    if(publishform.valid){
       var ciudades = [];
       var modalidades = [];
       var pagos = [];
       var path2:string;
-      for (let entry of this.selectedItems) {
-           ciudades.push(entry.nombre);
-      }
-      for (let entry of this.selectedItems2) {
-           pagos.push(entry.nombre);
-      }
-      for (let entry of this.selectedItems3) {
-           modalidades.push(entry.nombre);
-      }
-      path2=this.databaseServicio.insertServiceDatabase(this.authService.afAuth.auth.currentUser.uid,this.categoria,this.nombre,
-      this.descripcion,this.tiempo_duracion,this.opcion_duracion,this.precio,ciudades,
-      modalidades,pagos,this.fecha);
+      var cuentaValidada;
+      var estado = true;
 
-      this.uploadFile(path2);
-      this.router.navigate(['/privado']);
+
+      this.nombre = publishform.controls.nombre.value;
+      this.descripcion = publishform.controls.descripcion.value;
+      this.categoria = publishform.controls.categoria.value;
+      this.precio = publishform.controls.precio.value;
+      this.tiempo_duracion = publishform.controls.tiempo_duracion.value;
+      this.opcion_duracion = publishform.controls.opcion_duracion.value;
+
+      cuentaValidada = this.authService.getVerficationAccount();
+
+      //console.log(publishform);
+
+      if(this.precio<=0){
+        this.flashMensaje.show("El precio debe ser mayor a 0",
+        {cssClass: 'alert-danger', timeout: 4000});
+        estado = false;
+      }
+      else if(this.tiempo_duracion<=0){
+        this.flashMensaje.show("El tiempo de duración debe ser mayor a 0",
+        {cssClass: 'alert-danger', timeout: 4000});
+        estado = false;
+      }
+      else if(!this.fotoDisponible){
+        this.flashMensaje.show("No se ha seleccionado una imagen",
+        {cssClass: 'alert-danger', timeout: 4000});
+        estado = false;
+      }
+      else if(this.selectedItems.length<=0){
+        this.flashMensaje.show("Debe seleccionar al menos una ciudad",
+        {cssClass: 'alert-danger', timeout: 4000});
+        estado = false;
+      }
+      else if(this.selectedItems2.length<=0){
+        this.flashMensaje.show("Debe seleccionar al menos un tipo de pago",
+        {cssClass: 'alert-danger', timeout: 4000});
+        estado = false;
+      }
+      else if(this.selectedItems3.length<=0){
+        this.flashMensaje.show("Debe seleccionar al menos una modalidad",
+        {cssClass: 'alert-danger', timeout: 4000});
+        estado = false;
+      }
+      else if(!cuentaValidada){
+        var email = this.authService.getEmail();
+        this.flashMensaje.show("Usuario con correo: "+ email+" debe confirmar cuenta",
+        {cssClass: 'alert-danger', timeout: 4000});
+        estado = false;
+      }
+
+      if(estado){
+        for (let entry of this.selectedItems) {
+             ciudades.push(entry.nombre);
+        }
+        for (let entry of this.selectedItems2) {
+             pagos.push(entry.nombre);
+        }
+        for (let entry of this.selectedItems3) {
+             modalidades.push(entry.nombre);
+        }
+
+        path2=this.databaseServicio.insertServiceDatabase(this.authService.afAuth.auth.currentUser.uid,this.categoria,this.nombre,
+        this.descripcion,this.tiempo_duracion,this.opcion_duracion,this.precio,ciudades,
+        modalidades,pagos,this.fecha);
+
+        this.uploadFile(path2);
+
+        this.flashMensaje.show('Servicio publicado satisfactoriamente',
+        {cssClass: 'alert-success', timeout: 4000});
+
+        this.router.navigate(['/privado']);
+      }
+    }else{
+      this.flashMensaje.show("Formulario tiene campos incompletos o inválidos",
+      {cssClass: 'alert-danger', timeout: 4000});
     }
   }
   uploadFile(idServicio:string){;
     const path = "servicios/"+idServicio;
+
     if(this.cargarFoto){
       const task = this.uploadService.uploadFile(this.file, path);
       this.uploadPercent = task.percentageChanges();
@@ -219,12 +282,10 @@ export class PublishservicepageComponent implements OnInit {
       reader.readAsDataURL(this.file);
       reader.onload = (event:any) => {
         this.nombreArchivo = event.target.result;
+        this.fotoDisponible = true;
       }
-      this.fotoInicial = false;
       this.cargarFoto = true;
     }
-  verificarFormulario(){
-    return true;
-  }
+
 
 }

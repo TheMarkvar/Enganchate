@@ -27,6 +27,14 @@ export class AuthService {
     this.afAuth.auth.currentUser.sendEmailVerification();
   }
 
+  getVerficationAccount(){
+    return this.afAuth.auth.currentUser.emailVerified;
+  }
+
+  getEmail(){
+    return this.afAuth.auth.currentUser.email;
+  }
+
   loginEmail(email: string, pass: string) {
     return new Promise((resolve, reject) => {
       this.afAuth.auth.signInWithEmailAndPassword(email, pass)
@@ -57,7 +65,7 @@ export class AuthService {
   }
 
   updateProfile(photoURL:string, displayName:string){
-  
+
     //this.afAuth.auth.currentUser.photoURL = photoURL;
     this.afAuth.auth.currentUser.updateProfile({
       displayName: displayName,

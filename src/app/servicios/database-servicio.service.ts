@@ -35,6 +35,8 @@ export class DatabaseServicioService {
     this.servicio.tipo_pago=tipo_pago;
     this.servicio.fecha=fecha.toString();
     variable=this.listaServicios.push(this.servicio);
+    //this.servicio.$id = variable;
+    //this.listaServicios.update(variable,this.servicio);
     return variable.path.pieces_[1];
     //console.log(a);
 

@@ -6,6 +6,15 @@ input[type="radio"]{
   display: none;
 }
 
+img.rounded-circle{
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .opciones_pago label:hover,
 .opciones_modalidad label,
 .opciones_categorias label{
@@ -69,4 +78,31 @@ img.rounded-circle{
     left: 50%;
     transform: translate(-50%, -50%);
     user-select: none;
+}
+
+
+
+/*input.ng-valid{
+  border-left: 5px solid green;
+}*/
+ng-multiselect-dropdown.ng-invalid,
+select.ng-invalid,
+input.ng-invalid{
+  border-radius:  5px solid red;
+}
+
+ng-multiselect-dropdown.ng-valid.ng-touched,
+select.ng-valid.ng-touched,
+input.ng-valid.ng-touched{
+  border-left: 5px solid green;
+}
+
+ng-multiselect-dropdown.ng-invalid.ng-touched,
+select.ng-invalid.ng-touched,
+input.ng-invalid.ng-touched{
+  border-left: 5px solid red;
+}
+
+label.mismatch{
+  color: red;
 }
