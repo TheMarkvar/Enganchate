@@ -15,17 +15,14 @@
       </li>
     </ul>
 
-
-
-    <form class="form-inline my-2 my-lg-0">
-
-        <input class="form-control mr-sm-2" name="buscar" id="buscar" [(ngModel)]="buscar" type="text" placeholder="Buscar servicios">
-        <button class="btn btn-default" type="submit" (click)="onClickSearch()">
-            <i class="fa fa-search"></i>
-        </button>
-    </form>
-
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" >
+        <input name="buscar" id="buscar" (change)="onClickSearch()" [(ngModel)]="buscar"
+         type="search" placeholder="Buscar servicios">
+      </li>
+    </ul>
     <ul class="navbar-nav mx-auto">
+
       <li class="nav-item" *ngIf="!isLogin">
         <a class="nav-link" href="#" routerLink="/login">Login</a>
       </li>
