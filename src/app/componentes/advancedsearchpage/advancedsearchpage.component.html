@@ -138,72 +138,64 @@
 
           Resultados de la Búsqueda
           <br>
-          <ul>
+          <div class="form-row">
+            <!-- <div class="col-xs-12 col-sm-6 col-md-16"> -->
+            <div class="col-xs-12 col-sm-6 col-md-4" *ngFor="let servicio of listaServicios">
+              <article class="card-wrapper">
+                <div class="image-holder">
+                  <a href="#" class="image-holder__link"></a>
+                  <!--<div class="image-liquid image-holder--original" style="background-image: url('{{servicio.pathImagen}}')">
+                  </div>-->
+                  <div class="image-liquid image-holder--original" [style.background-image]="getBackground(servicio.pathImagen)">
+                  </div>
+                </div>
 
-            <li class="list-inline" *ngFor="let servicio of listaServicios">
 
+                <div class="product-description">
+                  <!-- title -->
+                  <h1 class="product-description__title">
+                    <a href="#">
+                      {{servicio.nombre}}
+                      </a>
+                  </h1>
 
-              <div class="col-xs-12 col-sm-6 col-md-16">
-                <article class="card-wrapper">
-                  <div class="image-holder">
-                    <a href="#" class="image-holder__link"></a>
-                    <!--<div class="image-liquid image-holder--original" style="background-image: url('{{servicio.pathImagen}}')">
-                    </div>-->
-                    <div class="image-liquid image-holder--original" [style.background-image]="getBackground(servicio.pathImagen)">
+                  <!-- category and price -->
+                  <div class="row">
+                    <div class="col-xs-12 col-sm-8 product-description__category secondary-text">
+                      {{servicio.categoria}}
+                    </div>
+                    <div class="col-xs-12 col-sm-4 product-description__price">
+                      $ {{servicio.precio}}
                     </div>
                   </div>
 
+                  <!-- divider -->
+                  <hr />
 
-                  <div class="product-description">
-                    <!-- title -->
-                    <h1 class="product-description__title">
-                      <a href="#">
-                        {{servicio.nombre}}
-                        </a>
-                    </h1>
+                  <!-- zona_cobertura -->
 
-                    <!-- category and price -->
-                    <div class="row">
-                      <div class="col-xs-12 col-sm-8 product-description__category secondary-text">
-                        {{servicio.categoria}}
+                      <div class="sizes-wrapper">
+                        <b>Zona de cobertura</b>
+                        <br />
+                        <span class="secondary-text text-uppercase">
+
+                            {{servicio.zona_cobertura.toString()}}
+                        </span>
                       </div>
-                      <div class="col-xs-12 col-sm-4 product-description__price">
-                        $ {{servicio.precio}}
-                      </div>
-                    </div>
-
-                    <!-- divider -->
-                    <hr />
-
-                    <!-- zona_cobertura -->
-
-                        <div class="sizes-wrapper">
-                          <b>Zona de cobertura</b>
-                          <br />
-                          <span class="secondary-text text-uppercase">
-
-                              {{servicio.zona_cobertura.toString()}}
-                          </span>
-                        </div>
-                    <!-- tipo_pago -->
-                    <div class="sizes-wrapper">
-                      <b>Tipo de pago</b>
-                      <br />
-                      <span class="secondary-text text-uppercase">
-                          {{servicio.tipo_pago.toString()}}
-                      </span>
-                    </div>
-
+                  <!-- tipo_pago -->
+                  <div class="sizes-wrapper">
+                    <b>Tipo de pago</b>
+                    <br />
+                    <span class="secondary-text text-uppercase">
+                        {{servicio.tipo_pago.toString()}}
+                    </span>
                   </div>
 
-                </article>
-              </div>
+                </div>
 
-
-            </li>
-
-
-          </ul>
+              </article>
+            </div>
+          </div>
 
     </div>
   </div>
