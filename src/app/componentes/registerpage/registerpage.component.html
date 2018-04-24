@@ -4,49 +4,60 @@
       <div class="card-body">
         <h1 class="text-center">REGISTRO</h1>
 
-        <form name="registerForm"(submit)="onSubmitRegisterUser(registerForm)" >
+        <form #registerForm="ngForm" (ngSubmit)="onSubmitRegisterUser(registerForm)">
 
           <div class="form-group">
 
             <label for="email">Email</label>
-            <input type="email" name="email" placeholder="Digite su email" id="email"
-            [(ngModel)]="email" class="form-control" required>
+            <input type="email" name="email"  placeholder="Digite su correo" id="email"
+            ngModel #name="ngModel" pattern="[a-zA-Z0-9._]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9]+)+"
+             class="form-control" required>
+             <label class="mismatch" *ngIf="name.errors">Correo inválido</label>
           </div>
+
 
           <div class="form-group">
             <label for="nombres">Nombre</label>
             <input type="text" name="nombres" placeholder="Digite su nombre" id="nombres"
-            [(ngModel)]="nombres" class="form-control" required>
+            ngModel class="form-control" required>
           </div>
 
           <div class="form-group">
             <label for="apellidos">Apellidos</label>
             <input type="text" name="apellidos" placeholder="Digite sus apellidos" id="apellidos"
-            [(ngModel)]="apellidos" class="form-control" required>
+            ngModel class="form-control" required>
           </div>
 
-          <div class="form-group">
-            <label for="">Contraseña</label>
+
+          <label for="">Contraseña</label>
+          <show-hide-password size="lg" icon="fontawesome">
             <input type="password" name="password" placeholder="Digite su contraseña" id="password"
-            [(ngModel)]="password" ng-minlength="6" ng-maxlength="15" class="form-control" required>
-          </div>
-          <div class="form-group">
-            <label for="">Confirmar contraseña</label>
-            <input type="password" name="password2" placeholder="Repita la contraseña" id="password2"
-            [(ngModel)]="password2"class="form-control" required >
-          </div>
-
-          <label class="mismatch" *ngIf="password2!=password">Constraseñas no coinciden</label>
+            ngModel #passW="ngModel" password pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            title="Debe contener al menos un número, una mayúscula, una minúscula y al menos 8 caracteres o más"
+            class="form-control">
+          </show-hide-password>
+          <label class="form-group mismatch" *ngIf="passW.errors">La no clave no cumple con requisitos</label>
+          <br>
 
 
+
+          <label for="">Confirmar contraseña</label>
+          <show-hide-password size="lg" icon="fontawesome">
+              <input type="password" name="password2" placeholder="Repita la contraseña" id="password2"
+              ngModel #passW2 class="form-control" required>
+          </show-hide-password>
+
+          <label class="mismatch" *ngIf="passW2.value!=passW.value">Constraseñas no coinciden</label>
+
+
+            <br>
           <div class="form-group">
             <label for="">Fecha de Nacimiento</label>
             <input type="date"  name="fecha_nac" id="fecha_nac"
-            [(ngModel)]="edad" class="form-control" min="1970-01-01" max="2000-01-01"  required>
-
-
+            ngModel  class="form-control" min="1948-01-01" max="2000-01-01"  required>
           </div>
-          <input type="submit" value="REGISTRAR" class="btn btn-primary btn-block btn-lg">
+
+          <button type="submit"  class="btn btn-primary btn-block btn-lg">REGISTRAR</button>
         </form>
       </div>
     </div>

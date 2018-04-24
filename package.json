@@ -32,6 +32,7 @@
     "ng-multiselect-dropdown": "^0.1.6",
     "ng2-datepicker": "^2.2.5",
     "ngx-input-file": "^1.0.2",
+    "ngx-show-hide-password": "^1.2.4",
     "popper.js": "^1.14.1",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"

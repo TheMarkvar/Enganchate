@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FormsModule, NgForm } from '@angular/forms';
+import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -57,6 +58,7 @@ import { AdvancedsearchpageComponent } from './componentes/advancedsearchpage/ad
     AppRoutingModule,
     FormsModule,
     NgMultiSelectDropDownModule.forRoot(),
+    ShowHidePasswordModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,

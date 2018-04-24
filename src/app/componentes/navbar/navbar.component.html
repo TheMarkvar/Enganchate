@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Enganchate</a>
+  <a class="navbar-brand" href="/home">Engánchate</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -7,9 +7,6 @@
   <div class="collapse navbar-collapse" id="navbarColor02">
 
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#" routerLink="/">Home <span class="sr-only">(current)</span></a>
-      </li>
       <li class="nav-item active">
         <a class="nav-link" href="#" *ngIf="isLogin" routerLink="/">Mis Servicios<span class="sr-only">(current)</span></a>
       </li>
@@ -21,9 +18,11 @@
 
 
     <form class="form-inline my-2 my-lg-0">
+
         <input class="form-control mr-sm-2" name="buscar" id="buscar" [(ngModel)]="buscar" type="text" placeholder="Buscar servicios">
-        <button class="btn btn-secondary my-2 my-sm-0" (click)="onClickSearch()"
-        type="submit">Buscar</button>
+        <button class="btn btn-default" type="submit" (click)="onClickSearch()">
+            <i class="fa fa-search"></i>
+        </button>
     </form>
 
     <ul class="navbar-nav mx-auto">
