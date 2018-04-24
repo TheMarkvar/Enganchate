@@ -147,8 +147,9 @@
                 <article class="card-wrapper">
                   <div class="image-holder">
                     <a href="#" class="image-holder__link"></a>
-                    <div class="image-liquid image-holder--original" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/24/Blue_Tshirt.jpg')">
-
+                    <!--<div class="image-liquid image-holder--original" style="background-image: url('{{servicio.pathImagen}}')">
+                    </div>-->
+                    <div class="image-liquid image-holder--original" [style.background-image]="getBackground(servicio.pathImagen)">
                     </div>
                   </div>
 
@@ -158,7 +159,6 @@
                     <h1 class="product-description__title">
                       <a href="#">
                         {{servicio.nombre}}
-
                         </a>
                     </h1>
 

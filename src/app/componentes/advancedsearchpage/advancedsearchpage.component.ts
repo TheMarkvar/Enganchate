@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FlashMessagesService} from 'angular2-flash-messages';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute,NavigationEnd } from '@angular/router';
 import { DatabaseServicioService } from '../../servicios/database-servicio.service';
@@ -52,6 +53,7 @@ export class AdvancedsearchpageComponent implements OnInit {
     private uploadService:UploadService,
     public flashMensaje: FlashMessagesService,
     public router:Router,
+    private _sanitizer: DomSanitizer
   ) {
 
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
@@ -145,6 +147,12 @@ export class AdvancedsearchpageComponent implements OnInit {
           else if(key === "precio"){
             servicioFiltro.precio = value;
           }
+          else if(key=="pathImagen"){
+            this.uploadService.downloadFile('servicios/'+value).subscribe(URL=>{
+              //console.log(URL.toString());
+              servicioFiltro.pathImagen = URL;
+            });
+          }
 
       }
       if(servicioValido){
@@ -223,10 +231,16 @@ export class AdvancedsearchpageComponent implements OnInit {
           else if(key === "precio"){
             servicioFiltro.precio = value;
           }
+          else if(key=="pathImagen"){
+            this.uploadService.downloadFile('servicios/'+value).subscribe(URL=>{
+              //console.log(URL.toString());
+              servicioFiltro.pathImagen = URL;
+            });
+          }
 
       }
       if(servicioValido){
-
+          console.log()
           this.listaServicios.push(servicioFiltro);
       }
      ;});});
@@ -414,6 +428,10 @@ export class AdvancedsearchpageComponent implements OnInit {
         this.navigationSubscription.unsubscribe();
      }
    }
+
+   getBackground(image) {
+    return this._sanitizer.bypassSecurityTrustStyle(`linear-gradient(rgba(29, 29, 29, 0), rgba(16, 16, 23, 0.5)), url(${image})`);
+  }
 
 
 
