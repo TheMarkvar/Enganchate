@@ -206,35 +206,22 @@ export class PublishservicepageComponent implements OnInit {
     }
   }
   uploadFile(idServicio:string){;
-    //const task = this.storage.upload(filePath, file);
-    //const path = "servicios/"+this.authService.afAuth.auth.currentUser.uid;
-      const path = "servicios/"+idServicio;
-    //const task = this.uploadService.uploadFile(this.file, path);
-
+    const path = "servicios/"+idServicio;
     if(this.cargarFoto){
       const task = this.uploadService.uploadFile(this.file, path);
       this.uploadPercent = task.percentageChanges();
-
-      /*this.uploadService.downloadFile(path).subscribe(URL=>{
-        //console.log(URL.toString());
-        this.authService.updateProfile(URL.toString(), this.displayName);
-      });*/
     }
 
   }
-
     getEvent(file:FileList){
       this.file = file.item(0);
-
       var reader = new FileReader();
       reader.readAsDataURL(this.file);
-
       reader.onload = (event:any) => {
         this.nombreArchivo = event.target.result;
       }
       this.fotoInicial = false;
       this.cargarFoto = true;
-
     }
   verificarFormulario(){
     return true;

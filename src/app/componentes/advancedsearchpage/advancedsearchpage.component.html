@@ -138,14 +138,17 @@
   <div class="container">
 
         Resultados de la Búsqueda
-
+        <br>
         <ul>
+
           <li class="list-inline" *ngFor="let servicio of listaServicios">
+
+
             <div class="col-xs-12 col-sm-6 col-md-16">
               <article class="card-wrapper">
                 <div class="image-holder">
                   <a href="#" class="image-holder__link"></a>
-                  <div class="image-liquid image-holder--original" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/24/Blue_Tshirt.jpg')">
+                  <div class="image-liquid image-holder--original" style="background-image: url('https://firebasestorage.googleapis.com/v0/b/enganchate-3a0f1.appspot.com/o/images%2Fservicios%2F-LAol3HmG0BOVcJSHMN0?alt=media&token=f751c9c4-f6aa-4eed-8e62-270cfdef9eef')">
                   </div>
                 </div>
 
@@ -180,19 +183,6 @@
                             {{servicio.zona_cobertura.toString()}}
                         </span>
                       </div>
-
-                  <!--
-                  <div class="sizes-wrapper">
-                    <b>Zona de cobertura</b>
-                    <br />
-                    <span class="secondary-text text-uppercase">
-                        {{servicio.zona_cobertura[0].toString()}}
-                    </span>
-                  </div>
-                -->
-
-
-
                   <!-- tipo_pago -->
                   <div class="sizes-wrapper">
                     <b>Tipo de pago</b>
@@ -206,6 +196,8 @@
 
               </article>
             </div>
+
+
           </li>
 
 

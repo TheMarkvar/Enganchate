@@ -19,15 +19,12 @@
               <div class="col-xs-5 selectContainer">
                 <label for="categoria">Categoría</label>
                  <select class="form-control" name="categoria" [(ngModel)]="categoria">
-
                    <option *ngFor="let cat of categorias" [value]="cat.nombre">
                       {{cat.nombre}}
                    </option>
-
                 </select>
                </div>
           </div>
-
           <div class="form-group">
             <label for="nombre">Nombre</label>
             <input type="text" name="nombre" id="nombre"
@@ -97,6 +94,12 @@
               <label class="custom-file-label">Subir imagen</label>
               <div class="invalid-feedback">Example invalid custom file feedback</div>
           </div>
+
+            <div class="nav-item">
+                <img [src]="nombreArchivo" class="center rounded-circle" >
+                <a class="centered" *ngIf="fotoInicial">{{iniciales}}</a>
+            </div>
+
 
           <form name="publishform" (submit)="onSubmitPublicarServicio(publishform)">
           <br><br><br>
