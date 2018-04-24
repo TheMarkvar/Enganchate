@@ -1,5 +1,5 @@
 export class Servicio {
-  $id: string;
+  $id:string;
   publicador:string;
   categoria:string;
   nombre:string;
@@ -11,4 +11,5 @@ export class Servicio {
   modalidad=[];
   tipo_pago = [];
   fecha:any;
+  pathImagen:string;
 }

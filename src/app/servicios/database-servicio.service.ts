@@ -10,6 +10,7 @@ export class DatabaseServicioService {
 
   private pathServicios:string;
   public servicio:Servicio;
+  public servicio2:Servicio;
   private listaServicios: AngularFireList<Servicio>;
 
   constructor(public afDatabase: AngularFireDatabase) {
@@ -22,7 +23,6 @@ export class DatabaseServicioService {
     var variable;
     this.getServicios();
     this.servicio=new Servicio();
-
     this.servicio.publicador=publicador;
     this.servicio.categoria=categoria;
     this.servicio.nombre=nombre;
@@ -35,10 +35,10 @@ export class DatabaseServicioService {
     this.servicio.tipo_pago=tipo_pago;
     this.servicio.fecha=fecha.toString();
     variable=this.listaServicios.push(this.servicio);
-    //this.servicio.$id = variable;
-    //this.listaServicios.update(variable,this.servicio);
+    this.servicio.pathImagen=variable.path.pieces_[1];
+    this.getServicios();
+    this.listaServicios.update(variable.path.pieces_[1],this.servicio);
     return variable.path.pieces_[1];
-    //console.log(a);
 
   }
   getServicios(){

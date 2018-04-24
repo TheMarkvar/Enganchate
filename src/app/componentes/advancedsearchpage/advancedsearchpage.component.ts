@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute,NavigationEnd } from '@angular/router';
 import { DatabaseServicioService } from '../../servicios/database-servicio.service';
 import { OptionsService } from '../../servicios/options.service';
-
+import { UploadService } from '../../servicios/upload.service';
 import { Servicio } from  '../../modelos/servicio';
 import { Ciudad } from  '../../modelos/ciudad';
 import { Categoria } from  '../../modelos/categoria';
@@ -49,6 +49,7 @@ export class AdvancedsearchpageComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private optionsService:OptionsService,
     private databaseServicioService:DatabaseServicioService,
+    private uploadService:UploadService,
     public flashMensaje: FlashMessagesService,
     public router:Router,
   ) {
@@ -225,13 +226,15 @@ export class AdvancedsearchpageComponent implements OnInit {
 
       }
       if(servicioValido){
-          
+
           this.listaServicios.push(servicioFiltro);
       }
      ;});});
   }
 
-
+  cargarImagen(path){
+    this.uploadService.downloadFile('servicios/'+path);
+  }
   cargarCategorias(){
     this.optionsService.getCategorias().snapshotChanges().subscribe(item => {
     this.categorias = [];
