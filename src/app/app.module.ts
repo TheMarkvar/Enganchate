@@ -38,6 +38,7 @@ import { NotfoundpageComponent } from './componentes/notfoundpage/notfoundpage.c
 import {EditarperfilpageComponent} from './componentes/editarperfilpage/editarperfilpage.component';
 import { PublishservicepageComponent } from './componentes/publishservicepage/publishservicepage.component';
 import { AdvancedsearchpageComponent } from './componentes/advancedsearchpage/advancedsearchpage.component';
+import { ServicepageComponent } from './componentes/servicepage/servicepage.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { AdvancedsearchpageComponent } from './componentes/advancedsearchpage/ad
     NotfoundpageComponent,
     EditarperfilpageComponent,
     PublishservicepageComponent,
-    AdvancedsearchpageComponent
+    AdvancedsearchpageComponent,
+    ServicepageComponent
   ],
   imports: [
     BrowserModule,

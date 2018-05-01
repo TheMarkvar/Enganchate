@@ -69,7 +69,7 @@ export class AdvancedsearchpageComponent implements OnInit {
       .subscribe(params => {
         this.buscar = params.search;
       });
-      console.log(this.buscar);
+      //console.log(this.buscar);
 
     this.cargarCategorias();
     this.cargarCiudades();
@@ -150,6 +150,7 @@ export class AdvancedsearchpageComponent implements OnInit {
           else if(key=="pathImagen"){
             this.uploadService.downloadFile('servicios/'+value).subscribe(URL=>{
               //console.log(URL.toString());
+              servicioFiltro.idServicio = value;
               servicioFiltro.pathImagen = URL;
             });
           }
@@ -160,6 +161,7 @@ export class AdvancedsearchpageComponent implements OnInit {
       }
      ;});});
   }
+
   filtrarServiciosParametros(){
     this.databaseServicioService.getServicios().snapshotChanges().subscribe(item => {
       this.listaServicios = [];
@@ -234,6 +236,7 @@ export class AdvancedsearchpageComponent implements OnInit {
           else if(key=="pathImagen"){
             this.uploadService.downloadFile('servicios/'+value).subscribe(URL=>{
               //console.log(URL.toString());
+              servicioFiltro.idServicio = value;
               servicioFiltro.pathImagen = URL;
             });
           }
@@ -427,6 +430,10 @@ export class AdvancedsearchpageComponent implements OnInit {
      if (this.navigationSubscription) {
         this.navigationSubscription.unsubscribe();
      }
+   }
+
+   onClickService(idService:string){
+     this.router.navigate(['/service'], { queryParams: { search: idService } });
    }
 
    getBackground(image) {

@@ -44,4 +44,8 @@ export class DatabaseServicioService {
   getServicios(){
     return this.listaServicios = this.afDatabase.list(this.pathServicios);
   }
+  getServicio(id:string){
+    return  this.afDatabase.database.ref(this.pathServicios+'/'+id).once('value');
+  }
+
 }

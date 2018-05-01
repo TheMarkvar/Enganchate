@@ -29,24 +29,6 @@ input.form-control{
     transform: translate(-50%, -50%);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 body {
 	background: #fff;
 	color: #666;
@@ -141,4 +123,12 @@ input::-webkit-input-placeholder {
 }
 #demo-2 input::-webkit-input-placeholder {
 	color: transparent;
+}
+
+.dropdown-style{
+  color:black;
+}
+.dropdown-style:hover{
+    color: #4CAF50;
+    background-color: transparent; /* or #000 */
 }

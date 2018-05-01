@@ -10,6 +10,8 @@ export class Servicio {
   zona_cobertura=[];
   modalidad=[];
   tipo_pago = [];
+  opiniones = [];
   fecha:any;
   pathImagen:string;
+  idServicio:string;
 }

@@ -8,6 +8,7 @@ import {PrivadopageComponent} from './componentes/privadopage/privadopage.compon
 import {EditarperfilpageComponent} from './componentes/editarperfilpage/editarperfilpage.component';
 import {PublishservicepageComponent} from './componentes/publishservicepage/publishservicepage.component';
 import {AdvancedsearchpageComponent} from './componentes/advancedsearchpage/advancedsearchpage.component';
+import {ServicepageComponent} from './componentes/servicepage/servicepage.component';
 import {NotfoundpageComponent} from './componentes/notfoundpage/notfoundpage.component';
 
 import {AuthGuard} from './guards/auth.guard';
@@ -22,6 +23,8 @@ const routes: Routes = [
   {path: 'publishService', component: PublishservicepageComponent, canActivate: [AuthGuard]},
   {path: 'advancedSearch', component: AdvancedsearchpageComponent, runGuardsAndResolvers: 'always'},
   {path: 'advancedSearch/:id', component: AdvancedsearchpageComponent, runGuardsAndResolvers: 'always'},
+  {path: 'service', component: ServicepageComponent, runGuardsAndResolvers: 'always'},
+  {path: 'service/:id', component: ServicepageComponent, runGuardsAndResolvers: 'always'},
   {path: 'privado', component: PrivadopageComponent , canActivate: [AuthGuard]},
   {path: '**', component: NotfoundpageComponent}
 ];
