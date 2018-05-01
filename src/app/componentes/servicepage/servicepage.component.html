@@ -24,14 +24,21 @@
           </div>
           <span class="review-no">{{cant}} opiniones</span>
 
+          <br>
           <p class="product-description">{{servicio.descripcion}}</p>
           <h4 class="price">precio actual: <span>$ {{servicio.precio}}</span></h4>
           <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
 
-          <div class="action">
+          <div class="action" *ngIf="servicio.publicador != idUsuario">
             <button class="add-to-cart btn btn-default" type="button">Comprar</button>
             <button class="add-to-cart btn btn-default" type="button">Contactar</button>
           </div>
+
+          <div class="action" *ngIf="servicio.publicador == idUsuario">
+            <button class="add-to-cart btn btn-default" type="button">Editar</button>
+            <button class="add-to-cart btn btn-default" type="button">Eliminar</button>
+          </div>
+
         </div>
       </div>
     </div>

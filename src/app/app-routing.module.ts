@@ -9,6 +9,8 @@ import {EditarperfilpageComponent} from './componentes/editarperfilpage/editarpe
 import {PublishservicepageComponent} from './componentes/publishservicepage/publishservicepage.component';
 import {AdvancedsearchpageComponent} from './componentes/advancedsearchpage/advancedsearchpage.component';
 import {ServicepageComponent} from './componentes/servicepage/servicepage.component';
+import { PublishedservicesuserpageComponent } from './componentes/publishedservicesuserpage/publishedservicesuserpage.component';
+
 import {NotfoundpageComponent} from './componentes/notfoundpage/notfoundpage.component';
 
 import {AuthGuard} from './guards/auth.guard';
@@ -25,6 +27,7 @@ const routes: Routes = [
   {path: 'advancedSearch/:id', component: AdvancedsearchpageComponent, runGuardsAndResolvers: 'always'},
   {path: 'service', component: ServicepageComponent, runGuardsAndResolvers: 'always'},
   {path: 'service/:id', component: ServicepageComponent, runGuardsAndResolvers: 'always'},
+  {path: 'publishedServices', component: PublishedservicesuserpageComponent, canActivate: [AuthGuard]},
   {path: 'privado', component: PrivadopageComponent , canActivate: [AuthGuard]},
   {path: '**', component: NotfoundpageComponent}
 ];

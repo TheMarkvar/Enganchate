@@ -4,6 +4,7 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browse
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute,NavigationEnd } from '@angular/router';
 
+import { AuthService } from '../../servicios/auth.service';
 import { DatabaseService } from '../../servicios/database.service';
 import { DatabaseServicioService } from '../../servicios/database-servicio.service';
 import { OptionsService } from '../../servicios/options.service';
@@ -29,6 +30,7 @@ export class ServicepageComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private optionsService:OptionsService,
+    public authService: AuthService,
     private databaseServicioService:DatabaseServicioService,
     public databaseService: DatabaseService,
     private uploadService:UploadService,
@@ -47,6 +49,7 @@ export class ServicepageComponent implements OnInit {
   private fotoInicial:boolean = false;
   private cargarFoto:boolean = false;
   private calificacion = '0';
+  private idUsuario:string;
   private cant = 0;
 
   ngOnInit() {
@@ -60,7 +63,6 @@ export class ServicepageComponent implements OnInit {
       });
 
       this.cargarDatos();
-      console.log(this.servicio);
 
   }
 
@@ -138,6 +140,7 @@ export class ServicepageComponent implements OnInit {
     });
     pub.then((res) => {
       this.servicio.publicador = res;
+
       this.cargarUsuario();
     });
 
@@ -211,6 +214,14 @@ export class ServicepageComponent implements OnInit {
 
 
   cargarUsuario(){
+
+    this.authService.getAuth().subscribe(auth=>{
+        if(auth){
+          this.idUsuario = auth.uid;
+        }
+      }
+    );
+
     var userDN = this.databaseService.getUsuario(this.servicio.publicador).then(
       function(snapshot) {
        var res = (snapshot.val() && snapshot.val().displayName);

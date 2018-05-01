@@ -39,6 +39,7 @@ import {EditarperfilpageComponent} from './componentes/editarperfilpage/editarpe
 import { PublishservicepageComponent } from './componentes/publishservicepage/publishservicepage.component';
 import { AdvancedsearchpageComponent } from './componentes/advancedsearchpage/advancedsearchpage.component';
 import { ServicepageComponent } from './componentes/servicepage/servicepage.component';
+import { PublishedservicesuserpageComponent } from './componentes/publishedservicesuserpage/publishedservicesuserpage.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { ServicepageComponent } from './componentes/servicepage/servicepage.comp
     EditarperfilpageComponent,
     PublishservicepageComponent,
     AdvancedsearchpageComponent,
-    ServicepageComponent
+    ServicepageComponent,
+    PublishedservicesuserpageComponent
   ],
   imports: [
     BrowserModule,

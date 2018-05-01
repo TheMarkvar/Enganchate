@@ -13,11 +13,11 @@
       <li class="nav-item active">
         <a class="nav-link" href="#" *ngIf="isLogin" routerLink="/publishService">Publicar Servicio<span class="sr-only">(current)</span></a>
       </li>-->
-      <li class="nav-item dropdown">
+      <li class="nav-item dropdown" *ngIf="isLogin">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="/home" role="button" aria-haspopup="true" aria-expanded="false">Mis Servicios</a>
         <div class="dropdown-menu">
-          <a class="dropdown-item dropdown-style" href="/home">Publicados</a>
-          <a class="dropdown-item dropdown-style" href="/home">Solicitados</a>
+          <a class="dropdown-item dropdown-style" href="/publishedServices">Publicados</a>
+          <a class="dropdown-item dropdown-style" href="#">Solicitados</a>
         </div>
       </li>
       <li class="nav-item active">
