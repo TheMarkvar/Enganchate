@@ -15,7 +15,11 @@
         <div class="details col-md-6">
           <h3 class="product-title">{{servicio.nombre}}</h3>
           <p class="product-description">{{servicio.categoria}}</p>
-          <p class="product-description">Publicado {{usuario.nombre}}</p>
+          <p class="product-description">Publicado por
+              <button type="button" (click)="onClickDisplayName()"
+               class="btn btn-link owner-color">{{usuario.displayName}}</button>
+          </p>
+
 
           <div class="ratings">
             <div class="rating-box">
@@ -30,14 +34,18 @@
           <h4 class="price">precio actual: <span>$ {{servicio.precio}}</span></h4>
           <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
 
-          <div class="action" *ngIf="servicio.publicador != idUsuario">
-            <button class="add-to-cart btn btn-default" type="button">Comprar</button>
-            <button class="add-to-cart btn btn-default" type="button">Contactar</button>
+          <div class="action" *ngIf="servicio.publicador != idUsuarioActual">
+            <button class="add-to-cart btn btn-default" (click)="onClickPurchase()"
+            type="button">Comprar</button>
+            <button class="add-to-cart btn btn-default" (click)="onClickContact()"
+            type="button">Contactar</button>
           </div>
 
-          <div class="action" *ngIf="servicio.publicador == idUsuario">
-            <button class="add-to-cart btn btn-default" type="button">Editar</button>
-            <button class="add-to-cart btn btn-default" type="button">Eliminar</button>
+          <div class="action" *ngIf="servicio.publicador == idUsuarioActual">
+            <button class="add-to-cart btn btn-default" (click)="onClickEditService()"
+            type="button">Editar</button>
+            <button class="add-to-cart btn btn-default" (click)="onClickDeleteService()"
+            type="button">Eliminar</button>
           </div>
 
         </div>

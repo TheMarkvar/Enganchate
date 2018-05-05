@@ -6,6 +6,7 @@ export class Usuario {
   telefono:string;
   documento:string;
   edad:Date;
+  idUsuario:string;
   servicios:Array<string>;
 
 

@@ -41,6 +41,11 @@
         <a class="nav-link" href="#" routerLink="/register">Registrarse</a>
       </li>
       <li class="nav-item" *ngIf="isLogin">
+        <input type="image" class="rounded-circle" src="assets/images/chat.png"
+        routerLink="/chat">
+      </li>
+
+      <li class="nav-item" *ngIf="isLogin">
         <a class="nav-link" routerLink="/editProfile">{{username}}</a>
       </li>
       <li class="nav-item" *ngIf="tieneFotoExterna && isLogin">

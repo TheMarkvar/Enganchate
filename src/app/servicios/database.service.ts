@@ -29,6 +29,7 @@ export class DatabaseService {
      this.getUsuarios();
 
      this.usuario = new Usuario();
+     this.usuario.idUsuario = id;
      this.usuario.email = email;
      this.usuario.displayName = displayName;
      this.usuario.edad = edad;
@@ -56,6 +57,7 @@ export class DatabaseService {
         this.getUsuarios();
 
         this.usuario = new Usuario();
+        this.usuario.idUsuario = id;
         this.usuario.email = email;
         this.usuario.displayName = displayName;
         this.afDatabase.database.ref(this.pathUsuarios+'/'+id).set(this.usuario);

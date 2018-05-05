@@ -10,6 +10,10 @@ import {PublishservicepageComponent} from './componentes/publishservicepage/publ
 import {AdvancedsearchpageComponent} from './componentes/advancedsearchpage/advancedsearchpage.component';
 import {ServicepageComponent} from './componentes/servicepage/servicepage.component';
 import { PublishedservicesuserpageComponent } from './componentes/publishedservicesuserpage/publishedservicesuserpage.component';
+import { ChatpageComponent } from './componentes/chatpage/chatpage.component';
+import { PaymentspageComponent } from './componentes/paymentspage/paymentspage.component';
+import { PurchasedservicespageComponent } from './componentes/purchasedservicespage/purchasedservicespage.component';
+
 
 import {NotfoundpageComponent} from './componentes/notfoundpage/notfoundpage.component';
 
@@ -27,6 +31,10 @@ const routes: Routes = [
   {path: 'advancedSearch/:id', component: AdvancedsearchpageComponent, runGuardsAndResolvers: 'always'},
   {path: 'service', component: ServicepageComponent, runGuardsAndResolvers: 'always'},
   {path: 'service/:id', component: ServicepageComponent, runGuardsAndResolvers: 'always'},
+  {path: 'chat', component: ChatpageComponent, canActivate: [AuthGuard]},
+  {path: 'chat/:id', component: ChatpageComponent, canActivate: [AuthGuard]},
+  {path: 'payment', component: PaymentspageComponent, canActivate: [AuthGuard]},
+  {path: 'purchasedServices', component: PurchasedservicespageComponent, canActivate: [AuthGuard]},
   {path: 'publishedServices', component: PublishedservicesuserpageComponent, canActivate: [AuthGuard]},
   {path: 'privado', component: PrivadopageComponent , canActivate: [AuthGuard]},
   {path: '**', component: NotfoundpageComponent}

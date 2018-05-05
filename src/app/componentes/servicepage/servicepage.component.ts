@@ -49,7 +49,7 @@ export class ServicepageComponent implements OnInit {
   private fotoInicial:boolean = false;
   private cargarFoto:boolean = false;
   private calificacion = '0';
-  private idUsuario:string;
+  private idUsuarioActual:string;
   private cant = 0;
 
   ngOnInit() {
@@ -217,10 +217,22 @@ export class ServicepageComponent implements OnInit {
 
     this.authService.getAuth().subscribe(auth=>{
         if(auth){
-          this.idUsuario = auth.uid;
+          this.idUsuarioActual = auth.uid;
         }
       }
     );
+
+    //this.usuario.idUsuario = this.servicio.publicador;
+
+    var userId = this.databaseService.getUsuario(this.servicio.publicador).then(
+      function(snapshot) {
+       var res = (snapshot.val() && snapshot.val().idUsuario);
+       return res;
+    });
+    userId.then((value: string) => {
+      this.usuario.idUsuario = value;
+    });
+
 
     var userDN = this.databaseService.getUsuario(this.servicio.publicador).then(
       function(snapshot) {
@@ -270,6 +282,26 @@ export class ServicepageComponent implements OnInit {
 
   getBackground(image) {
    return this._sanitizer.bypassSecurityTrustStyle(`linear-gradient(rgba(29, 29, 29, 0), rgba(16, 16, 23, 0.5)), url(${image})`);
+  }
+
+  onClickDisplayName(){
+    console.log("Listener displayName");
+  }
+
+  onClickContact(){
+    this.router.navigate(['/chat'], { queryParams: { destination: this.usuario.idUsuario } });
+  }
+
+  onClickPurchase(){
+    console.log("Listener purchase");
+  }
+
+  onClickEditService(){
+    console.log("Listener editService");
+  }
+
+  onClickDeleteService(){
+    console.log("Listener deleteService");
   }
 
 }
