@@ -40,6 +40,9 @@ import { PublishservicepageComponent } from './componentes/publishservicepage/pu
 import { AdvancedsearchpageComponent } from './componentes/advancedsearchpage/advancedsearchpage.component';
 import { ServicepageComponent } from './componentes/servicepage/servicepage.component';
 import { PublishedservicesuserpageComponent } from './componentes/publishedservicesuserpage/publishedservicesuserpage.component';
+import { ChatpageComponent } from './componentes/chatpage/chatpage.component';
+import { PaymentspageComponent } from './componentes/paymentspage/paymentspage.component';
+import { PurchasedservicespageComponent } from './componentes/purchasedservicespage/purchasedservicespage.component';
 
 
 @NgModule({
@@ -55,7 +58,10 @@ import { PublishedservicesuserpageComponent } from './componentes/publishedservi
     PublishservicepageComponent,
     AdvancedsearchpageComponent,
     ServicepageComponent,
-    PublishedservicesuserpageComponent
+    PublishedservicesuserpageComponent,
+    ChatpageComponent,
+    PaymentspageComponent,
+    PurchasedservicespageComponent
   ],
   imports: [
     BrowserModule,
