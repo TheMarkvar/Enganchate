@@ -31,6 +31,9 @@ export class ChatpageComponent implements OnInit {
   private usuarioDestino:Usuario;
   private usuarioDestinoParametro:Usuario;
   private destinoParametro = false;
+  private status = "";
+  private inicialesOrigen="";
+  private inicialesDestinoParametro="";
 
 
   constructor(
@@ -61,12 +64,13 @@ export class ChatpageComponent implements OnInit {
     this.authService.getAuth().subscribe(auth=>{
         if(auth){
           this.usuarioOrigen.idUsuario = auth.uid;
-          this.cargarUsuario(this.usuarioOrigen.idUsuario, this.usuarioOrigen);
+          this.cargarUsuario(this.usuarioOrigen.idUsuario, this.usuarioOrigen, this.inicialesOrigen);
         }
       }
     );
     if(this.destinoParametro){
-        this.cargarUsuario(this.usuarioDestinoParametro.idUsuario, this.usuarioDestinoParametro);
+        this.cargarUsuario(this.usuarioDestinoParametro.idUsuario, this.usuarioDestinoParametro,
+        this.inicialesDestinoParametro);
     }
 
 
@@ -74,52 +78,67 @@ export class ChatpageComponent implements OnInit {
   }
 
 
-  cargarUsuario(id:string, usuario:Usuario){
+  cargarUsuario(id:string, usuarioParam:Usuario, iniciales:string){
 
-    var userDN = this.databaseService.getUsuario(id).then(
-      function(snapshot) {
-       var res = (snapshot.val() && snapshot.val().displayName);
-       return res;
-    });
-    userDN.then((value: string) => {
-      usuario.displayName = value;
 
-      /*if(usuario.displayName!=null){
-        let aux = this.usuario.displayName.split(" ");
-        this.iniciales = aux[0].toUpperCase().charAt(0) + aux[1].toUpperCase().charAt(0);
-      }*/
-    });
+    let usuario:Usuario = new Usuario();
 
-    var userDoc = this.databaseService.getUsuario(id).then(
-      function(snapshot) {
-       var res = (snapshot.val() && snapshot.val().documento);
-       return res;
-    });
-    userDoc.then((value: string) => {
-      if(value!=null)
-        usuario.documento = value;
-    });
+    this.databaseService.getUsuarios().snapshotChanges().subscribe(item => {
+      item.forEach(element => {
+        let x = element.payload.toJSON();
+        x["$key"] = element.key;
+        let usuarioEncontrado:boolean = false;
 
-    var userDir = this.databaseService.getUsuario(id).then(
-      function(snapshot) {
-       var res = (snapshot.val() && snapshot.val().direccion);
-       return res;
-    });
-    userDir.then((value: string) => {
-      if(value!=null)
-        usuario.direccion = value;
-    });
+        if(x["idUsuario"]===usuarioParam.idUsuario){
+          usuarioEncontrado = true;
+        }
 
-    var userTel = this.databaseService.getUsuario(id).then(
-      function(snapshot) {
-       var res = (snapshot.val() && snapshot.val().telefono);
-       return res;
-    });
-    userTel.then((value: string) => {
-      if(value!=null)
-        usuario.telefono = value;
-    });
-    console.log(usuario);
+        for(var key in x) {
+
+          let value = x[key];
+
+
+          if(usuarioEncontrado){
+            if(key === "status"){
+              usuario.status = value;
+              this.status = value;
+            }
+            else if(key === "displayName"){
+              usuario.displayName = value;
+              if(usuario.displayName!=null){
+                let aux = usuario.displayName.split(" ");
+                iniciales = aux[0].toUpperCase().charAt(0) + aux[1].toUpperCase().charAt(0);
+              }
+            }
+            else if(key === "documento"){
+              usuario.documento = value;
+            }
+            else if(key === "direccion"){
+              usuario.direccion = value;
+            }
+            else if(key === "telefono"){
+              usuario.telefono = value;
+            }
+          }
+
+
+        }
+        if(usuarioEncontrado){
+          usuarioParam.displayName = usuario.displayName;
+          usuarioParam.documento = usuario.documento;
+          usuarioParam.telefono = usuario.telefono;
+          usuarioParam.direccion = usuario.direccion;
+          usuarioParam.status = usuario.status;
+
+
+          //console.log(usuarioParam);
+        }
+
+      }
+    )});
+
+
+
 
   }
 

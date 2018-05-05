@@ -84,5 +84,10 @@ export class DatabaseService {
     return  this.afDatabase.database.ref(this.pathUsuarios+'/'+id).once('value');
   }
 
+  getUsuario2(id:string){
+    
+    return  this.afDatabase.database.ref(this.pathUsuarios+'/'+id).once('value');
+  }
+
 
 }

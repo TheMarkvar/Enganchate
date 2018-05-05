@@ -8,6 +8,7 @@ export class Usuario {
   edad:Date;
   idUsuario:string;
   servicios:Array<string>;
+  status:string;
 
 
 }
