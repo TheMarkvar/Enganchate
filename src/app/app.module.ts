@@ -25,6 +25,8 @@ import { DatabaseService } from './servicios/database.service';
 import { UploadService } from './servicios/upload.service';
 import { OptionsService } from './servicios/options.service';
 import { DatabaseServicioService } from './servicios/database-servicio.service';
+import { ChatService } from './servicios/chat.service';
+import { PurchaseService } from './servicios/purchase.service';
 
 
 //Componentes
@@ -43,6 +45,7 @@ import { PublishedservicesuserpageComponent } from './componentes/publishedservi
 import { ChatpageComponent } from './componentes/chatpage/chatpage.component';
 import { PaymentspageComponent } from './componentes/paymentspage/paymentspage.component';
 import { PurchasedservicespageComponent } from './componentes/purchasedservicespage/purchasedservicespage.component';
+
 
 
 @NgModule({
@@ -76,7 +79,7 @@ import { PurchasedservicespageComponent } from './componentes/purchasedservicesp
     FlashMessagesModule
   ],
   providers: [AuthService,DatabaseService,DatabaseServicioService,UploadService,
-              OptionsService,AuthGuard,LoginGuard,FlashMessagesService],
+              OptionsService,AuthGuard,LoginGuard,FlashMessagesService, PurchaseService, ChatService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

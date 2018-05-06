@@ -6,6 +6,8 @@ import { Router, ActivatedRoute,NavigationEnd } from '@angular/router';
 
 import { AuthService } from '../../servicios/auth.service';
 import { DatabaseService } from '../../servicios/database.service';
+import { ChatService } from '../../servicios/chat.service';
+import { PurchaseService } from '../../servicios/purchase.service';
 import { DatabaseServicioService } from '../../servicios/database-servicio.service';
 import { OptionsService } from '../../servicios/options.service';
 import { UploadService } from '../../servicios/upload.service';
@@ -33,6 +35,8 @@ export class ServicepageComponent implements OnInit {
     public authService: AuthService,
     private databaseServicioService:DatabaseServicioService,
     public databaseService: DatabaseService,
+    public purchaseService: PurchaseService,
+    public chatService: ChatService,
     private uploadService:UploadService,
     public flashMensaje: FlashMessagesService,
     public router:Router,
@@ -51,6 +55,7 @@ export class ServicepageComponent implements OnInit {
   private calificacion = '0';
   private idUsuarioActual:string;
   private cant = 0;
+  private message:string="";
 
   ngOnInit() {
     this.servicio = new Servicio();
@@ -288,10 +293,6 @@ export class ServicepageComponent implements OnInit {
     console.log("Listener displayName");
   }
 
-  onClickContact(){
-    this.router.navigate(['/chat'], { queryParams: { destination: this.usuario.idUsuario } });
-  }
-
   onClickPurchase(){
     console.log("Listener purchase");
   }
@@ -302,6 +303,29 @@ export class ServicepageComponent implements OnInit {
 
   onClickDeleteService(){
     console.log("Listener deleteService");
+  }
+
+  onSubmitSendMessageUser(){
+
+    if(this.idUsuarioActual==null){
+      this.flashMensaje.show("Debe iniciar sesión primero para poder contactarse con el vendedor",
+      {cssClass: 'alert-danger', timeout: 4000});
+    }
+    else if(this.message!=""){
+      let idOrigen = this.idUsuarioActual;
+      let idDestino = this.usuario.idUsuario;
+
+      this.chatService.insertMessageDatabase(idOrigen, idDestino, this.message);
+
+
+      this.flashMensaje.show('Se ha enviado el mensaje correctamente',
+      {cssClass: 'alert-success', timeout: 4000});
+    }else{
+      this.flashMensaje.show("Mensaje inválido",
+      {cssClass: 'alert-danger', timeout: 4000});
+    }
+
+    this.message="";
   }
 
 }

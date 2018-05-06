@@ -32,7 +32,6 @@ const routes: Routes = [
   {path: 'service', component: ServicepageComponent, runGuardsAndResolvers: 'always'},
   {path: 'service/:id', component: ServicepageComponent, runGuardsAndResolvers: 'always'},
   {path: 'chat', component: ChatpageComponent, canActivate: [AuthGuard]},
-  {path: 'chat/:id', component: ChatpageComponent, canActivate: [AuthGuard]},
   {path: 'payment', component: PaymentspageComponent, canActivate: [AuthGuard]},
   {path: 'purchasedServices', component: PurchasedservicespageComponent, canActivate: [AuthGuard]},
   {path: 'publishedServices', component: PublishedservicesuserpageComponent, canActivate: [AuthGuard]},

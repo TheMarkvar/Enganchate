@@ -34,18 +34,43 @@
           <h4 class="price">precio actual: <span>$ {{servicio.precio}}</span></h4>
           <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
 
-          <div class="action" *ngIf="servicio.publicador != idUsuarioActual">
-            <button class="add-to-cart btn btn-default" (click)="onClickPurchase()"
-            type="button">Comprar</button>
-            <button class="add-to-cart btn btn-default" (click)="onClickContact()"
-            type="button">Contactar</button>
-          </div>
 
           <div class="action" *ngIf="servicio.publicador == idUsuarioActual">
             <button class="add-to-cart btn btn-default" (click)="onClickEditService()"
             type="button">Editar</button>
             <button class="add-to-cart btn btn-default" (click)="onClickDeleteService()"
             type="button">Eliminar</button>
+          </div>
+
+          <div class="action" *ngIf="servicio.publicador != idUsuarioActual">
+            <button class="add-to-cart btn btn-default" (click)="onClickPurchase()"
+            type="button">Comprar</button>
+            <button class="add-to-cart btn btn-default"
+            type="button" data-toggle="modal" data-target="#sendMessageModal">Contactar</button>
+          </div>
+
+            <div class="modal fade" id="sendMessageModal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Enviar Mensaje</h4>
+                  <button class="close" data-dismiss="modal">&times;</button>
+                </div>
+                  <div class="modal-body">
+                    <div class="form-group">
+                      <label>Destinatario: {{usuario.displayName}}</label>
+                      <br>
+                      <label for="message">Mensaje</label>
+                      <textarea class="form-control" rows="5" id="message" name="message" required
+                        placeholder="Digite su mensaje" title="" [(ngModel)]="message"></textarea>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-primary" data-dismiss="modal"(click)="onSubmitSendMessageUser()">Enviar</button>
+                    <button class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                  </div>
+              </div>
+            </div>
           </div>
 
         </div>

@@ -29,7 +29,6 @@ import { Modalidad } from '../../modelos/modalidad';
 export class ChatpageComponent implements OnInit {
   private usuarioOrigen:Usuario;
   private usuarioDestino:Usuario;
-  private usuarioDestinoParametro:Usuario;
   private destinoParametro = false;
   private status = "";
   private inicialesOrigen="";
@@ -51,15 +50,8 @@ export class ChatpageComponent implements OnInit {
   ngOnInit() {
 
     this.usuarioOrigen = new Usuario();
-    this.usuarioDestinoParametro = new Usuario();
-    this.usuarioOrigen = new Usuario();
+    this.usuarioDestino = new Usuario();
 
-    this.activatedRoute.queryParams
-      .filter(params => params.destination)
-      .subscribe(params => {
-        this.usuarioDestinoParametro.idUsuario = params.destination;
-        this.destinoParametro = true;
-      });
 
     this.authService.getAuth().subscribe(auth=>{
         if(auth){
@@ -68,10 +60,7 @@ export class ChatpageComponent implements OnInit {
         }
       }
     );
-    if(this.destinoParametro){
-        this.cargarUsuario(this.usuarioDestinoParametro.idUsuario, this.usuarioDestinoParametro,
-        this.inicialesDestinoParametro);
-    }
+
 
 
 
