@@ -17,17 +17,19 @@ export class ChatService {
 
   insertMessageDatabase(idOrigen:string, idDestino:string, contenido:string){
 
+    var fecha = new Date();
     var idMensaje;
     this.getMensajes();
     this.mensaje = new Mensaje();
     this.mensaje.idOrigen = idOrigen;
     this.mensaje.idDestino = idDestino;
     this.mensaje.contenido = contenido;
-    this.mensaje.fecha = new Date();
-    //console.log(this.mensaje);
-
+    this.mensaje.fecha = fecha.toString();
     idMensaje = this.listaMensajes.push(this.mensaje);
+
     this.getMensajes();
+    this.mensaje = new Mensaje();
+    this.mensaje.idmensaje = idMensaje.path.pieces_[1];
     this.listaMensajes.update(idMensaje.path.pieces_[1],this.mensaje);
 
 

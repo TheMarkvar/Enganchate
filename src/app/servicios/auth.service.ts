@@ -16,7 +16,7 @@ export class AuthService {
   userId: string; // current user uid
   mouseEvents:  Subscription
   timer: Subscription;
-  maxTime: number = 5000;
+  maxTime: number = 60000;
 
   constructor(
     public afAuth: AngularFireAuth,
@@ -68,7 +68,7 @@ export class AuthService {
 
      this.mouseEvents = Observable
                           .fromEvent(document, 'mousemove')
-                          .throttleTime(5000)
+                          .throttleTime(this.maxTime)
                           .do(() => {
                              this.updateStatus('online')
                              this.resetTimer()

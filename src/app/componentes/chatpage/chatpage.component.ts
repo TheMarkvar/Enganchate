@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PipeContactosPipe } from '../../pipes/pipe-contactos.pipe';
 
 import { FlashMessagesService} from 'angular2-flash-messages';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
@@ -10,7 +11,7 @@ import { DatabaseService } from '../../servicios/database.service';
 import { DatabaseServicioService } from '../../servicios/database-servicio.service';
 import { OptionsService } from '../../servicios/options.service';
 import { UploadService } from '../../servicios/upload.service';
-
+import { ChatService } from '../../servicios/chat.service';
 import { Servicio } from  '../../modelos/servicio';
 import { Usuario } from  '../../modelos/usuario';
 import { Ciudad } from  '../../modelos/ciudad';
@@ -19,6 +20,8 @@ import { OpcionDuracion } from  '../../modelos/opcion-duracion';
 import { TipoPago } from  '../../modelos/tipo-pago';
 import { Observable } from 'rxjs/Observable';
 import { Modalidad } from '../../modelos/modalidad';
+import { Mensaje } from '../../modelos/mensaje';
+
 
 
 @Component({
@@ -27,12 +30,18 @@ import { Modalidad } from '../../modelos/modalidad';
   styleUrls: ['./chatpage.component.scss']
 })
 export class ChatpageComponent implements OnInit {
-  private usuarioOrigen:Usuario;
+  private usuarioActual:Usuario;
   private usuarioDestino:Usuario;
   private destinoParametro = false;
   private status = "";
   private inicialesOrigen="";
   private inicialesDestinoParametro="";
+  private nuevoMensaje = "";
+  private buscarContacto="";
+
+  private mapaContactos;
+  private listaMensajesTotalesUsuarioActual = [];
+  private listaMensajesOrigenDestino = [];
 
 
   constructor(
@@ -42,21 +51,28 @@ export class ChatpageComponent implements OnInit {
     private databaseServicioService:DatabaseServicioService,
     public databaseService: DatabaseService,
     private uploadService:UploadService,
+    public chatService: ChatService,
     public flashMensaje: FlashMessagesService,
     public router:Router,
     private _sanitizer: DomSanitizer
   ) { }
 
+
   ngOnInit() {
 
-    this.usuarioOrigen = new Usuario();
+    //console.log(this.listaBasura);
+
+
+    this.usuarioActual = new Usuario();
     this.usuarioDestino = new Usuario();
+    this.mapaContactos = new Map();
 
 
     this.authService.getAuth().subscribe(auth=>{
         if(auth){
-          this.usuarioOrigen.idUsuario = auth.uid;
-          this.cargarUsuario(this.usuarioOrigen.idUsuario, this.usuarioOrigen, this.inicialesOrigen);
+          this.usuarioActual.idUsuario = auth.uid;
+          this.cargarUsuario(this.usuarioActual.idUsuario, this.usuarioActual, this.inicialesOrigen);
+          this.cargarMensajes(this.usuarioActual.idUsuario);
         }
       }
     );
@@ -66,10 +82,126 @@ export class ChatpageComponent implements OnInit {
 
   }
 
+  cargarMensajes(idUsuario:string){
+
+      this.chatService.getMensajes().snapshotChanges().subscribe(item=>{
+        this.listaMensajesTotalesUsuarioActual = [];
+        item.forEach(element=>{
+          let x = element.payload.toJSON();
+          x["$key"] = element.key;
+          let mensajeAux:Mensaje = new Mensaje();
+          let usuarioEncontrado:boolean = false;
+
+
+          if(x["idOrigen"]===idUsuario || x["idDestino"]===idUsuario){
+            usuarioEncontrado = true;
+          }
+
+          for(var key in x){
+            var value = x[key];
+
+            if(key === "idOrigen"){
+              mensajeAux.idOrigen = value;
+            }
+            else if(key === "idDestino"){
+              mensajeAux.idDestino = value;
+            }
+            else if(key === "contenido"){
+              mensajeAux.contenido = value;
+            }
+            else if(key === "fecha"){
+              mensajeAux.fecha = value;
+            }
+            else if(key === "idmensaje"){
+              mensajeAux.idmensaje = value;
+            }
+          }
+          if(usuarioEncontrado){
+
+              this.listaMensajesTotalesUsuarioActual.push(mensajeAux);
+          }
+
+
+        });
+
+        for(let x in this.listaMensajesTotalesUsuarioActual){
+          if(idUsuario===this.listaMensajesTotalesUsuarioActual[x].idDestino){
+            this.cargarContactos(this.listaMensajesTotalesUsuarioActual[x].idOrigen);
+          }
+          else if(idUsuario===this.listaMensajesTotalesUsuarioActual[x].idOrigen){
+            this.cargarContactos(this.listaMensajesTotalesUsuarioActual[x].idDestino);
+          }
+        }
+
+        if(this.usuarioDestino.idUsuario!=null){
+          this.getMensajes(this.usuarioDestino);
+        }
+
+      });
+
+  }
+
+  getKeys(map){
+     return Array.from(map.keys());
+  }
+
+  getValues(map){
+     return Array.from(map.values());
+  }
+
+  cargarContactos(idUsuario:string){
+
+    this.databaseService.getUsuarios().snapshotChanges().subscribe(item => {
+
+      item.forEach(element => {
+        let x = element.payload.toJSON();
+        x["$key"] = element.key;
+
+        let usuarioAux:Usuario = new Usuario();
+        let usuarioEncontrado:boolean = false;
+
+        if(x["idUsuario"]===idUsuario){
+          usuarioEncontrado = true;
+        }
+
+        for(var key in x) {
+          let value = x[key];
+          if(key === "idUsuario"){
+            usuarioAux.idUsuario = value;
+          }
+          else if(key === "status"){
+            usuarioAux.status = value;
+          }
+          else if(key === "displayName"){
+            usuarioAux.displayName = value;
+            let aux = value.split(" ");
+            usuarioAux.iniciales = aux[0].toUpperCase().charAt(0) + aux[1].toUpperCase().charAt(0);
+          }
+          else if(key === "tieneImagen"){
+            usuarioAux.tieneImagen = value;
+          }
+        }
+        if(usuarioEncontrado){
+
+          if(usuarioAux.tieneImagen){
+            this.uploadService.downloadFile('usuarios/'+usuarioAux.idUsuario).subscribe(URL=>{
+              //console.log(URL);
+              usuarioAux.direccion = URL;
+            });
+          }
+
+            this.mapaContactos.set(usuarioAux.idUsuario,usuarioAux);
+            //this.mapaContactosFiltrado.set(usuarioAux.idUsuario,usuarioAux);
+        }
+      });
+      //console.log(this.mapaContactos);
+    });
+
+  }
+
+
 
   cargarUsuario(id:string, usuarioParam:Usuario, iniciales:string){
-
-
     let usuario:Usuario = new Usuario();
 
     this.databaseService.getUsuarios().snapshotChanges().subscribe(item => {
@@ -108,6 +240,9 @@ export class ChatpageComponent implements OnInit {
             else if(key === "telefono"){
               usuario.telefono = value;
             }
+            else if(key === "tieneImagen"){
+              usuario.tieneImagen = value;
+            }
           }
 
 
@@ -126,9 +261,133 @@ export class ChatpageComponent implements OnInit {
       }
     )});
 
+  }
 
+  getMensajes(usuarioParaVerChat:Usuario){
+    //console.log(usuarioParaVerChat);
+    this.usuarioDestino = usuarioParaVerChat;
+    //console.log(this.usuarioDestino);
+
+    this.listaMensajesOrigenDestino = [];
+    for(let x in this.listaMensajesTotalesUsuarioActual){
+      let contenido, idOrigen, idDesitno, nombreOrigen, idDestino, nombreDestino,
+      tieneImagen, URLImagenDestino, fechaMensaje, status;
+      let mensajeCompleto:{ contenido: string, idOrigen:string, nombreOrigen:string,
+        idDestino:string, nombreDestino:string, tieneImagen:boolean,
+        URLImagenDestino:string, fechaMensaje:string, status:boolean};
+
+      if(usuarioParaVerChat.idUsuario===this.listaMensajesTotalesUsuarioActual[x].idDestino
+        && this.usuarioActual.idUsuario===this.listaMensajesTotalesUsuarioActual[x].idOrigen){
+        //this.listaMensajesOrigenDestino.push(this.listaMensajesTotalesUsuarioActual[x]);
+        contenido = this.listaMensajesTotalesUsuarioActual[x].contenido;
+        idOrigen = this.usuarioActual.idUsuario;
+        nombreOrigen = this.usuarioActual.displayName;
+        idDestino = this.listaMensajesTotalesUsuarioActual[x].idDestino;
+        nombreDestino = usuarioParaVerChat.displayName;
+        tieneImagen = usuarioParaVerChat.tieneImagen;
+        status = usuarioParaVerChat.status;
+        if(tieneImagen){
+          URLImagenDestino = usuarioParaVerChat.direccion;
+        }
+        fechaMensaje = this.formatoFecha(new Date(this.listaMensajesTotalesUsuarioActual[x].fecha));
+        mensajeCompleto = {contenido:contenido, idOrigen:idOrigen, nombreOrigen:nombreOrigen,
+        idDestino:idDestino, nombreDestino:nombreDestino, tieneImagen:tieneImagen,
+        URLImagenDestino:URLImagenDestino, fechaMensaje:fechaMensaje, status:status};
+        this.listaMensajesOrigenDestino.push(mensajeCompleto);
+      }
+      else if(usuarioParaVerChat.idUsuario===this.listaMensajesTotalesUsuarioActual[x].idOrigen
+       && this.usuarioActual.idUsuario===this.listaMensajesTotalesUsuarioActual[x].idDestino){
+        contenido = this.listaMensajesTotalesUsuarioActual[x].contenido;
+        idOrigen = usuarioParaVerChat.idUsuario;
+        nombreOrigen = usuarioParaVerChat.displayName;
+        idDestino = this.usuarioActual.idUsuario;
+        nombreDestino = this.usuarioActual.displayName;
+        tieneImagen = usuarioParaVerChat.tieneImagen;
+        status = usuarioParaVerChat.status;
+        if(tieneImagen){
+          URLImagenDestino = usuarioParaVerChat.direccion;
+        }
+        fechaMensaje = this.formatoFecha(new Date(this.listaMensajesTotalesUsuarioActual[x].fecha));
+        mensajeCompleto = {contenido:contenido, idOrigen:idOrigen, nombreOrigen:nombreOrigen,
+        idDestino:idDestino, nombreDestino:nombreDestino, tieneImagen:tieneImagen,
+        URLImagenDestino:URLImagenDestino, fechaMensaje:fechaMensaje, status:status,};
+        this.listaMensajesOrigenDestino.push(mensajeCompleto);
+      }
+    }
+    //console.log(this.listaMensajesOrigenDestino);
 
 
   }
+
+  compararPosicionEnChat(id:string){
+    if(id==this.usuarioActual.idUsuario){
+      return true;
+    }
+    return false;
+  }
+
+  formatoFecha(date:Date){
+
+    let format="";
+    let today:Date = new Date();
+    let dif = Math.abs( (+today) - (+date) );
+
+
+    let YY = date.getFullYear();
+    let MM = date.getMonth();
+    let DD = date.getDate();
+    let mm = date.getMinutes();
+
+    let secs = dif / 1000;
+    let mins = secs / 60;
+    let hours = mins / 60;
+    let days = hours/ 24;
+    let weeks = days / 7;
+    let months = days/30;
+
+    if(Number(months.toFixed(0))>0){
+      format = "Hace " + months.toFixed(0) + " meses, "+DD+"/"+MM+"/"+YY;
+    }
+    else if(Number(weeks.toFixed(0))>0){
+      format = "Hace " + weeks.toFixed(0) + " semanas, "+DD+"/"+MM+"/"+YY;
+    }
+    else if(Number(days.toFixed(0))>0){
+      format = "Hace " + days.toFixed(0) + " dias, "+DD+"/"+MM+"/"+YY;
+    }
+    else if(Number(hours.toFixed(0))==1){
+      format = "Hace 1 hora";
+    }
+    else if(Number(hours.toFixed(0))>0){
+      format = "Hace " + hours.toFixed(0) + " horas";
+    }
+    else if(Number(mins.toFixed(0))==1){
+      format = "Hace 1 minuto";
+    }
+    else if(Number(mins.toFixed(0))>0){
+      format = "Hace " + mins.toFixed(0) + " minutos";
+    }
+    else if(Number(secs.toFixed(0))<60 && Number(secs.toFixed(0))>0){
+      format = "Hace " + secs.toFixed(0) + " segundos";
+    }
+    else{
+      format = "Hace 1 segundo";
+    }
+
+
+    return format;
+  }
+
+  enviarMensaje(){
+    if(this.usuarioActual.idUsuario && this.usuarioDestino.idUsuario){
+      if(this.nuevoMensaje!=""){
+        this.chatService.insertMessageDatabase(this.usuarioActual.idUsuario,
+          this.usuarioDestino.idUsuario, this.nuevoMensaje);
+
+      }
+    }
+    this.nuevoMensaje="";
+  }
+
+
 
 }

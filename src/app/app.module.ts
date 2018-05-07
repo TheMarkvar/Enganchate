@@ -6,6 +6,8 @@ import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 
 import { AppRoutingModule } from './app-routing.module';
 
+import { PipeContactosPipe } from './pipes/pipe-contactos.pipe';
+
 //Firebase
 import {FlashMessagesModule} from 'angular2-flash-messages';
 import {FlashMessagesService} from 'angular2-flash-messages';
@@ -48,6 +50,7 @@ import { PurchasedservicespageComponent } from './componentes/purchasedservicesp
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,7 +67,8 @@ import { PurchasedservicespageComponent } from './componentes/purchasedservicesp
     PublishedservicesuserpageComponent,
     ChatpageComponent,
     PaymentspageComponent,
-    PurchasedservicespageComponent
+    PurchasedservicespageComponent,
+    PipeContactosPipe
   ],
   imports: [
     BrowserModule,

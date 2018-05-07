@@ -33,6 +33,7 @@ export class DatabaseService {
      this.usuario.email = email;
      this.usuario.displayName = displayName;
      this.usuario.edad = edad;
+     this.usuario.tieneImagen = false;
 
      this.afDatabase.database.ref(this.pathUsuarios+'/'+id).set(this.usuario);
    }
@@ -45,7 +46,8 @@ export class DatabaseService {
     return true;
   }
 }
-  insertUserDatabaseLogin(id:string, email:string, displayName:string){
+  insertUserDatabaseLogin(id:string, email:string, displayName:string, tieneImagen:boolean,
+  pathImagen:string){
 
     var user = this.getUsuario(id).then(
       function(snapshot) {
@@ -60,19 +62,23 @@ export class DatabaseService {
         this.usuario.idUsuario = id;
         this.usuario.email = email;
         this.usuario.displayName = displayName;
+        this.usuario.tieneImagen = tieneImagen;
+        this.usuario.URLImagenExterna = pathImagen;
         this.afDatabase.database.ref(this.pathUsuarios+'/'+id).set(this.usuario);
       }
     });
 
   }
 
-  updateUser(id:string, nombre:string, documento:string, direccion:string, telefono:string){
+  updateUser(id:string, nombre:string, documento:string, direccion:string, telefono:string,
+    tieneImagen:boolean){
     this.getUsuarios();
     this.usuario = new Usuario();
     this.usuario.displayName = nombre;
     this.usuario.documento = documento;
     this.usuario.direccion = direccion;
     this.usuario.telefono = telefono;
+    this.usuario.tieneImagen = tieneImagen;
     this.listaUsuarios.update(id, this.usuario);
   }
 
@@ -85,7 +91,7 @@ export class DatabaseService {
   }
 
   getUsuario2(id:string){
-    
+
     return  this.afDatabase.database.ref(this.pathUsuarios+'/'+id).once('value');
   }
 

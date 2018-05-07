@@ -136,7 +136,7 @@ export class EditarperfilpageComponent implements OnInit {
   onSubmitEditarPerfilUser(){
     if(this.verificarFormulario()){
       this.databaseService.updateUser(this.authService.afAuth.auth.currentUser.uid,
-      this.displayName, this.documento, this.direccion, this.telefono);
+      this.displayName, this.documento, this.direccion, this.telefono, this.fotoInicial);
       //console.log(this.authService.afAuth.auth.currentUser.uid);
       //console.log(this.displayName);
       //console.log(this.documento);

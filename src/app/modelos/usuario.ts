@@ -9,6 +9,9 @@ export class Usuario {
   idUsuario:string;
   servicios:Array<string>;
   status:string;
+  tieneImagen:boolean;
+  URLImagenExterna:string;
+  iniciales:string;
 
 
 }

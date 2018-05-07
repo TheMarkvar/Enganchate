@@ -3,7 +3,7 @@ export class Mensaje {
   idmensaje:string;
   idOrigen:string;
   idDestino:string;
-  fecha:Date;
+  fecha:any;
   contenido:string;
 
 }

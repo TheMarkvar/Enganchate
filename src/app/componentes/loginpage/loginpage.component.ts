@@ -105,7 +105,9 @@ export class LoginpageComponent implements OnInit {
     let id = this.authService.afAuth.auth.currentUser.uid;
     let email = this.authService.afAuth.auth.currentUser.email;
     let displayName = this.authService.afAuth.auth.currentUser.displayName;
-    this.databaseService.insertUserDatabaseLogin(id,email, displayName);
+    let pathImagen = this.authService.afAuth.auth.currentUser.photoURL;
+    let tieneImagen = true;
+    this.databaseService.insertUserDatabaseLogin(id,email, displayName, tieneImagen, pathImagen);
   }
 
 
