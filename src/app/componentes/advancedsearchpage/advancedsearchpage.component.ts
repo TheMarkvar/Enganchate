@@ -71,7 +71,6 @@ export class AdvancedsearchpageComponent implements OnInit {
         this.buscar = params.search;
       });
       //console.log(this.buscar);
-
     this.cargarCategorias();
     this.cargarCiudades();
     this.cargarTiposPago();
