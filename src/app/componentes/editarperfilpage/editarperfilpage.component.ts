@@ -26,6 +26,7 @@ export class EditarperfilpageComponent implements OnInit {
   private file:File=null;
   private nombreArchivo:string;
   private fotoInicial:boolean = false;
+  private fotoBD:boolean = false;
   private cargarFoto:boolean = false;
   private iniciales:string;
 
@@ -85,13 +86,34 @@ export class EditarperfilpageComponent implements OnInit {
             this.telefono = value;
         });
 
-        if(auth.photoURL != null){
+        /*if(auth.photoURL != null){
             this.nombreArchivo = auth.photoURL;
-            //this.nombreArchivo = 'assets/images/light-sky-blue-solid-color-background.jpg';
         }else{
             this.nombreArchivo = 'assets/images/light-sky-blue-solid-color-background.jpg';
             this.fotoInicial = true;
-        }
+        }*/
+
+        var userTI = this.databaseService.getUsuario(auth.uid).then(
+          function(snapshot) {
+           var res = (snapshot.val() && snapshot.val().tieneImagen);
+           return res;
+        });
+        userTI.then((msg: boolean) => {
+          this.fotoBD = msg;
+
+          if(this.fotoBD){
+            this.uploadService.downloadFile('usuarios/'+auth.uid).subscribe(URL=>{
+              this.nombreArchivo = URL;
+            });
+          }
+          else if(auth.photoURL != null){
+              this.nombreArchivo = auth.photoURL;
+          }else{
+              this.nombreArchivo = 'assets/images/light-sky-blue-solid-color-background.jpg';
+              this.fotoInicial = true;
+          }
+
+        });
 
 
         this.file = new File([""], this.nombreArchivo);
@@ -135,16 +157,15 @@ export class EditarperfilpageComponent implements OnInit {
   }
   onSubmitEditarPerfilUser(){
     if(this.verificarFormulario()){
-      this.databaseService.updateUser(this.authService.afAuth.auth.currentUser.uid,
-      this.displayName, this.documento, this.direccion, this.telefono, this.fotoInicial);
-      //console.log(this.authService.afAuth.auth.currentUser.uid);
-      //console.log(this.displayName);
-      //console.log(this.documento);
-      //console.log(this.direccion);
-      //console.log(this.telefono);
 
-      if(!this.fotoInicial){
+      if(this.cargarFoto){
           this.uploadFile();
+          this.databaseService.updateUser(this.authService.afAuth.auth.currentUser.uid,
+          this.displayName, this.documento, this.direccion, this.telefono, this.cargarFoto);
+
+      }else{
+        this.databaseService.updateUser(this.authService.afAuth.auth.currentUser.uid,
+        this.displayName, this.documento, this.direccion, this.telefono, this.cargarFoto);
       }
 
 

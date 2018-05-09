@@ -62,9 +62,15 @@ export class DatabaseService {
         this.usuario.idUsuario = id;
         this.usuario.email = email;
         this.usuario.displayName = displayName;
-        this.usuario.tieneImagen = tieneImagen;
+        //this.usuario.tieneImagenExterna = tieneImagen;
         this.usuario.URLImagenExterna = pathImagen;
         this.afDatabase.database.ref(this.pathUsuarios+'/'+id).set(this.usuario);
+      }else{
+        this.getUsuarios();
+        this.usuario = new Usuario();
+        //this.usuario.tieneImagenExterna = tieneImagen;
+        this.usuario.URLImagenExterna = pathImagen;
+        this.listaUsuarios.update(id, this.usuario);
       }
     });
 

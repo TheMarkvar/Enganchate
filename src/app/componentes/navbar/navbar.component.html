@@ -48,12 +48,17 @@
       <li class="nav-item" *ngIf="isLogin">
         <a class="nav-link" routerLink="/editProfile">{{username}}</a>
       </li>
-      <li class="nav-item" *ngIf="tieneFotoExterna && isLogin">
+      <li class="nav-item" *ngIf="tieneFotoExterna && isLogin && !tieneImagen">
         <input type="image" class="rounded-circle" src="{{fotoUsuario}}"
         routerLink="/editProfile" alt="Submit">
       </li>
 
-      <li class="nav-item" *ngIf="!tieneFotoExterna && isLogin">
+      <li class="nav-item" *ngIf="tieneImagen && isLogin">
+        <input type="image" class="rounded-circle" src="{{fotoUsuario}}"
+        routerLink="/editProfile" alt="Submit">
+      </li>
+
+      <li class="nav-item" *ngIf="!tieneFotoExterna && !tieneImagen && isLogin">
         <input type="image" class="rounded-circle" src="assets/images/light-sky-blue-solid-color-background.jpg"
         routerLink="/editProfile">
         <a class="nav-link centered" routerLink="/editProfile">{{iniciales}}</a>

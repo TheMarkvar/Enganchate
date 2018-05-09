@@ -26,7 +26,7 @@
   <div class="col-md-4">
     <div class="people-list" id="people-list">
       <div class="search">
-        <input type="search" [(ngModel)]="buscarContacto" (change)="filtrarContactos()" placeholder="search" />
+        <input type="search" [(ngModel)]="buscarContacto" placeholder="search" />
         <i class="fa fa-search"></i>
       </div>
 
@@ -35,15 +35,18 @@
 
 
           <img class="rounded-circle" src="{{usuario.direccion}}" (click)="getMensajes(usuario)"
-          alt="avatar" *ngIf="usuario.tieneImagen" />
+          alt="avatar" *ngIf="usuario.tieneImagen && usuario.direccion" />
+
+          <img class="rounded-circle" src="{{usuario.direccion}}" (click)="getMensajes(usuario)"
+          alt="avatar" *ngIf="!usuario.tieneImagen && usuario.URLImagenExterna" />
 
           <img class="rounded-circle" src="assets/images/light-sky-blue-solid-color-background.jpg"
-          alt="avatar" *ngIf="!usuario.tieneImagen " (click)="getMensajes(usuario)"/>
+          alt="avatar" *ngIf="!usuario.tieneImagen && !usuario.direccion && !usuario.URLImagenExterna" (click)="getMensajes(usuario)"/>
 
 
           <div class="about">
             <div class="name" (click)="getMensajes(usuario)">{{usuario.displayName}}</div>
-            <div class="status">
+            <div class="status" >
               <i class="fa fa-circle {{usuario.status}}"></i>  {{usuario.status}}
             </div>
           </div>
@@ -54,25 +57,28 @@
   </div>
 
   <div class="col-md-8">
-    <div class="chat" *ngIf="usuarioDestino.idUsuario">
+    <div class="chat" *ngIf="usuarioDestino.idUsuario && listaMensajesOrigenDestino.length>0" >
 
       <div class="chat-header clearfix">
-        <img  class="rounded-circle"
-        src="{{usuarioDestino.direccion}}" *ngIf="usuarioDestino.tieneImagen" alt="avatar" />
+      <!--<i style="font-size:24px" class="fa">&#xf00d;</i>-->
+
+        <img  class="rounded-circle" (click)="userProfile(usuarioDestino)"
+        src="{{usuarioDestino.direccion}}" *ngIf="usuarioDestino.direccion" alt="avatar" />
         <img  class="rounded-circle"src="assets/images/light-sky-blue-solid-color-background.jpg"
-         *ngIf="!usuarioDestino.tieneImagen" alt="avatar" />
+         *ngIf="!usuarioDestino.direccion" alt="avatar" (click)="userProfile(usuarioDestino)"/>
 
 
-        <div class="chat-about" >
-          <div class="chat-with">Chat con {{usuarioDestino.displayName}}</div>
+        <div class="chat-about">
+          <div class="chat-with" (click)="userProfile(usuarioDestino)">Chat con {{usuarioDestino.displayName}}</div>
           <div class="chat-num-messages">{{listaMensajesOrigenDestino.length}} Mensajes</div>
         </div>
-        <i class="fa fa-star"></i>
+        <!--<i class="fa fa-star"></i>-->
+        <i class="fa fa-close" (click)="cancelarChat()"></i>
       </div>
 
       <div class="chat-history">
-        <ul>
-            <li *ngFor="let message of listaMensajesOrigenDestino">
+        <ul class="list">
+            <li class="clearfix" *ngFor="let message of listaMensajesOrigenDestino">
 
               <div class="clearfix" *ngIf="compararPosicionEnChat(message.idOrigen)">
                 <div class="message-data align-right">
@@ -80,13 +86,21 @@
                   <span class="message-data-name" >{{message.nombreOrigen}}</span> <i class="fa fa-circle me"></i>
 
                 </div>
+
+
                 <div class="message other-message float-right">
                   {{message.contenido}}
                 </div>
+
+                <div class="hours-other-message">
+                  {{message.horaMensaje}}
+                </div>
+
+
               </div>
 
               <div class="clearfix" *ngIf="!compararPosicionEnChat(message.idOrigen)">
-                <div class="message-data">
+                <div class="message-data align-left">
                   <span class="message-data-name"><i class="fa fa-circle online"></i> {{message.nombreOrigen}}</span>
                   <span class="message-data-time">{{message.fechaMensaje}}</span>
                 </div>
@@ -94,6 +108,11 @@
                 <div class="message my-message">
                   {{message.contenido}}
                 </div>
+                <div class="hours-my-message">
+                  {{message.horaMensaje}}
+                </div>
+
+
               </div>
 
           </li>

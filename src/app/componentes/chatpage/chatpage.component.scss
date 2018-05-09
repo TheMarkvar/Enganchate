@@ -48,17 +48,6 @@ body {
     left: -25px;
   }
 
-  ul {
-    padding: 20px;
-    height: 500px;
-
-
-
-
-    li {
-      padding-bottom: 20px;
-    }
-  }
 
   img {
     float: left;
@@ -79,12 +68,23 @@ body {
 
 }
 
+ul {
+  padding: 20px;
+  height: 500px;
+  list-style-type: none;
+
+  li {
+    padding-bottom: 20px;
+  }
+}
+
 .chat {
   width: 100%;
   float:left;
   background: #F2F5F8;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
+
 
   color: #434651;
 
@@ -105,18 +105,27 @@ body {
     .chat-with {
       font-weight: bold;
       font-size: 16px;
+      cursor: pointer;
     }
 
     .chat-num-messages {
       color: $gray;
     }
 
-    .fa-star {
+    /*.fa-star {
       float: right;
       color: #D8DADF;
       font-size: 20px;
       margin-top: 12px;
+    }*/
+    .fa-close {
+      float: right;
+      color: #D8DADF;
+      font-size: 20px;
+      margin-top: 12px;
+      cursor: pointer;
     }
+
   }
 
   .chat-history {
@@ -140,8 +149,8 @@ body {
       line-height: 26px;
       font-size: 16px;
       border-radius: 7px;
-      margin-bottom: 30px;
-      width: 90%;
+      margin-bottom: 5px;
+      width: 95%;
       position: relative;
 
       &:after {
@@ -162,6 +171,13 @@ body {
     .my-message {
       background: $green;
     }
+    .hours-my-message{
+      //padding-top: -20px;
+      //padding-bottom: 10%;
+      float: left;
+      color: $gray;
+      font-size: 11px;
+    }
 
     .other-message {
       background: $blue;
@@ -170,6 +186,14 @@ body {
         border-bottom-color: $blue;
         left: 93%;
       }
+    }
+    .hours-other-message{
+      //padding-top: -20px;
+      //padding-bottom: 10%;
+      float: right;
+      text-align: right;
+      color: $gray;
+      font-size: 11px;
     }
 
   }
@@ -244,6 +268,13 @@ body {
 .float-right {
   float: right;
 }
+.float-left {
+  float: left;
+}
+
+.clearfix{
+  padding-bottom: 5px;
+}
 
 .clearfix:after {
 	visibility: hidden;
@@ -253,7 +284,6 @@ body {
 	clear: both;
 	height: 0;
 }
-
 
 .is-success{
   color: green;

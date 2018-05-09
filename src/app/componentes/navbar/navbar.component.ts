@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../servicios/auth.service';
 import { DatabaseService } from '../../servicios/database.service';
+import { UploadService } from '../../servicios/upload.service';
 import { Router } from '@angular/router';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { Usuario } from '../../modelos/usuario';
@@ -13,6 +14,7 @@ import { Usuario } from '../../modelos/usuario';
 export class NavbarComponent implements OnInit {
   public isLogin:boolean;
   public tieneFotoExterna:boolean;
+  public tieneImagen:boolean;
   public username:string;
   public iniciales:string;
   public email:string;
@@ -24,7 +26,8 @@ export class NavbarComponent implements OnInit {
     public authService: AuthService,
     public databaseService: DatabaseService,
     public router:Router,
-    public flashMensaje: FlashMessagesService
+    public flashMensaje: FlashMessagesService,
+    private uploadService:UploadService,
   ) { }
 
   ngOnInit() {
@@ -48,15 +51,32 @@ export class NavbarComponent implements OnInit {
           }
         });
 
+        var userTI = this.databaseService.getUsuario(auth.uid).then(
+          function(snapshot) {
+           var res = (snapshot.val() && snapshot.val().tieneImagen);
+           return res;
+        });
+        userTI.then((msg: boolean) => {
+          this.tieneImagen = msg;
+
+          if(this.tieneImagen){
+            this.uploadService.downloadFile('usuarios/'+auth.uid).subscribe(URL=>{
+              this.fotoUsuario = URL;
+            });
+          }
+          else if(auth.photoURL != null){
+              this.fotoUsuario = auth.photoURL;
+              this.tieneFotoExterna = true;
+          }else{
+              this.tieneFotoExterna = false;
+          }
+
+        });
+
         this.email = auth.email;
 
-        if(auth.photoURL != null){
-            this.fotoUsuario = auth.photoURL;
-            this.tieneFotoExterna = true;
-        }else{
-            this.tieneFotoExterna = false;
-        }
-        //console.log(auth);
+
+
       }else{
         this.isLogin = false;
         this.tieneFotoExterna = false;
