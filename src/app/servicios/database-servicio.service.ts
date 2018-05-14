@@ -18,7 +18,7 @@ export class DatabaseServicioService {
   }
   insertServiceDatabase(publicador:string,categoria:string,nombre:string,descripcion:string,tiempo_duracion:number,
                         opcion_duracion:string,precio:number,zona_cobertura:Array<string>,modalidad:Array<string>,
-                        tipo_pago:Array<string>,fecha:Date){
+                        direccion:string, tipo_pago:Array<string>,fecha:Date){
 
     var variable;
     this.getServicios();
@@ -33,6 +33,7 @@ export class DatabaseServicioService {
     this.servicio.zona_cobertura=zona_cobertura;
     this.servicio.modalidad=modalidad;
     this.servicio.tipo_pago=tipo_pago;
+    this.servicio.direccion=direccion;
     this.servicio.fecha=fecha.toString();
     variable=this.listaServicios.push(this.servicio);
     this.servicio.pathImagen=variable.path.pieces_[1];

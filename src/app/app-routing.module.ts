@@ -13,6 +13,7 @@ import { PublishedservicesuserpageComponent } from './componentes/publishedservi
 import { ChatpageComponent } from './componentes/chatpage/chatpage.component';
 import { PaymentspageComponent } from './componentes/paymentspage/paymentspage.component';
 import { PurchasedservicespageComponent } from './componentes/purchasedservicespage/purchasedservicespage.component';
+import { UserprofilepageComponent } from './componentes/userprofilepage/userprofilepage.component';
 
 
 import {NotfoundpageComponent} from './componentes/notfoundpage/notfoundpage.component';
@@ -31,6 +32,8 @@ const routes: Routes = [
   {path: 'advancedSearch/:id', component: AdvancedsearchpageComponent, runGuardsAndResolvers: 'always'},
   {path: 'service', component: ServicepageComponent, runGuardsAndResolvers: 'always'},
   {path: 'service/:id', component: ServicepageComponent, runGuardsAndResolvers: 'always'},
+  {path: 'userProfile', component: ServicepageComponent, canActivate: [LoginGuard]},
+  {path: 'userProfile/:id', component: ServicepageComponent, canActivate: [LoginGuard]},
   {path: 'chat', component: ChatpageComponent, canActivate: [AuthGuard]},
   {path: 'payment', component: PaymentspageComponent, canActivate: [AuthGuard]},
   {path: 'purchasedServices', component: PurchasedservicespageComponent, canActivate: [AuthGuard]},

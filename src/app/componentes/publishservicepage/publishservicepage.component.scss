@@ -1,10 +1,207 @@
+$brand-primary: #2196F3; // Blue 500
+$brand-muted: rgba(0,0,0,.38);
+$grey-100: #F5F5F5;
+$grey-200: #EEEEEE;
+$grey-400: #BDBDBD;
+$brown: #BD7435;
+$blue: #94C2ED;
+$border-radius: 3px;
+$shadow-z-1: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+
+
+.title{
+  font-size: 15;
+  font-weight: bold;
+}
+
+
+textarea{
+  width:100%;
+  margin:5px 0;
+  padding:3px;
+}
+
+input[type="radio"],
 input[type="checkbox"]{
+  visibility: hidden;
+   position: absolute;
+ }
+
+label > div > input + img{
+  cursor:pointer;
+  filter: invert(0%);
+}
+
+label > div > input[type="radio"]:checked + img{
+  filter: invert(100%);
+  background-color: $brown;
+}
+
+label > div > input[type="radio"]:hover + img{
+  filter: invert(100%);
+  background-color: $brown;
+}
+
+label > div > input[type="checkbox"]:checked + img{
+  filter: invert(100%);
+  background-color: $brown;
+}
+
+label > div > input[type="checkbox"]:hover + img{
+  filter: invert(100%);
+  background-color: $brown;
+}
+
+.resume-title{
+  font-weight: bold;
+}
+
+
+
+
+// Module - Stepper (style structure based on http://maintainablecss.com)
+
+.stepper {
+    background-color: #fff;
+    margin-bottom: 90px;
+    border-radius: $border-radius;
+    box-shadow: $shadow-z-1;
+}
+
+.stepper-steps {
+    height: 72px;
+    background-color: #fff;
+    border-radius: $border-radius;
+    box-shadow: $shadow-z-1;
+}
+
+.stepper-steps-isOffset {
+    position: relative;
+    top: -30px;
+    margin: 0 15px -30px 15px;
+}
+
+.stepper-content {
+    padding: 24px;
+}
+
+.stepper-step {
+    float: left;
+    width: 100/4%; // fixme: only works because there's 3 steps
+    padding: 24px;
+    //cursor: not-allowed;
+    //cursor: pointer;
+    color: rgba(0,0,0,.87);
+    position: relative;
+    text-align: center;
+
+    &:not(.stepper-step-isDisabled):hover,
+    &:not(.stepper-step-isDisabled):hover .stepper-stepContent {
+       background-color: $grey-100;
+    }
+
+    &:first-child {
+        text-align: left;
+    }
+
+    &:last-child {
+        text-align: right;
+    }
+}
+
+// Connector line
+.stepper-step {
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 36px;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: $grey-400;
+    }
+    &:first-child::after {
+        left: 24px;
+    }
+    &:last-child::after {
+        right: 24px;
+    }
+}
+
+.stepper-step-isActive {
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.stepper-step-isValid {
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.stepper-step-isDisabled {
+    color: rgba(0,0,0,.38);
+    cursor: default;
+}
+
+.stepper-stepMarker {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    text-align: center;
+    color: white;
+    line-height: 24px;
+    background-color: $brand-muted;
+    border-radius: 24px;
+    font-weight: 100;
+    font-size: 12px;
+}
+
+.stepper-step-isActive .stepper-stepMarker {
+    background-color: $brand-primary;
+}
+
+.stepper-step-isValid .stepper-stepMarker {
+    text-indent: -10000px;
+    background: url('data:image/svg+xml;charset=utf8,<svg fill="#FFFFFF" height="20" viewBox="0 0 24 24" width="19" xmlns="http://www.w3.org/2000/svg"><path d="M0 0h24v24H0z" fill="none"/> <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>') no-repeat $brand-primary;
+    background-position: 2px 1px;
+    background-color: $brand-primary;
+}
+
+// colored block to cover the connector line where needed
+.stepper-stepContent {
+    display: inline-block;
+    position: relative;
+    z-index: 2;
+    padding: 0 8px;
+    background-color: #fff;
+}
+
+agm-map {
+  height: 300px;
+}
+
+
+// Boilerplate for presentation only
+body {
+    background-color: $grey-200;
+    padding: 60px 0;
+    font-family: 'Roboto';
+    font-size: 14px;
+    font-weight: 400;
+}
+
+img { max-width: 100%; }
+
+
+
+/*input[type="checkbox"]{
   display: none;
 }
 
 input[type="radio"]{
   display: none;
-}
+}*/
 
 img.rounded-circle{
   width: 200px;
@@ -35,18 +232,6 @@ img.rounded-circle{
   background: rgba(0, 116, 115, 0.1);
 }
 
- input[type="radio"]:checked+label,
- input[type="checkbox"]:checked+label{
-  padding: 5px 5px;
-  background: #0074D9;
-  border-radius: 2px;
-  color: #fff;
-}
-
- input[type="radio"]:checked+label:before,
- input[type="checkbox"]:checked+label:before{
-  display: none;
-}
 
 .centered {
     position: absolute;
@@ -87,18 +272,21 @@ img.rounded-circle{
 }*/
 ng-multiselect-dropdown.ng-invalid,
 select.ng-invalid,
+textarea.ng-invalid,
 input.ng-invalid{
   border-radius:  5px solid red;
 }
 
 ng-multiselect-dropdown.ng-valid.ng-touched,
 select.ng-valid.ng-touched,
+textarea.ng-valid.ng-touched,
 input.ng-valid.ng-touched{
   border-left: 5px solid green;
 }
 
 ng-multiselect-dropdown.ng-invalid.ng-touched,
 select.ng-invalid.ng-touched,
+textarea.ng-invalid.ng-touched,
 input.ng-invalid.ng-touched{
   border-left: 5px solid red;
 }

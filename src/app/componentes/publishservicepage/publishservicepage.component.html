@@ -1,120 +1,361 @@
-<div class="row">
-  <div class="col-md-6 mx-auto mt-5">
-    <div class="card">
-      <div class="card-body">
-        <h1 class="text-center">PUBLICAR SERVICIO</h1>
+<div class="container">
 
-        <br>
+    <div class="stepper">
 
 
+        <div class="stepper-steps">
 
-
-        <form #publishform="ngForm" (submit)="onSubmitPublicarServicio(publishform)">
-
-          <div class="custom-file">
-              <input type="file" id = "file1" name="file1"
-              class="custom-file-input" (change)="getEvent($event.target.files)"
-              accept="image/png, image/jpeg, image/jpg" max="2MB" required>
-
-              <label class="custom-file-label">Subir imagen</label>
-              <div class="invalid-feedback">Example invalid custom file feedback</div>
+          <div class="col-sm-3 stepper-step" *ngIf="!firstStepVisible && !firstStepCompleted">
+              <div class="stepper-stepContent" (click)="onFirstStep()">
+                  <span class="stepper-stepMarker">1</span>Seleccionar categoría
+              </div>
           </div>
-            <br>
-            <div class="nav-item">
-                <br>
-                <img [src]="nombreArchivo" *ngIf="fotoDisponible" class="center rounded-circle" >
-                <a class="centered" *ngIf="fotoDisponible">{{iniciales}}</a>
+          <div class="col-sm-3 stepper-step stepper-step-isActive" *ngIf="firstStepVisible && !firstStepCompleted">
+              <div class="stepper-stepContent">
+                  <span class="stepper-stepMarker">1</span>Seleccionar categoría
+              </div>
+          </div>
+          <div class="col-sm-3 stepper-step stepper-step-isValid" *ngIf="firstStepCompleted">
+              <div class="stepper-stepContent" (click)="onFirstStep()">
+                  <span class="stepper-stepMarker">1</span>Seleccionar categoría
+              </div>
+          </div>
+
+
+
+            <div class="col-sm-3 stepper-step" *ngIf="!secondStepVisible && !secondStepCompleted">
+                <div class="stepper-stepContent">
+                    <span class="stepper-stepMarker">2</span>Describir producto
+                </div>
             </div>
-            <br>
-
-              <ng-multiselect-dropdown name="ciudades"
-                    [(ngModel)]="selectedItems"
-                    [placeholder]="'Seleccione las ciudades'"
-                    [data]="ciudades"
-                    [settings]="dropdownSettings"
-                    (onSelect)="onItemSelect($event)"
-                    (onDeSelect)="OnItemDeSelect($event)"
-                    (onSelectAll)="onSelectAll($event)"
-                    (onDeSelectAll)="onDeSelectAll($event)"
-                >
-              </ng-multiselect-dropdown><br>
+            <div class="col-sm-3 stepper-step stepper-step-isActive" *ngIf="secondStepVisible && !secondStepCompleted">
+                <div class="stepper-stepContent" (click)="onSecondStep()">
+                    <span class="stepper-stepMarker">2</span>Describir producto
+                </div>
+            </div>
+            <div class="col-sm-3 stepper-step stepper-step-isValid" *ngIf="secondStepCompleted">
+                <div class="stepper-stepContent" (click)="onSecondStep()">
+                    <span class="stepper-stepMarker">2</span>Describir Producto
+                </div>
+            </div>
 
 
-              <div class="form-group">
-                  <div class="col-xs-5 selectContainer">
-                    <label for="categoria">Categoría</label>
-                     <select class="form-control" name="categoria" ngModel required>
-                       <option *ngFor="let cat of categorias" [value]="cat.nombre">
-                          {{cat.nombre}}
-                       </option>
-                    </select>
-                   </div>
+
+            <div class="col-sm-3 stepper-step" *ngIf="!thirdStepVisible && !thirdStepCompleted">
+                <div class="stepper-stepContent">
+                    <span class="stepper-stepMarker">3</span>Zona de cobertura y precio
+                </div>
+            </div>
+            <div class="col-sm-3 stepper-step stepper-step-isActive" *ngIf="thirdStepVisible && !thirdStepCompleted">
+                <div class="stepper-stepContent" (click)="onThirdStep()">
+                    <span class="stepper-stepMarker">3</span>Zona de cobertura y precio
+                </div>
+            </div>
+            <div class="col-sm-3 stepper-step stepper-step-isValid" *ngIf="thirdStepCompleted">
+                <div class="stepper-stepContent" (click)="onThirdStep()">
+                    <span class="stepper-stepMarker">3</span>Zona de cobertura y precio
+                </div>
+            </div>
+
+            <div class="col-sm-3 stepper-step" *ngIf="!fourthStepVisible && !fourthStepCompleted">
+                <div class="stepper-stepContent">
+                    <span class="stepper-stepMarker">4</span>Resumen
+                </div>
+            </div>
+            <div class="col-sm-3 stepper-step stepper-step-isActive" *ngIf="fourthStepVisible && !fourthStepCompleted">
+                <div class="stepper-stepContent">
+                    <span class="stepper-stepMarker">4</span>Resumen
+                </div>
+            </div>
+            <div class="col-sm-3 stepper-step stepper-step-isValid" *ngIf="fourthStepCompleted">
+                <div class="stepper-stepContent">
+                    <span class="stepper-stepMarker">4</span>Resumen
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <div class="stepper-content" *ngIf="firstStepVisible">
+          <br>
+          <p class="title">Categorías</p>
+          <div class="row">
+            <label for="{{cat.id}}" *ngFor="let cat of getValues(categorias) | pipeCategorias:1" >
+              <div class="col-xs-4" *ngIf="cat.pathImagen">
+                  <input id="{{cat.id}}" name="opc-cat" type="radio" (change)="getEventCategory($event)" value="{{cat.nombre}}" >
+                  <img src="{{cat.pathImagen}}" />
               </div>
-              <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" name="nombre" id="nombre"
-                ngModel class="form-control" required>
+
+            </label>
+          </div>
+          <div class="stepper-actions">
+            <a class="btn btn-outline-info">Atrás</a>
+            <a  class="btn btn-outline-info pull-right mbn"
+              (click)="onNextFirstStep()">Continuar</a>
+          </div>
+        </div>
+
+        <div class="stepper-content" *ngIf="firstStepCompleted && secondStepVisible">
+          <br>
+          <p class="title">Descripción</p>
+
+
+            <div class="custom-file">
+                <input type="file" id = "file1" name="file1"
+                class="custom-file-input" (change)="getEvent($event.target.files)"
+                accept="image/png, image/jpeg, image/jpg" max="2MB" required>
+
+                <label class="custom-file-label">Subir imagen</label>
+                <div class="invalid-feedback">Example invalid custom file feedback</div>
+            </div>
+              <br>
+              <div class="nav-item">
+                  <br>
+                  <img [src]="nombreArchivo" *ngIf="fotoDisponible" class="center rounded-circle" >
+                  <a class="centered" *ngIf="fotoDisponible">{{iniciales}}</a>
               </div>
-              <div class="form-group">
-                <label for="descripcion">Descripción</label>
-                <input type="text" name="descripcion" id="descripcion"
-                ngModel class="form-control" required>
+              <br>
+
+
+                <div class="form-group">
+                  <label for="nombre">Nombre</label><br>
+                  <textarea name="nombre" id="nombre" [(ngModel)]="nombre" rows="4" cols="30" required>
+                    </textarea>
+                </div>
+                <div class="form-group">
+                  <label for="descripcion">Descripción</label>
+                  <textarea rows="4" cols="30" name="descripcion" [(ngModel)]="descripcion" id="descripcion"
+                    required></textarea>
+                </div>
+
+               <div class="form-row">
+                    <div class="col">
+                      <label for="tiempo_duracion">Tiempo</label>
+                      <input type="number" name="tiempo_duracion" id="tiempo_duracion"
+                      [(ngModel)]="tiempo_duracion"  class="form-control" min='1' required>
+                    </div>
+
+                    <div class="col selectContainer">
+                      <label for="opcion_duracion">Opción</label>
+                       <select class="form-control" name="opcion_duracion" [(ngModel)]="opcion_duracion" required>
+                         <option *ngFor="let opc of opcDuracion" [value]="opc.nombre">
+                            {{opc.nombre}}
+                         </option>
+                      </select>
+                    </div>
+                </div>
+                <br>
+
+          <div class="stepper-actions">
+              <a class="btn btn-outline-info"
+              (click)="onBackSecondStep()">Atrás</a>
+              <a  class="btn btn-outline-info pull-right mbn"
+              (click)="onNextSecondStep()">Continuar</a>
+
+          </div>
+        </div>
+
+        <!--<div class="stepper-content">-->
+        <div class="stepper-content" *ngIf="secondStepCompleted && thirdStepVisible">
+          <br> <p class="title">Ubicación</p>
+
+            <div class="row">
+              <div class="col-sm-7">
+                <div class="form-group">
+                 <input type="text" id="search" placeholder="Digite su dirección" autocorrect="off" autocapitalize="off" spellcheck="off" class="form-control" #search>
+                </div>
+                <div class="form-group">
+                  <label class="title" for="ciudades">Ciudades de cobertura</label>
+                  <ng-multiselect-dropdown name="ciudades"
+
+                        [placeholder]="'Seleccione las ciudades'"
+                        [data]="ciudades"
+                        [settings]="dropdownSettings"
+                        (onSelect)="onItemSelect($event)"
+                        (onDeSelect)="OnItemDeSelect($event)"
+                        (onSelectAll)="onSelectAll($event)"
+                        (onDeSelectAll)="onDeSelectAll($event)"
+                    >
+                  </ng-multiselect-dropdown>
+                </div>
+
+                <div class="form-group">
+                    <label class="title" for="modalidades">Modalidades del servicio</label>
+                    <ng-multiselect-dropdown name="modalidades"
+                       [placeholder]="'Seleccione las modalidades'"
+                       [data]="modalidades"
+                       [settings]="dropdownSettings3"
+                       (onSelect)="onItemSelect3($event)"
+                       (onDeSelect)="OnItemDeSelect3($event)"
+                       (onSelectAll)="onSelectAll3($event)"
+                       (onDeSelectAll)="onDeSelectAll3($event)"
+                       >
+                   </ng-multiselect-dropdown>
+                </div>
+
+
+                <div class="form-group">
+                  <p class="title">Métodos de pago</p>
+
+                    <label class="col-xs-4" for="{{pago.id}}" *ngFor="let pago of getValues(pagos)" >
+                      <div *ngIf="pago.pathImagen">
+                          <input id="{{pago.id}}" name="opc-cat" type="checkbox" (change)="getEventPayment($event)" value="{{pago.nombre}}" >
+                          <img src="{{pago.pathImagen}}" />
+                      </div>
+                      {{pago.nombre}}
+
+                    </label>
+
+                </div>
+
+                <div class="form-group">
+                  <label class="title" for="precio">Precio $</label>
+                  <input type="number" name="precio" id="precio"
+                  [(ngModel)]="precio" class="form-control" min='1' required>
+                </div>
+
               </div>
 
-             <div class="form-row">
-                 <div class="col">
-                   <label for="precio">Precio $</label>
-                   <input type="number" name="precio" id="precio"
-                   ngModel class="form-control" min='1' required>
-                 </div>
-                  <div class="col">
-                    <label for="tiempo_duracion">Tiempo</label>
-                    <input type="number" name="tiempo_duracion" id="tiempo_duracion"
-                    ngModel  class="form-control" min='1' required>
+              <div class="col-sm-5">
+                <agm-map #map id="map" [scrollwheel]="false" [zoom]="zoom" [latitude]="lat" [longitude]="lng">
+                  <agm-marker [latitude]="lat" [longitude]="lng" *ngIf="locationChosen"></agm-marker>
+                </agm-map>
+              </div>
+            </div>
+
+            <div class="stepper-actions">
+                <a class="btn btn-outline-info"
+                (click)="onBackThirdStep()">Atrás</a>
+                <a  class="btn btn-outline-info pull-right mbn"
+                (click)="onNextThirdStep()">Continuar</a>
+            </div>
+        </div>
+
+        <div class="stepper-content" *ngIf="thirdStepCompleted && fourthStepVisible">
+            <br> <p class="resume-title">Resumen del servicio</p>
+            <div class="row">
+              <div class="col-sm-3 resume-title">
+                Categoria
+              </div>
+              <div class="col-sm-8">
+                <div class="row">
+                  {{opcionCategoria}}
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-3 resume-title">
+                Nombre
+              </div>
+              <div class="col-sm-8">
+                <div class="row">
+                  {{nombre}}
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-3 resume-title">
+                Descripción
+              </div>
+              <div class="col-sm-8">
+                <div class="row">
+                  {{descripcion}}
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-3 resume-title">
+                Tiempo Duración
+              </div>
+              <div class="col-sm-8">
+                <div class="row">
+                  {{tiempo_duracion}}
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-3 resume-title">
+                Opción Duración
+              </div>
+              <div class="col-sm-8">
+                <div class="row">
+                  {{opcion_duracion}}
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-3 resume-title">
+                Dirección
+              </div>
+              <div class="col-sm-8">
+                <div class="row">
+                  {{direccion}}
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-3 resume-title">
+                Ciudades
+              </div>
+              <div class="col-sm-8">
+                <div class="row">
+                  <div *ngFor="let ciudad of this.selectedItems">
+                    {{ciudad.nombre}} <br>
                   </div>
+                </div>
 
-                  <div class="col selectContainer">
-                    <label for="categoria">Opción</label>
-                     <select class="form-control" name="opcion_duracion" ngModel required>
-                       <option *ngFor="let opc of opcDuracion" [value]="opc.nombre">
-                          {{opc.nombre}}
-                       </option>
-                    </select>
-                  </div>
               </div>
-              <br>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-3 resume-title">
+                Modalidades
+              </div>
+              <div class="col-sm-8">
+                <div class="row">
+                  <div *ngFor="let modalidad of this.selectedItems3">
+                    {{modalidad.nombre}} <br>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-3 resume-title">
+                Métodos de pago
+              </div>
+              <div class="col-sm-8">
+                <div class="row">
+                  <div *ngFor="let pago of getValues(opcionesPago)">
+                    {{pago}} <br>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="stepper-actions">
+                <a class="btn btn-outline-info"
+                (click)="onBackFourthStep()">Atrás</a>
+                <a  class="btn btn-outline-info pull-right mbn"
+                (click)="onNextFourthStep()">Publicar</a>
+            </div>
+        </div>
 
 
-             <ng-multiselect-dropdown name="tipos_pago"
-                 [(ngModel)]="selectedItems2"
-                 [placeholder]="'Seleccione los tipos de pago'"
-                 [data]="tipoPago"
-                 [settings]="dropdownSettings2"
-                 (onSelect)="onItemSelect2($event)"
-                 (onDeSelect)="OnItemDeSelect2($event)"
-                 (onSelectAll)="onSelectAll($event)"
-                 (onDeSelectAll)="onDeSelectAll($event)"
-             >
-             </ng-multiselect-dropdown><br>
-              <br>
-
-              <ng-multiselect-dropdown name="modalidades"
-                 [(ngModel)]="selectedItems3"
-                 [placeholder]="'Seleccione las modalidades'"
-                 [data]="modalidades"
-                 [settings]="dropdownSettings3"
-                 (onSelect)="onItemSelect3($event)"
-                 (onDeSelect)="OnItemDeSelect3($event)"
-                 (onSelectAll)="onSelectAll($event)"
-                 (onDeSelectAll)="onDeSelectAll($event)"
-                 >
-             </ng-multiselect-dropdown><br>
-
-              <br>
-              <input type="submit" value="PUBLICAR" class="btn btn-primary btn-block btn-lg">
-        </form>
-
-      </div>
     </div>
-  </div>
+
 </div>

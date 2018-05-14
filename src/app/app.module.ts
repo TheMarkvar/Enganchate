@@ -1,12 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { AgmCoreModule } from '@agm/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ShowHidePasswordModule } from 'ngx-show-hide-password';
 
 import { AppRoutingModule } from './app-routing.module';
 
 import { PipeContactosPipe } from './pipes/pipe-contactos.pipe';
+import { PipeCategoriasPipe } from './pipes/pipe-categorias.pipe';
 
 //Firebase
 import {FlashMessagesModule} from 'angular2-flash-messages';
@@ -47,6 +49,8 @@ import { PublishedservicesuserpageComponent } from './componentes/publishedservi
 import { ChatpageComponent } from './componentes/chatpage/chatpage.component';
 import { PaymentspageComponent } from './componentes/paymentspage/paymentspage.component';
 import { PurchasedservicespageComponent } from './componentes/purchasedservicespage/purchasedservicespage.component';
+import { UserprofilepageComponent } from './componentes/userprofilepage/userprofilepage.component';
+
 
 
 
@@ -68,7 +72,9 @@ import { PurchasedservicespageComponent } from './componentes/purchasedservicesp
     ChatpageComponent,
     PaymentspageComponent,
     PurchasedservicespageComponent,
-    PipeContactosPipe
+    PipeContactosPipe,
+    PipeCategoriasPipe,
+    UserprofilepageComponent
   ],
   imports: [
     BrowserModule,
@@ -76,6 +82,10 @@ import { PurchasedservicespageComponent } from './componentes/purchasedservicesp
     FormsModule,
     NgMultiSelectDropDownModule.forRoot(),
     ShowHidePasswordModule.forRoot(),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCmF3OuEqyZ9dU_h8gtJD6dep2EVAuhl4k',
+      libraries:['places']
+    }),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,

@@ -3,6 +3,7 @@ export class Servicio {
   publicador:string;
   categoria:string;
   nombre:string;
+  direccion:string;
   descripcion:string;
   tiempo_duracion:number;
   opcion_duracion:string;
