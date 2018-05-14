@@ -48,12 +48,12 @@
 
 
       <li class="nav-item dropdown" *ngIf="isLogin">
-        <input type="image" *ngIf="tieneImagen || tieneFotoExterna" class="dropdown-toggle rounded-circle" src="{{fotoUsuario}}" data-toggle="dropdown" href="/home" role="button" aria-haspopup="true" aria-expanded="false">
-        <input type="image" *ngIf="!tieneImagen && !tieneFotoExterna" class="dropdown-toggle rounded-circle" src="assets/images/light-sky-blue-solid-color-background.jpg" data-toggle="dropdown" href="/home"  aria-haspopup="true" aria-expanded="false">
+        <input type="image" *ngIf="tieneImagen || tieneFotoExterna" class="dropdown-toggle rounded-circle" src="{{fotoUsuario}}" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+        <input type="image" *ngIf="!tieneImagen && !tieneFotoExterna" class="dropdown-toggle rounded-circle" src="assets/images/light-sky-blue-solid-color-background.jpg" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <a *ngIf="!tieneImagen && !tieneFotoExterna" class="dropdown-toggle dropdown-style2 centered" data-toggle="dropdown" href="/home"  aria-haspopup="true" aria-expanded="false">{{iniciales}}</a>
         <div class="dropdown-menu">
           <a class="dropdown-item dropdown-style" routerLink="/editProfile">Editar Perfil</a>
-          <a class="dropdown-item dropdown-style" routerLink="/editProfile">Ver Historial</a>
+          <a class="dropdown-item dropdown-style" routerLink="/userProfile">Ver Historial</a>
         </div>
       </li>
 

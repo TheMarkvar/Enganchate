@@ -12,4 +12,8 @@ export class UserprofilepageComponent implements OnInit {
   ngOnInit() {
   }
 
+  sendMessage(){
+    console.log("sendMessage");
+  }
+
 }
