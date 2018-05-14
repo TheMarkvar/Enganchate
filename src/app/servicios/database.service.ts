@@ -77,14 +77,16 @@ export class DatabaseService {
   }
 
   updateUser(id:string, nombre:string, documento:string, direccion:string, telefono:string,
-    tieneImagen:boolean){
+    descripcion:string, tieneImagen:boolean, tienePortada:boolean){
     this.getUsuarios();
     this.usuario = new Usuario();
     this.usuario.displayName = nombre;
     this.usuario.documento = documento;
     this.usuario.direccion = direccion;
     this.usuario.telefono = telefono;
+    this.usuario.descripcion = descripcion;
     this.usuario.tieneImagen = tieneImagen;
+    this.usuario.tieneImagenPortada = tienePortada;
     this.listaUsuarios.update(id, this.usuario);
   }
 

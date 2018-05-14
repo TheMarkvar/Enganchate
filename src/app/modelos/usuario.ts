@@ -3,6 +3,7 @@ export class Usuario {
   email:string;
   displayName:string;
   direccion:string;
+  descripcion:string;
   telefono:string;
   documento:string;
   edad:Date;
@@ -10,7 +11,10 @@ export class Usuario {
   servicios:Array<string>;
   status:string;
   tieneImagen:boolean;
+  tieneImagenPortada:boolean;
   URLImagenExterna:string;
+  URLImagen:string;
+  URLImagenPortada:string;
   iniciales:string;
 
 

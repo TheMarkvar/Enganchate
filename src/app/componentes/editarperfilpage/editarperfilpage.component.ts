@@ -22,12 +22,20 @@ export class EditarperfilpageComponent implements OnInit {
   public displayName:string;
   public direccion:string="";
   public documento:string="";
+  private descripcion:string="";
   public telefono:string="";
   private file:File=null;
   private nombreArchivo:string;
   private fotoInicial:boolean = false;
   private fotoBD:boolean = false;
+
+  private file2:File=null;
+  private nombreArchivo2:string;
+  private fotoInicial2:boolean = false;
+  private fotoBD2:boolean = false;
+
   private cargarFoto:boolean = false;
+  private cargarFoto2:boolean = false;
   private iniciales:string;
 
 
@@ -54,6 +62,16 @@ export class EditarperfilpageComponent implements OnInit {
             let aux = this.displayName.split(" ");
             this.iniciales = aux[0].toUpperCase().charAt(0) + aux[1].toUpperCase().charAt(0);
           }
+        });
+
+        var userDesc = this.databaseService.getUsuario(auth.uid).then(
+          function(snapshot) {
+           var res = (snapshot.val() && snapshot.val().descripcion);
+           return res;
+        });
+        userDesc.then((value: string) => {
+          if(value!=null)
+            this.descripcion = value;
         });
 
         var userDoc = this.databaseService.getUsuario(auth.uid).then(
@@ -86,13 +104,6 @@ export class EditarperfilpageComponent implements OnInit {
             this.telefono = value;
         });
 
-        /*if(auth.photoURL != null){
-            this.nombreArchivo = auth.photoURL;
-        }else{
-            this.nombreArchivo = 'assets/images/light-sky-blue-solid-color-background.jpg';
-            this.fotoInicial = true;
-        }*/
-
         var userTI = this.databaseService.getUsuario(auth.uid).then(
           function(snapshot) {
            var res = (snapshot.val() && snapshot.val().tieneImagen);
@@ -116,12 +127,71 @@ export class EditarperfilpageComponent implements OnInit {
         });
 
 
+
+
+        var userTF = this.databaseService.getUsuario(auth.uid).then(
+          function(snapshot) {
+           var res = (snapshot.val() && snapshot.val().tieneImagenPortada);
+           return res;
+        });
+        userTF.then((msg: boolean) => {
+          this.fotoBD2 = msg;
+
+          if(this.fotoBD2){
+            this.uploadService.downloadFile('usuarios/BACKGROUND_'+auth.uid).subscribe(URL=>{
+              this.nombreArchivo2 = URL;
+            });
+          }else{
+              this.nombreArchivo2 = 'assets/images/light-sky-blue-solid-color-background.jpg';
+              this.fotoInicial2 = true;
+          }
+
+        });
+
+
+
+
         this.file = new File([""], this.nombreArchivo);
+        this.file2 = new File([""], this.nombreArchivo2);
 
       }
     });
 
 
+
+  }
+
+  onSubmitEditarPerfilUser(){
+
+    if(this.cargarFoto && this.cargarFoto2){
+        this.uploadFile();
+        this.uploadFile2();
+        this.databaseService.updateUser(this.authService.afAuth.auth.currentUser.uid,
+        this.displayName, this.documento, this.direccion, this.telefono, this.descripcion,
+        this.cargarFoto, this.cargarFoto2);
+
+    }
+    else if(this.cargarFoto){
+        this.uploadFile();
+        this.databaseService.updateUser(this.authService.afAuth.auth.currentUser.uid,
+        this.displayName, this.documento, this.direccion, this.telefono, this.descripcion,
+        this.cargarFoto, !this.cargarFoto2);
+
+    }else if(this.cargarFoto2){
+      this.uploadFile2();
+      this.databaseService.updateUser(this.authService.afAuth.auth.currentUser.uid,
+      this.displayName, this.documento, this.direccion, this.telefono, this.descripcion,
+      !this.cargarFoto, this.cargarFoto2);
+    }else{
+      this.databaseService.updateUser(this.authService.afAuth.auth.currentUser.uid,
+      this.displayName, this.documento, this.direccion, this.telefono, this.descripcion,
+      !this.cargarFoto,!this.cargarFoto2);
+    }
+
+
+    this.flashMensaje.show('Información editada correctamente',
+    {cssClass: 'alert-success', timeout: 4000});
+    this.router.navigate(['']);
 
   }
 
@@ -142,6 +212,23 @@ export class EditarperfilpageComponent implements OnInit {
 
   }
 
+  uploadFile2(){;
+    //const task = this.storage.upload(filePath, file);
+    const path = "usuarios/BACKGROUND_"+this.authService.afAuth.auth.currentUser.uid;
+    //const task = this.uploadService.uploadFile(this.file, path);
+
+    if(this.cargarFoto2){
+      const task = this.uploadService.uploadFile(this.file2, path);
+      this.uploadPercent = task.percentageChanges();
+
+      this.uploadService.downloadFile(path).subscribe(URL=>{
+        //console.log(URL.toString());
+        //this.authService.updateProfile(URL.toString(), this.displayName);
+      });
+    }
+
+  }
+
   getEvent(file:FileList){
     this.file = file.item(0);
 
@@ -155,32 +242,19 @@ export class EditarperfilpageComponent implements OnInit {
     this.cargarFoto = true;
 
   }
-  onSubmitEditarPerfilUser(){
-    if(this.verificarFormulario()){
 
-      if(this.cargarFoto){
-          this.uploadFile();
-          this.databaseService.updateUser(this.authService.afAuth.auth.currentUser.uid,
-          this.displayName, this.documento, this.direccion, this.telefono, this.cargarFoto);
+  getEventBackground(file:FileList){
+    this.file2 = file.item(0);
 
-      }else{
-        this.databaseService.updateUser(this.authService.afAuth.auth.currentUser.uid,
-        this.displayName, this.documento, this.direccion, this.telefono, this.cargarFoto);
-      }
+    var reader = new FileReader();
+    reader.readAsDataURL(this.file2);
 
-
-      this.flashMensaje.show('Información editada correctamente',
-      {cssClass: 'alert-success', timeout: 4000});
-      this.router.navigate(['']);
-    }else{
-      this.flashMensaje.show("No fue posible modificar datos",
-      {cssClass: 'alert-danger', timeout: 4000});
+    reader.onload = (event:any) => {
+      this.nombreArchivo2 = event.target.result;
     }
-  }
+    this.fotoInicial2 = false;
+    this.cargarFoto2 = true;
 
-  //Se debe implementar el método para que datos sean coherentes
-  verificarFormulario(){
-    return true;
   }
 
   cambiarContrasena(){
