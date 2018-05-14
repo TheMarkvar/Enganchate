@@ -455,7 +455,9 @@ export class ChatpageComponent implements OnInit {
   }
 
   userProfile(usuarioDestino:Usuario){
-    console.log(usuarioDestino);
+    //console.log(usuarioDestino);
+    this.router.navigate(['/userProfile'], { queryParams: { search: usuarioDestino.idUsuario } });
+    //this.router.navigate(['/userProfile'], { queryParams: { search: usuarioDestino } });
   }
 
   cancelarChat(){
