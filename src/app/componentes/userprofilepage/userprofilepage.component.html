@@ -1,9 +1,9 @@
 <div class="container">
   <div class="imgStyle">
-    <img src="{{usuarioActual.URLImagenPortada}}" height="250" width="100%"
+    <img src="{{usuarioActual.URLImagenPortada}}" height="100%" width="100%"
     alt="avatar" *ngIf="!usuarioParam.idUsuario && usuarioActual.URLImagenPortada" >
 
-    <img src="{{usuarioParam.URLImagenPortada}}"
+    <img src="{{usuarioParam.URLImagenPortada}}" height="100%" width="100%"
     alt="avatar" *ngIf="usuarioParam.idUsuario && usuarioParam.URLImagenPortada" >
 
   </div>
