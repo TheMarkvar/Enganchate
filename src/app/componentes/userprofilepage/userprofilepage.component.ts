@@ -311,6 +311,7 @@ export class UserprofilepageComponent implements OnInit {
     }
     if(servicioValido){
         this.listaServiciosPublicadosParam.push(servicioFiltro);
+        //console.log(servicioFiltro);
     }
 
 

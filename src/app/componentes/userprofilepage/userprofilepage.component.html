@@ -113,7 +113,7 @@
         <p>No Hay Servicios Disponibles</p>
     </div>
 
-      <div class="row gallery" *ngIf="serviciosPublicados && !usuarioParam.idUsuario && listaServiciosPublicadosActual.length>0">
+      <div class="form-row" *ngIf="serviciosPublicados && !usuarioParam.idUsuario && listaServiciosPublicadosActual.length>0">
         <div class="col-md-6" *ngFor="let servicio of listaServiciosPublicadosActual">
 
             <article class="card-wrapper">
@@ -133,24 +133,22 @@
                 </h1>
 
                 <div class="row">
-                  <div class="col-xs-12 col-sm-8 product-description__category secondary-text">
+                  <div class="col-xs-6 col-md-4 col-sm-4 product-description__category secondary-text">
                     {{servicio.categoria}}
                   </div>
-                  <div class="col-xs-12 col-sm-4 product-description__price">
+                  <div class="col-xs-6 col-md-2 col-sm-2 product-description__price">
                     $ {{servicio.precio}}
                   </div>
                 </div>
 
-                <hr />
 
-                    <div class="sizes-wrapper">
-                      <b>Zona de cobertura</b>
-                      <br />
-                      <span class="secondary-text text-uppercase">
-
-                          {{servicio.zona_cobertura.toString()}}
-                      </span>
-                    </div>
+                <div class="sizes-wrapper">
+                  <b>Zona de cobertura</b>
+                  <br />
+                  <span class="secondary-text text-uppercase">
+                      {{servicio.zona_cobertura.toString()}}
+                  </span>
+                </div>
                 <div class="sizes-wrapper">
                   <b>Tipo de pago</b>
                   <br />
@@ -169,7 +167,7 @@
           <p>No Hay Servicios Disponibles</p>
       </div>
 
-      <div class="row gallery" *ngIf="serviciosPublicados && usuarioParam.idUsuario && listaServiciosPublicadosParam.length>0">
+      <div class="form-row" *ngIf="serviciosPublicados && usuarioParam.idUsuario && listaServiciosPublicadosParam.length>0">
           <div class="col-md-6" *ngFor="let servicio of listaServiciosPublicadosParam">
             <article class="card-wrapper">
               <div class="image-holder">
@@ -189,10 +187,10 @@
 
 
                 <div class="row">
-                  <div class="col-xs-12 col-sm-8 product-description__category secondary-text">
+                  <div class="col-xs-6 col-sm-4 product-description__category secondary-text">
                     {{servicio.categoria}}
                   </div>
-                  <div class="col-xs-12 col-sm-4 product-description__price">
+                  <div class="col-xs-6 col-sm-2 product-description__price">
                     $ {{servicio.precio}}
                   </div>
                 </div>
@@ -206,7 +204,6 @@
                       <b>Zona de cobertura</b>
                       <br />
                       <span class="secondary-text text-uppercase">
-
                           {{servicio.zona_cobertura.toString()}}
                       </span>
                     </div>

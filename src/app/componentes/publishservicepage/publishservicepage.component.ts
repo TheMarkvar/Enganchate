@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild,ElementRef,NgZone,AfterViewInit } from '@angular/core';
+import { Component, OnInit,ViewChild,ElementRef,NgZone,AfterViewInit,ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 //import { DatabaseService } from '../../servicios/database.service';
 import { FlashMessagesService} from 'angular2-flash-messages';
@@ -90,7 +90,8 @@ export class PublishservicepageComponent implements OnInit, AfterViewInit {
     public authService: AuthService,
     private mapsAPILoader: MapsAPILoader,
     private ngZone:NgZone,
-    private _sanitizer: DomSanitizer
+    private _sanitizer: DomSanitizer,
+    private changeDetector : ChangeDetectorRef
   ) {
     this.fecha=new Date();
     this.categorias = new Map();
@@ -98,49 +99,15 @@ export class PublishservicepageComponent implements OnInit, AfterViewInit {
     this.opcionesPago = new Map();
 
 
+
   }
 
 
   ngAfterViewInit() {
-    //console.log(this.searchElement);
   }
 
   ngOnInit() {
 
-    this.mapsAPILoader.load().then(
-       () => {
-
-         let autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, { types:["address"] });
-
-          autocomplete.addListener("place_changed", () => {
-          this.ngZone.run(() => {
-           let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-           if(place.geometry === undefined || place.geometry === null ){
-            return;
-          }else{
-            this.direccion = place.formatted_address;
-            let short_name = place.address_components[place.address_components.length-1].short_name;
-
-            if(short_name.toLowerCase().includes("co")){
-              this.direccionValida = true;
-            }else{
-              this.direccionValida = false;
-            }
-            //console.log(this.direccion);
-            this.lat = place.geometry.location.lat();
-            this.lng = place.geometry.location.lng();
-            this.zoom = 15;
-            this.locationChosen = true;
-
-
-          }
-
-           });
-          });
-
-       }
-
-      );
 
       this.OptionsService.getCiudades().snapshotChanges().subscribe(item => {
       this.ciudades = [];
@@ -240,6 +207,52 @@ export class PublishservicepageComponent implements OnInit, AfterViewInit {
             this.modalidades.push(x as Modalidad);});});
   }
 
+  initAddressOnMap(){
+
+    this.changeDetector.detectChanges();
+    this.mapsAPILoader.load().then(
+       () => {
+
+         if(this.searchElement!=null || this.searchElement!=undefined){
+           let autocomplete = new google.maps.places.Autocomplete(this.searchElement.nativeElement, { types:["address"] });
+
+            autocomplete.addListener("place_changed", () => {
+            this.ngZone.run(() => {
+             let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+             if(place.geometry === undefined || place.geometry === null ){
+              return;
+            }else{
+              this.direccion = place.formatted_address;
+              let valido = false;
+              //console.log(place);
+              //console.log(this.direccion);
+
+              for(let val of place.address_components){
+                if(val.short_name.toLowerCase()==="co"){
+                  valido = true;
+                }
+              }
+
+              this.direccionValida = valido;
+
+              //console.log(this.direccion);
+              this.lat = place.geometry.location.lat();
+              this.lng = place.geometry.location.lng();
+              this.zoom = 15;
+              this.locationChosen = true;
+
+
+            }
+
+             });
+            });
+         }
+
+
+       }
+     )
+
+  }
 
   uploadFile(idServicio:string){
     const path = "servicios/"+idServicio;
@@ -374,6 +387,7 @@ export class PublishservicepageComponent implements OnInit, AfterViewInit {
       this.secondStepCompleted = true;
       this.secondStepVisible = false;
       this.thirdStepVisible = true;
+      this.initAddressOnMap();
     }
   }
 
@@ -390,16 +404,17 @@ export class PublishservicepageComponent implements OnInit, AfterViewInit {
     let estado:boolean = true;
 
 
-    if(!this.direccion){
+    /*if(!this.direccion){
       this.direccion = "Bogotá";
       this.direccionValida = true;
-    }
+    }*/
 
     if(!this.direccion){
       estado = false;
       this.flashMensaje.show("Debe seleccionar una dirección válida",
       {cssClass: 'alert-danger', timeout: 4000});
     }else if(!this.direccionValida){
+      estado = false;
       this.flashMensaje.show("Debe seleccionar una dirección dentro de Colombia",
       {cssClass: 'alert-danger', timeout: 4000});
     }else if(this.selectedItems.length===0){
@@ -437,6 +452,7 @@ export class PublishservicepageComponent implements OnInit, AfterViewInit {
     this.selectedItems = [];
     this.selectedItems3 = [];
     this.opcionesPago.clear();
+    this.initAddressOnMap();
   }
 
   onNextFourthStep(){
@@ -449,20 +465,26 @@ export class PublishservicepageComponent implements OnInit, AfterViewInit {
       this.flashMensaje.show("Usuario con correo: "+ email+" debe confirmar cuenta",
       {cssClass: 'alert-danger', timeout: 4000});
     }else{
-      let path2, ciudades=[], modalidades=[];
+      let path2, ciudades=[], modalidades=[], pagos=[];
       for (let entry of this.selectedItems) {
            ciudades.push(entry.nombre);
       }
       for (let entry of this.selectedItems3) {
            modalidades.push(entry.nombre);
       }
+
+      for (let pago of this.getValues(this.opcionesPago)) {
+           pagos.push(pago);
+      }
+
+
       this.fourthStepCompleted = true;
       this.fourthStepVisible = false;
 
 
       path2=this.databaseServicio.insertServiceDatabase(this.authService.afAuth.auth.currentUser.uid,
       this.opcionCategoria,this.nombre, this.descripcion,this.tiempo_duracion, this.opcion_duracion,
-      this.precio,ciudades, modalidades, this.direccion, this.opcionesPago,this.fecha);
+      this.precio,ciudades, modalidades, this.direccion, pagos,this.fecha);
 
       this.uploadFile(path2);
 
@@ -507,6 +529,7 @@ export class PublishservicepageComponent implements OnInit, AfterViewInit {
     this.selectedItems = [];
     this.selectedItems3 = [];
     this.opcionesPago.clear();
+    this.initAddressOnMap();
 
   }
 
