@@ -30,18 +30,18 @@ import { Mensaje } from '../../modelos/mensaje';
   styleUrls: ['./chatpage.component.scss']
 })
 export class ChatpageComponent implements OnInit {
-  private usuarioActual:Usuario;
-  private usuarioDestino:Usuario;
-  private destinoParametro = false;
-  private status = "";
-  private inicialesOrigen="";
-  private inicialesDestinoParametro="";
-  private nuevoMensaje = "";
-  private buscarContacto="";
+  usuarioActual:Usuario;
+  usuarioDestino:Usuario;
+  destinoParametro = false;
+  status = "";
+  inicialesOrigen="";
+  inicialesDestinoParametro="";
+  nuevoMensaje = "";
+  buscarContacto="";
 
-  private mapaContactos;
-  private listaMensajesTotalesUsuarioActual = [];
-  private listaMensajesOrigenDestino = [];
+  mapaContactos;
+  listaMensajesTotalesUsuarioActual = [];
+  listaMensajesOrigenDestino = [];
 
 
   constructor(

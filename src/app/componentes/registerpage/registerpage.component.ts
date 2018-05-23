@@ -13,13 +13,13 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./registerpage.component.scss']
 })
 export class RegisterpageComponent implements OnInit {
-  private email:string;
-  public password:string;
-  public password2:string;
-  public nombres:string;
-  public apellidos:string;
-  public edad:Date;
-  public maxDate;
+  email:string;
+  password:string;
+  password2:string;
+  nombres:string;
+  apellidos:string;
+  edad:Date;
+  maxDate;
 
   constructor(
     public authService: AuthService,

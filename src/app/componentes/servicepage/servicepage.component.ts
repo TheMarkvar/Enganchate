@@ -43,37 +43,37 @@ export class ServicepageComponent implements OnInit {
     private _sanitizer: DomSanitizer
   ) { }
 
-  private servicio:Servicio;
-  private usuario:Usuario;
+  servicio:Servicio;
+  usuario:Usuario;
 
 
-  private iniciales = "";
-  private file:File=null;
-  private nombreArchivo:string;
-  private fotoInicial:boolean = false;
-  private cargarFoto:boolean = false;
-  private calificacion = '0';
-  private idUsuarioActual:string;
-  private cant = 0;
-  private message:string="";
-  private precio:number;
-  private selectedItems = [];
-  private selectedItems2 = [];
-  private selectedItems3 = [];
-  private dropdownSettings = {};
-  private ciudades = [];
-  private dropdownSettings2 = {};
-  private dropdownSettings3 = {};
-  private categorias = [];
-  private modalidades = [];
-  private selectedItems4 = [];
-  private dropdownSettings4 = {};
-  private tipo_pago = [];
-  private selectedItems5 = [];
-  private dropdownSettings5 = {};
-  private opcion_duracion = [];
-  private tipoP:TipoPago;
-  private category:string;
+  iniciales = "";
+  file:File=null;
+  nombreArchivo:string;
+  fotoInicial:boolean = false;
+  cargarFoto:boolean = false;
+  calificacion = '0';
+  idUsuarioActual:string;
+  cant = 0;
+  message:string="";
+  precio:number;
+  selectedItems = [];
+  selectedItems2 = [];
+  selectedItems3 = [];
+  dropdownSettings = {};
+  ciudades = [];
+  dropdownSettings2 = {};
+  dropdownSettings3 = {};
+  categorias = [];
+  modalidades = [];
+  selectedItems4 = [];
+  dropdownSettings4 = {};
+  tipo_pago = [];
+  selectedItems5 = [];
+  dropdownSettings5 = {};
+  opcion_duracion = [];
+  tipoP:TipoPago;
+  category:string;
 
   ngOnInit() {
     this.servicio = new Servicio();

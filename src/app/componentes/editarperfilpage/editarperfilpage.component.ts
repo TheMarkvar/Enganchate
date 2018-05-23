@@ -19,24 +19,24 @@ export class EditarperfilpageComponent implements OnInit {
   uploadPercent: Observable<number>;
   downloadURL: Observable<string>;
 
-  public displayName:string;
-  public direccion:string="";
-  public documento:string="";
-  private descripcion:string="";
-  public telefono:string="";
-  private file:File=null;
-  private nombreArchivo:string;
-  private fotoInicial:boolean = false;
-  private fotoBD:boolean = false;
+  displayName:string;
+  direccion:string="";
+  documento:string="";
+  descripcion:string="";
+  telefono:string="";
+  file:File=null;
+  nombreArchivo:string;
+  fotoInicial:boolean = false;
+  fotoBD:boolean = false;
 
-  private file2:File=null;
-  private nombreArchivo2:string;
-  private fotoInicial2:boolean = false;
-  private fotoBD2:boolean = false;
+  file2:File=null;
+  nombreArchivo2:string;
+  fotoInicial2:boolean = false;
+  fotoBD2:boolean = false;
 
-  private cargarFoto:boolean = false;
-  private cargarFoto2:boolean = false;
-  private iniciales:string;
+  cargarFoto:boolean = false;
+  cargarFoto2:boolean = false;
+  iniciales:string;
 
 
   constructor(
@@ -161,7 +161,7 @@ export class EditarperfilpageComponent implements OnInit {
 
   }
 
-  onSubmitEditarPerfilUser(){
+  onSubmitEditarPerfilUser(EditarPerfilForm){
 
     if(this.cargarFoto && this.cargarFoto2){
         this.uploadFile();

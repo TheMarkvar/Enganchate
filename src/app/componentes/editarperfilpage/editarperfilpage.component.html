@@ -39,7 +39,7 @@
 
 
 
-        <form (submit)="onSubmitEditarPerfilUser(EditarPerfilForm)">
+        <form #EditarPerfilForm="ngForm" (submit)="onSubmitEditarPerfilUser(EditarPerfilForm)">
           <div class="form-group">
             <label class="title" for="nombres">Nombre</label>
             <input type="text" name="nombres" id="nombres"

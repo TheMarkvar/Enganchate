@@ -12,9 +12,9 @@ import { Categoria } from '../../modelos/categoria';
   styleUrls: ['./homepage.component.scss']
 })
 export class HomepageComponent implements OnInit {
-  private categorias;
-  private opcionCategoria;
-  private categoryAux:Categoria;
+  categorias;
+  opcionCategoria;
+  categoryAux:Categoria;
   constructor(
     public authService: AuthService,
     public databaseService: DatabaseService,

@@ -23,7 +23,7 @@ import { Modalidad } from '../../modelos/modalidad';
 })
 export class PublishedservicesuserpageComponent implements OnInit {
 
-  private listaServicios = [];
+  listaServicios = [];
 
 
   constructor(
@@ -119,7 +119,7 @@ export class PublishedservicesuserpageComponent implements OnInit {
   }
 
   onClickService(idService){
-    this.router.navigate(['/service'], { queryParams: { search: idService } });    
+    this.router.navigate(['/service'], { queryParams: { search: idService } });
   }
 
   getBackground(image) {

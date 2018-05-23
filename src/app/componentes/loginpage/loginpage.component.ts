@@ -11,8 +11,8 @@ import { FlashMessagesService } from 'angular2-flash-messages';
   styleUrls: ['./loginpage.component.scss']
 })
 export class LoginpageComponent implements OnInit {
-  private email:string;
-  private password:string;
+  email:string;
+  password:string;
 
   constructor(
     public authService: AuthService,

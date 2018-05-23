@@ -24,24 +24,23 @@ import { TipoPago } from '../../modelos/tipo-pago';
 })
 export class UserprofilepageComponent implements OnInit {
 
-  private iniciales = "";
-  private usuarioActual:Usuario;
-  private usuarioParam:Usuario;
-  private urlPortadaActual:string;
-  private urlPortadaParam:string;
-  private urlIconoMensaje:string;
-  private message:string;
-  private serviciosContratados:boolean=true;
-  private serviciosPublicados:boolean=false;
-  private acercaDe:boolean=false;
+  iniciales = "";
+  usuarioActual:Usuario;
+  usuarioParam:Usuario;
+  urlPortadaActual:string;
+  urlPortadaParam:string;
+  urlIconoMensaje:string;
+  message:string;
+  serviciosContratados:boolean=true;
+  serviciosPublicados:boolean=false;
+  acercaDe:boolean=false;
 
-  private resultadoCiudades:string;
-  private resultadoTipoPago:string;
-
-  private listaServiciosContratadosParam = [];
-  private listaServiciosPublicadosParam = [];
-  private listaServiciosContratadosActual = [];
-  private listaServiciosPublicadosActual = [];
+  resultadoCiudades:string;
+  resultadoTipoPago:string;
+  listaServiciosContratadosParam = [];
+  listaServiciosPublicadosParam = [];
+  listaServiciosContratadosActual = [];
+  listaServiciosPublicadosActual = [];
 
   constructor(private activatedRoute: ActivatedRoute,
   public authService: AuthService,
