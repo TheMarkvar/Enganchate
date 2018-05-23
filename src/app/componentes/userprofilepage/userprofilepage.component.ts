@@ -14,6 +14,8 @@ import { UploadService } from '../../servicios/upload.service';
 
 import { Usuario } from  '../../modelos/usuario';
 import { Servicio } from  '../../modelos/servicio';
+import { Ciudad } from '../../modelos/ciudad';
+import { TipoPago } from '../../modelos/tipo-pago';
 
 @Component({
   selector: 'app-userprofilepage',
@@ -32,6 +34,9 @@ export class UserprofilepageComponent implements OnInit {
   private serviciosContratados:boolean=true;
   private serviciosPublicados:boolean=false;
   private acercaDe:boolean=false;
+
+  private resultadoCiudades:string;
+  private resultadoTipoPago:string;
 
   private listaServiciosContratadosParam = [];
   private listaServiciosPublicadosParam = [];
@@ -168,7 +173,34 @@ export class UserprofilepageComponent implements OnInit {
     )});
 
   }
-
+  imprimirCiudades(ciudades:Array<Ciudad>){
+    this.resultadoCiudades = "";
+    var aux=1;
+    for(let item of ciudades){
+      if(aux==1){
+        this.resultadoCiudades=this.resultadoCiudades+item.nombre;
+      }
+      if(aux!=1){
+        this.resultadoCiudades=this.resultadoCiudades+","+item.nombre;
+      }
+      aux=aux+1;
+    }
+    return this.resultadoCiudades;
+  }
+  imprimirTiposPago(tipoPago:Array<TipoPago>){
+    this.resultadoTipoPago="";
+    var aux=1;
+    for(let item of tipoPago){
+      if(aux==1){
+        this.resultadoTipoPago=this.resultadoTipoPago+item.nombre;
+      }
+      if(aux!=1){
+        this.resultadoTipoPago=this.resultadoTipoPago+","+item.nombre;
+      }
+      aux=aux+1;
+    }
+    return this.resultadoTipoPago;
+  }
   serviciosPublicadosActual(){
     this.databaseServicioService.getServicios().snapshotChanges().subscribe(item => {
     this.listaServiciosPublicadosActual = [];

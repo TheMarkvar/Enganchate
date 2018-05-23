@@ -134,9 +134,10 @@
 
                 <div class="row">
                   <div class="col-xs-6 col-md-4 col-sm-4 product-description__category secondary-text">
-                    {{servicio.categoria}}
+                    {{servicio.categoria.nombre}}
                   </div>
-                  <div class="col-xs-6 col-md-2 col-sm-2 product-description__price">
+                    <div class="col-xs-6 col-md-2 col-sm-2 product-description__price">
+
                     $ {{servicio.precio}}
                   </div>
                 </div>
@@ -146,14 +147,14 @@
                   <b>Zona de cobertura</b>
                   <br />
                   <span class="secondary-text text-uppercase">
-                      {{servicio.zona_cobertura.toString()}}
+                      {{imprimirCiudades(servicio.zona_cobertura)}}
                   </span>
                 </div>
                 <div class="sizes-wrapper">
                   <b>Tipo de pago</b>
                   <br />
                   <span class="secondary-text text-uppercase">
-                      {{servicio.tipo_pago.toString()}}
+                      {{imprimirTiposPago(servicio.tipo_pago)}}
                   </span>
                 </div>
 
@@ -188,7 +189,7 @@
 
                 <div class="row">
                   <div class="col-xs-6 col-sm-4 product-description__category secondary-text">
-                    {{servicio.categoria}}
+                    {{servicio.categoria.nombre}}
                   </div>
                   <div class="col-xs-6 col-sm-2 product-description__price">
                     $ {{servicio.precio}}

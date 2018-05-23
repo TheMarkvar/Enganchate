@@ -22,6 +22,7 @@ import { Modalidad } from '../../modelos/modalidad';
 export class AdvancedsearchpageComponent implements OnInit {
   private listaServicios = [];
   private categorias = [];
+  private categoriasAux = [];
   private ciudades = [];
   private tipos_pago = [];
   private modalidades_pago = [];
@@ -42,8 +43,12 @@ export class AdvancedsearchpageComponent implements OnInit {
   private precioMinimo: number;
   private precioMaximo: number;
   private buscar:string;
+  private categoriaBusqueda:string;
 
   private navigationSubscription:any=null;
+
+  private resultadoCiudades:string;
+  private resultadoTipoPago:string;
 
 
   constructor(
@@ -60,6 +65,8 @@ export class AdvancedsearchpageComponent implements OnInit {
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       if (e instanceof NavigationEnd) {
         this.initialiseInvites();
+        //console.log("Entra en lo del constructor");
+
       }
     });
   }
@@ -68,14 +75,36 @@ export class AdvancedsearchpageComponent implements OnInit {
     this.activatedRoute.queryParams
       .filter(params => params.search)
       .subscribe(params => {
-        this.buscar = params.search;
+
+          if(Number(params.search)){
+            this.categoriaBusqueda=params.search;
+            this.buscar = "";
+            console.log("Categoria:"+ this.categoriaBusqueda);
+            this.filtrarServiciosParametros();
+          }else{
+              this.categoriaBusqueda="";
+              this.buscar=params.search;
+              console.log("Buscar:"+ this.buscar);
+              this.filtrarServiciosBarraBusqueda();
+          }
+
+
+
       });
+
+      this.cargarCategorias();
+      this.cargarCiudades();
+      this.cargarTiposPago();
+      this.cargarModalidades();
+
       //console.log(this.buscar);
-    this.cargarCategorias();
-    this.cargarCiudades();
-    this.cargarTiposPago();
-    this.cargarModalidades();
-    this.filtrarServiciosBarraBusqueda();
+
+    //this.validarParametro();
+    //this.filtrarServiciosBarraBusqueda();
+    //this.cargarCategoriasAuxiliares();
+
+
+
   }
 
   filtrarServiciosBarraBusqueda(){
@@ -99,8 +128,8 @@ export class AdvancedsearchpageComponent implements OnInit {
             let value2 = [];
             for (let key2 in value) {
                 value2.push(value[key2]);
-                if(value[key2].toUpperCase().includes(this.buscar.toUpperCase())
-                || this.buscar.toUpperCase().includes(value[key2].toUpperCase())){
+                if(value[key2].nombre.toUpperCase().includes(this.buscar.toUpperCase())
+                || this.buscar.toUpperCase().includes(value[key2].nombre.toUpperCase())){
                   servicioValido = true;
                 }
             }
@@ -110,8 +139,8 @@ export class AdvancedsearchpageComponent implements OnInit {
             let value2 = [];
             for (let key2 in value) {
                 value2.push(value[key2]);
-                if(value[key2].toUpperCase().includes(this.buscar.toUpperCase())
-                || this.buscar.toUpperCase().includes(value[key2].toUpperCase())){
+                if(value[key2].nombre.toUpperCase().includes(this.buscar.toUpperCase())
+                || this.buscar.toUpperCase().includes(value[key2].nombre.toUpperCase())){
                   servicioValido = true;
                 }
             }
@@ -133,8 +162,8 @@ export class AdvancedsearchpageComponent implements OnInit {
           }
           else if(key === "categoria"){
             servicioFiltro.categoria = value;
-            if(value.toUpperCase().includes(this.buscar.toUpperCase())
-             || this.buscar.toUpperCase().includes(value.toUpperCase())){
+            if(value.nombre.toUpperCase().includes(this.buscar.toUpperCase())
+             || this.buscar.toUpperCase().includes(value.nombre.toUpperCase())){
               servicioValido = true;
             }
           }
@@ -166,6 +195,34 @@ export class AdvancedsearchpageComponent implements OnInit {
     console.log(this.precioMinimo);
     console.log(this.precioMaximo);
   }
+  imprimirCiudades(ciudades:Array<Ciudad>){
+    this.resultadoCiudades = "";
+    var aux=1;
+    for(let item of ciudades){
+      if(aux==1){
+        this.resultadoCiudades=this.resultadoCiudades+item.nombre;
+      }
+      if(aux!=1){
+        this.resultadoCiudades=this.resultadoCiudades+","+item.nombre;
+      }
+      aux=aux+1;
+    }
+    return this.resultadoCiudades;
+  }
+  imprimirTiposPago(tipoPago:Array<TipoPago>){
+    this.resultadoTipoPago="";
+    var aux=1;
+    for(let item of tipoPago){
+      if(aux==1){
+        this.resultadoTipoPago=this.resultadoTipoPago+item.nombre;
+      }
+      if(aux!=1){
+        this.resultadoTipoPago=this.resultadoTipoPago+","+item.nombre;
+      }
+      aux=aux+1;
+    }
+    return this.resultadoTipoPago;
+  }
   filtrarServiciosParametros(){
     this.databaseServicioService.getServicios().snapshotChanges().subscribe(item => {
       this.listaServicios = [];
@@ -194,8 +251,8 @@ export class AdvancedsearchpageComponent implements OnInit {
             for(let j in value){
               value2.push(value[j]);
               for(let i of this.selectedItems2){
-                if((value[j].toUpperCase().includes(i.nombre)
-                || i.nombre.toUpperCase().includes(value[j].toUpperCase()))){
+                if((value[j].nombre.toUpperCase().includes(i.nombre)
+                || i.nombre.toUpperCase().includes(value[j].nombre.toUpperCase()))){
                   servicioValido = true;
                   zonaCoberturaValido = true;
                 }
@@ -211,8 +268,8 @@ export class AdvancedsearchpageComponent implements OnInit {
             for(let j in value){
               value2.push(value[j]);
               for(let i of this.selectedItems4){
-                if(value[j].toUpperCase().includes(i.nombre)
-                || i.nombre.toUpperCase().includes(value[j].toUpperCase())){
+                if(value[j].nombre.toUpperCase().includes(i.nombre)
+                || i.nombre.toUpperCase().includes(value[j].nombre.toUpperCase())){
                   servicioValido = true;
                   modalidadValido = true;
                 }
@@ -229,8 +286,8 @@ export class AdvancedsearchpageComponent implements OnInit {
             for(let j in value){
               value2.push(value[j]);
               for(let i of this.selectedItems3){
-                if(value[j].toUpperCase().includes(i.nombre)
-                || i.nombre.toUpperCase().includes(value[j].toUpperCase())){
+                if(value[j].nombre.toUpperCase().includes(i.nombre)
+                || i.nombre.toUpperCase().includes(value[j].nombre.toUpperCase())){
                   servicioValido = true;
                   tipoPagoValido = true;
                 }
@@ -247,8 +304,8 @@ export class AdvancedsearchpageComponent implements OnInit {
               categoriaValido = true;
             }
             for(let i of this.selectedItems){
-              if(value.toUpperCase().includes(i.nombre)
-              || i.nombre.toUpperCase().includes(value.toUpperCase())){
+              if(value.nombre.toUpperCase().includes(i.nombre)
+              || i.nombre.toUpperCase().includes(value.nombre.toUpperCase())){
                 servicioValido = true;
                 categoriaValido = true;
               }
@@ -287,11 +344,29 @@ export class AdvancedsearchpageComponent implements OnInit {
   cargarCategorias(){
     this.optionsService.getCategorias().snapshotChanges().subscribe(item => {
     this.categorias = [];
+    this.categoriasAux = [];
 
     item.forEach(element => {
     let x = element.payload.toJSON();
     x["$key"] = element.key;
-     this.categorias.push(x as Categoria);});});
+    /*for(var key in x) {
+        var value = x[key];
+    }*/
+
+     this.categorias.push(x as Categoria);});
+
+     if(this.categoriaBusqueda!=""){
+       for(let item of this.categorias){
+         console.log(item);
+         if(item.id==/*Number(this.categoriaBusqueda)*/1){
+           console.log("Entro mmmm");
+           this.selectedItems.push({id:"1",nombre:"Arte y Fotografia"} as Categoria);
+           this.filtrarServiciosParametros();
+         }
+       }
+     }
+
+   });
 
     this.dropdownSettings = {
         singleSelection: false,

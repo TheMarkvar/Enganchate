@@ -56,6 +56,24 @@ export class ServicepageComponent implements OnInit {
   private idUsuarioActual:string;
   private cant = 0;
   private message:string="";
+  private precio:number;
+  private selectedItems = [];
+  private selectedItems2 = [];
+  private selectedItems3 = [];
+  private dropdownSettings = {};
+  private ciudades = [];
+  private dropdownSettings2 = {};
+  private dropdownSettings3 = {};
+  private categorias = [];
+  private modalidades = [];
+  private selectedItems4 = [];
+  private dropdownSettings4 = {};
+  private tipo_pago = [];
+  private selectedItems5 = [];
+  private dropdownSettings5 = {};
+  private opcion_duracion = [];
+  private tipoP:TipoPago;
+  private category:string;
 
   ngOnInit() {
     this.servicio = new Servicio();
@@ -72,6 +90,16 @@ export class ServicepageComponent implements OnInit {
   }
 
   cargarDatos(){
+
+    var fec = this.databaseServicioService.getServicio(this.servicio.idServicio).then(
+      function(snapshot) {
+       var fecha = (snapshot.val() && snapshot.val().fecha);
+       return fecha;
+    });
+    fec.then((res) => {
+      this.servicio.fecha = res;
+    });
+
     var cat = this.databaseServicioService.getServicio(this.servicio.idServicio).then(
       function(snapshot) {
        var categoria = (snapshot.val() && snapshot.val().categoria);
@@ -79,6 +107,16 @@ export class ServicepageComponent implements OnInit {
     });
     cat.then((res) => {
       this.servicio.categoria = res;
+      this.category=res.nombre;
+    });
+
+    var dir = this.databaseServicioService.getServicio(this.servicio.idServicio).then(
+      function(snapshot) {
+       var direccion = (snapshot.val() && snapshot.val().direccion);
+       return direccion;
+    });
+    dir.then((res) => {
+      this.servicio.direccion = res;
     });
 
     var des = this.databaseServicioService.getServicio(this.servicio.idServicio).then(
@@ -167,11 +205,10 @@ export class ServicepageComponent implements OnInit {
       var vec = [];
       for(let key in res){
         let value = res[key];
-
-        this.uploadService.downloadFile('opciones/'+value).subscribe(URL=>{
+        this.uploadService.downloadFile('opciones/'+value.nombre).subscribe(URL=>{
           let pathImagen = URL;
           var obj:
-          { nombre: string; pathImagen: string;} = { nombre: value, pathImagen: pathImagen};
+          {id:string; nombre: string; pathImagen: string;} = {id:value.id, nombre: value.nombre, pathImagen: pathImagen};
           vec.push(obj);
         });
       }
@@ -294,15 +331,224 @@ export class ServicepageComponent implements OnInit {
   }
 
   onClickPurchase(){
-    console.log("Listener purchase");
+    console.log("entra en compra");
+    this.purchaseService.insertPurchaseDatabase(this.servicio.publicador,this.authService.afAuth.auth.currentUser.uid
+    ,this.servicio.idServicio,this.servicio.precio);
   }
 
   onClickEditService(){
-    console.log("Listener editService");
-  }
+    this.selectedItems4 = [];
+    this.selectedItems  = [];
+    this.selectedItems2 = [];
+    this.selectedItems3 = [];
+    this.selectedItems5 = [];
+    for(let i of this.servicio.tipo_pago){
+      this.selectedItems4.push({ id: i.id, nombre: i.nombre });
+    }
+    for(let i of this.servicio.modalidad){
 
+      this.selectedItems3.push({ id: i.id, nombre: i.nombre });
+    }
+    for(let i of this.servicio.zona_cobertura){
+      this.selectedItems.push({ id: i.id, nombre: i.nombre });
+    }
+    this.selectedItems2.push({id:this.servicio.categoria.id,nombre:this.servicio.categoria.nombre});
+    this.selectedItems5.push({id:this.servicio.opcion_duracion.id,nombre:this.servicio.opcion_duracion.nombre});
+
+    this.optionsService.getCiudades().snapshotChanges().subscribe(item => {
+    this.ciudades = [];
+
+    item.forEach(element => {
+    let x = element.payload.toJSON();
+    x["$key"] = element.key;
+     this.ciudades.push(x as Ciudad);});});
+
+     this.optionsService.getCategorias().snapshotChanges().subscribe(item => {
+     this.categorias = [];
+
+     item.forEach(element => {
+     let x = element.payload.toJSON();
+     x["$key"] = element.key;
+      this.categorias.push(x as Categoria);});});
+
+      this.optionsService.getModalidad().snapshotChanges().subscribe(item => {
+      this.modalidades = [];
+
+      item.forEach(element => {
+      let x = element.payload.toJSON();
+      x["$key"] = element.key;
+       this.modalidades.push(x as Modalidad);});});
+
+       this.optionsService.getTipoPago().snapshotChanges().subscribe(item => {
+       this.tipo_pago = [];
+
+       item.forEach(element => {
+       let x = element.payload.toJSON();
+       x["$key"] = element.key;
+        this.tipo_pago.push(x as TipoPago);});});
+
+        this.optionsService.getOpcDuracion().snapshotChanges().subscribe(item => {
+        this.opcion_duracion = [];
+
+        item.forEach(element => {
+        let x = element.payload.toJSON();
+        x["$key"] = element.key;
+         this.opcion_duracion.push(x as OpcionDuracion);});});
+
+
+    this.dropdownSettings = {
+        singleSelection: false,
+        idField: 'id',
+        textField: 'nombre',
+        selectAllText: 'Seleccionar todas',
+        unSelectAllText: 'Deseleccionar todas',
+        searchPlaceholderText: 'Buscar',
+        itemsShowLimit: 10,
+        allowSearchFilter: true
+    };
+
+    this.dropdownSettings2 = {
+        singleSelection: true,
+        idField: 'id',
+        textField: 'nombre',
+        selectAllText: 'Seleccionar todas',
+        unSelectAllText: 'Deseleccionar todas',
+        searchPlaceholderText: 'Buscar',
+        itemsShowLimit: 10,
+        allowSearchFilter: true
+    };
+
+    this.dropdownSettings3 = {
+        singleSelection: false,
+        idField: 'id',
+        textField: 'nombre',
+        selectAllText: 'Seleccionar todas',
+        unSelectAllText: 'Deseleccionar todas',
+        searchPlaceholderText: 'Buscar',
+        itemsShowLimit: 10,
+        allowSearchFilter: true
+    };
+
+    this.dropdownSettings4 = {
+        singleSelection: false,
+        idField: 'id',
+        textField: 'nombre',
+        selectAllText: 'Seleccionar todas',
+        unSelectAllText: 'Deseleccionar todas',
+        searchPlaceholderText: 'Buscar',
+        itemsShowLimit: 10,
+        allowSearchFilter: true
+    };
+
+    this.dropdownSettings5 = {
+        singleSelection: true,
+        idField: 'id',
+        textField: 'nombre',
+        selectAllText: 'Seleccionar todas',
+        unSelectAllText: 'Deseleccionar todas',
+        searchPlaceholderText: 'Buscar',
+        itemsShowLimit: 10,
+        allowSearchFilter: true
+    };
+
+
+
+  }
+  onClickAceptarEditService(){
+
+    this.servicio.zona_cobertura=this.selectedItems;
+    this.servicio.tipo_pago=this.selectedItems4;
+    this.servicio.modalidad=this.selectedItems3;
+    //this.servicio.opcion_duracion=this.selectedItems5;
+    //this.servicio.categoria=this.selectedItems2;
+    for(let i of this.selectedItems2){
+      var cat=new Categoria();
+      cat.id=i.id;
+      cat.nombre=i.nombre;
+      this.servicio.categoria=cat;
+    }
+    for(let i of this.selectedItems5){
+      var opc=new OpcionDuracion();
+      opc.id=i.id;
+      opc.nombre=i.nombre;
+      this.servicio.opcion_duracion=opc;
+    }
+    this.databaseServicioService.updateServiceDatabase(this.servicio.publicador,this.servicio.categoria,this.servicio.nombre,
+                          this.servicio.descripcion,this.servicio.tiempo_duracion,
+                          this.servicio.opcion_duracion,this.servicio.precio,this.servicio.zona_cobertura,
+                          this.servicio.modalidad,
+                          this.servicio.direccion, this.servicio.tipo_pago,this.servicio.fecha,this.servicio.idServicio);
+    this.category=this.servicio.categoria.nombre;
+    this.cargarDatos();
+
+  }
+  onClickCategory(){
+    console.log("Listener Category");
+  }
+  onClickCity(){
+    console.log("Listener City");
+  }
+  onItemSelect(item:any){
+      this.selectedItems.push(item);
+      //console.log(this.selectedItems);
+  }
+  OnItemDeSelect(item:any){
+    var newSelectedItems = this.selectedItems.filter(function(element) {
+    return element.nombre !== item.nombre;
+    });
+    this.selectedItems = newSelectedItems;
+  }
+  onItemSelect2(item:any){
+      this.selectedItems2.push(item);
+      //console.log(this.selectedItems);
+  }
+  OnItemDeSelect2(item:any){
+    var newSelectedItems = this.selectedItems2.filter(function(element) {
+    return element.nombre !== item.nombre;
+    });
+    this.selectedItems2 = newSelectedItems;
+  }
+  onItemSelect3(item:any){
+      this.selectedItems3.push(item);
+      //console.log(this.selectedItems);
+  }
+  OnItemDeSelect3(item:any){
+    var newSelectedItems = this.selectedItems3.filter(function(element) {
+    return element.nombre !== item.nombre;
+    });
+    this.selectedItems3 = newSelectedItems;
+  }
+  onItemSelect4(item:any){
+      this.selectedItems4.push(item);
+      //console.log(this.selectedItems);
+  }
+  OnItemDeSelect4(item:any){
+    var newSelectedItems = this.selectedItems4.filter(function(element) {
+    return element.nombre !== item.nombre;
+    });
+    this.selectedItems4 = newSelectedItems;
+  }
+  onItemSelect5(item:any){
+      this.selectedItems5.push(item);
+      //console.log(this.selectedItems);
+  }
+  OnItemDeSelect5(item:any){
+    var newSelectedItems = this.selectedItems5.filter(function(element) {
+    return element.nombre !== item.nombre;
+    });
+    this.selectedItems5 = newSelectedItems;
+  }
+  onSelectAll(items: any){
+      //console.log(items);
+  }
+  onDeSelectAll(items: any){
+      //console.log(items);
+  }
   onClickDeleteService(){
+
     console.log("Listener deleteService");
+    console.log(this.servicio.idServicio);
+    this.databaseServicioService.deleteServiceDatabase(this.servicio.idServicio);
   }
 
   onSubmitSendMessageUser(){

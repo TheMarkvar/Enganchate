@@ -8,6 +8,9 @@
               Categorias
             </a>
           </div>
+          <p>---------</p>
+          <p>{{selectedItems.length}}</p>
+          <p>------------</p>
           <div id="collapseOne" class="collapse show" data-parent="#accordion">
             <div class="card-body">
               <ng-multiselect-dropdown
@@ -170,7 +173,7 @@
                   <!-- category and price -->
                   <div class="row">
                     <div class="col-xs-12 col-sm-8 product-description__category secondary-text">
-                      {{servicio.categoria}}
+                      {{servicio.categoria.nombre}}
                     </div>
                     <div class="col-xs-12 col-sm-4 product-description__price">
                       $ {{servicio.precio}}
@@ -187,15 +190,16 @@
                         <br />
                         <span class="secondary-text text-uppercase">
 
-                            {{servicio.zona_cobertura.toString()}}
+                            {{imprimirCiudades(servicio.zona_cobertura)}}
                         </span>
                       </div>
+
                   <!-- tipo_pago -->
                   <div class="sizes-wrapper">
                     <b>Tipo de pago</b>
                     <br />
                     <span class="secondary-text text-uppercase">
-                        {{servicio.tipo_pago.toString()}}
+                        {{imprimirTiposPago(servicio.tipo_pago)}}
                     </span>
                   </div>
 

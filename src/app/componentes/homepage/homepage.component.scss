@@ -1,3 +1,13 @@
+$brand-primary: #2196F3; // Blue 500
+$brand-muted: rgba(0,0,0,.38);
+$grey-100: #F5F5F5;
+$grey-200: #EEEEEE;
+$grey-400: #BDBDBD;
+$brown: #BD7435;
+$blue: #94C2ED;
+$border-radius: 3px;
+$shadow-z-1: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+
 .slider{
   width:95%;
   margin:auto;
@@ -40,3 +50,52 @@
   100%{margin-left: -300%;}
 
 }
+input[type="radio"],
+input[type="checkbox"]{
+  visibility: hidden;
+   position: absolute;
+ }
+ .opciones_pago label:hover,
+ .opciones_modalidad label,
+ .opciones_categorias label{
+   //color: #0074D9;
+   padding: 5px 15px 5px 15px;
+   display: inline-block;
+   font-size: 1em;
+   border-radius: 3px;
+   cursor: pointer;
+   -webkit-transition: all 0.3s ease;
+   -o-transition: all 0.3s ease;
+   transition: all 0.3s ease;
+ }
+
+ .opciones_pago label:hover,
+ .opciones_modalidad label:hover,
+ .opciones_categorias label:hover{
+   background: rgba(0, 116, 115, 0.1);
+ }
+
+ label > div > input + img{
+   cursor:pointer;
+   filter: invert(0%);
+ }
+
+ label > div > input[type="radio"]:checked + img{
+   filter: invert(100%);
+   background-color: $brown;
+ }
+
+ label > div > input[type="radio"]:hover + img{
+   filter: invert(100%);
+   background-color: $brown;
+ }
+
+ label > div > input[type="checkbox"]:checked + img{
+   filter: invert(100%);
+   background-color: $brown;
+ }
+
+ label > div > input[type="checkbox"]:hover + img{
+   filter: invert(100%);
+   background-color: $brown;
+ }
