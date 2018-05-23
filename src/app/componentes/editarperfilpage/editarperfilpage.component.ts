@@ -191,7 +191,7 @@ export class EditarperfilpageComponent implements OnInit {
 
     this.flashMensaje.show('Información editada correctamente',
     {cssClass: 'alert-success', timeout: 4000});
-    this.router.navigate(['']);
+    this.router.navigate(['home']);
 
   }
 

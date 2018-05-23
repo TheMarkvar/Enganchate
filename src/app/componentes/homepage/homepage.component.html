@@ -39,10 +39,8 @@
 <div class="row">
   <label for="{{cat.id}}" *ngFor="let cat of getValues(categorias) | pipeCategorias:1" >
     <div class="col-xs-4" *ngIf="cat.pathImagen">
-        <input id="{{cat.id}}" name="opc-cat" type="radio" (change)="getEventCategory($event)" value="{{cat.nombre}}">
-        <button (click)="onClickCategoryHome(cat.id,cat.nombre)">
+        <input id="{{cat.id}}" name="opc-cat" type="radio" (change)="getEventCategory(cat.id,cat.nombre)" value="{{cat.nombre}}">
         <img src="{{cat.pathImagen}}" />
-      </button>
     </div>
 
   </label>

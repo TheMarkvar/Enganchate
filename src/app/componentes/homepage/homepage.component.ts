@@ -56,15 +56,14 @@ export class HomepageComponent implements OnInit {
   getValues(map){
      return Array.from(map.values());
   }
-  getEventCategory(event){
-    this.opcionCategoria = event.srcElement.value;
-    //console.log(this.opcionCategoria);
-  }
-  onClickCategoryHome(id:string,nombre:string){
+  getEventCategory(id:string,nombre:string){
+    //this.opcionCategoria = event.srcElement.value;
     console.log("Listener Category");
     this.categoryAux=new Categoria();
     this.categoryAux.id=id;
     this.categoryAux.nombre=nombre;
     this.router.navigate(['/advancedSearch'], { queryParams: {search:this.categoryAux.id }});
+    //console.log(this.opcionCategoria);
   }
+
 }

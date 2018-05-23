@@ -34,7 +34,7 @@ export class LoginpageComponent implements OnInit {
 
         this.flashMensaje.show('Inicio de sesion satisfactorio',
         {cssClass: 'alert-success', timeout: 4000});
-        this.router.navigate(['/privado']);
+        this.router.navigate(['/home']);
       }).catch((err)=>{
         this.flashMensaje.show(err.message,
         {cssClass: 'alert-danger', timeout: 4000});
@@ -51,7 +51,7 @@ export class LoginpageComponent implements OnInit {
       this.insertUser();
       if(!this.authService.getVerficationAccount())
         this.authService.sendEmailVerification();
-      this.router.navigate(['./privado']);
+      this.router.navigate(['./home']);
     }).catch((err)=>{
       this.flashMensaje.show(err.message,
       {cssClass: 'alert-danger', timeout: 4000});
@@ -64,7 +64,7 @@ export class LoginpageComponent implements OnInit {
       this.insertUser();
       if(!this.authService.getVerficationAccount())
         this.authService.sendEmailVerification();
-      this.router.navigate(['./privado']);
+      this.router.navigate(['./home']);
     }).catch((err)=>{
       this.flashMensaje.show(err.message,
       {cssClass: 'alert-danger', timeout: 4000});
@@ -77,7 +77,7 @@ export class LoginpageComponent implements OnInit {
       this.insertUser();
       if(!this.authService.getVerficationAccount())
         this.authService.sendEmailVerification();
-      this.router.navigate(['./privado']);
+      this.router.navigate(['./home']);
     }).catch((err)=>{
       this.flashMensaje.show(err.message,
       {cssClass: 'alert-danger', timeout: 4000});
