@@ -220,7 +220,7 @@ export class UserprofilepageComponent implements OnInit {
         if(key === "zona_cobertura"){
           let value2 = [];
           for (let key2 in value) {
-              value2.push(value[key2]);
+              value2.push(value[key2].nombre);
           }
           servicioFiltro.zona_cobertura = value2;
         }
@@ -234,7 +234,7 @@ export class UserprofilepageComponent implements OnInit {
         else if(key === "tipo_pago"){
           let value2 = [];
           for (let key2 in value) {
-              value2.push(value[key2]);
+              value2.push(value[key2].nombre);
           }
           servicioFiltro.tipo_pago = value2;
         }
@@ -242,7 +242,7 @@ export class UserprofilepageComponent implements OnInit {
           servicioFiltro.nombre = value;
         }
         else if(key === "categoria"){
-          servicioFiltro.categoria = value;
+          servicioFiltro.categoria = value.nombre;
         }
         else if(key === "descripcion"){
           servicioFiltro.descripcion = value;
@@ -295,7 +295,7 @@ export class UserprofilepageComponent implements OnInit {
         if(key === "zona_cobertura"){
           let value2 = [];
           for (let key2 in value) {
-              value2.push(value[key2]);
+              value2.push(value[key2].nombre);
           }
           servicioFiltro.zona_cobertura = value2;
         }
@@ -309,7 +309,7 @@ export class UserprofilepageComponent implements OnInit {
         else if(key === "tipo_pago"){
           let value2 = [];
           for (let key2 in value) {
-              value2.push(value[key2]);
+              value2.push(value[key2].nombre);
           }
           servicioFiltro.tipo_pago = value2;
         }
@@ -317,7 +317,7 @@ export class UserprofilepageComponent implements OnInit {
           servicioFiltro.nombre = value;
         }
         else if(key === "categoria"){
-          servicioFiltro.categoria = value;
+          servicioFiltro.categoria = value.nombre;
         }
         else if(key === "descripcion"){
           servicioFiltro.descripcion = value;

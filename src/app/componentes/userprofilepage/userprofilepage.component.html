@@ -88,9 +88,9 @@
 
     <div class="right col-md-8">
       <ul class="nav">
-        <li (click)="serviciosContratadosTab()">Servicios Contratados</li>
-        <li (click)="serviciosPublicadosTab()">Servicios Publicados</li>
-        <li (click)="acercaDeTab()">Acerca de</li>
+        <li class="col-lg-3" (click)="serviciosContratadosTab()">Servicios Contratados</li>
+        <li class="col-lg-3"(click)="serviciosPublicadosTab()">Servicios Publicados</li>
+        <li class="col-lg-2"(click)="acercaDeTab()">Acerca de</li>
       </ul>
 
       <div class="row gallery" *ngIf="serviciosContratados && usuarioParam.idUsuario && listaServiciosContratadosParam.length===0">
@@ -134,10 +134,9 @@
 
                 <div class="row">
                   <div class="col-xs-6 col-md-4 col-sm-4 product-description__category secondary-text">
-                    {{servicio.categoria.nombre}}
+                    {{servicio.categoria}}
                   </div>
-                    <div class="col-xs-6 col-md-2 col-sm-2 product-description__price">
-
+                  <div class="col-xs-6 col-md-2 col-sm-2 product-description__price">
                     $ {{servicio.precio}}
                   </div>
                 </div>
@@ -147,14 +146,14 @@
                   <b>Zona de cobertura</b>
                   <br />
                   <span class="secondary-text text-uppercase">
-                      {{imprimirCiudades(servicio.zona_cobertura)}}
+                      {{servicio.zona_cobertura.toString()}}
                   </span>
                 </div>
                 <div class="sizes-wrapper">
                   <b>Tipo de pago</b>
                   <br />
                   <span class="secondary-text text-uppercase">
-                      {{imprimirTiposPago(servicio.tipo_pago)}}
+                      {{servicio.tipo_pago.toString()}}
                   </span>
                 </div>
 
@@ -189,7 +188,7 @@
 
                 <div class="row">
                   <div class="col-xs-6 col-sm-4 product-description__category secondary-text">
-                    {{servicio.categoria.nombre}}
+                    {{servicio.categoria}}
                   </div>
                   <div class="col-xs-6 col-sm-2 product-description__price">
                     $ {{servicio.precio}}
@@ -205,7 +204,7 @@
                       <b>Zona de cobertura</b>
                       <br />
                       <span class="secondary-text text-uppercase">
-                          {{servicio.zona_cobertura.toString()}}
+                          {{servicio.zona_cobertura}}
                       </span>
                     </div>
 
@@ -213,7 +212,7 @@
                   <b>Tipo de pago</b>
                   <br />
                   <span class="secondary-text text-uppercase">
-                      {{servicio.tipo_pago.toString()}}
+                      {{servicio.tipo_pago}}
                   </span>
                 </div>
 
