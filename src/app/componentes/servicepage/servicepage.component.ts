@@ -328,12 +328,14 @@ export class ServicepageComponent implements OnInit {
 
   onClickDisplayName(){
     console.log("Listener displayName");
+    this.router.navigate(['/userProfile'], { queryParams: { search: this.servicio.publicador } });
+
   }
 
   onClickPurchase(){
     console.log("entra en compra");
-    this.purchaseService.insertPurchaseDatabase(this.servicio.publicador,this.authService.afAuth.auth.currentUser.uid
-    ,this.servicio.idServicio,this.servicio.precio);
+    this.purchaseService.insertPurchaseDatabase(this.servicio.publicador,this.authService.afAuth.auth.currentUser.uid,
+    this.servicio.idServicio,this.servicio.precio);
   }
 
   onClickEditService(){
@@ -483,7 +485,11 @@ export class ServicepageComponent implements OnInit {
 
   }
   onClickCategory(){
-    console.log("Listener Category");
+    //console.log("Listener Category");
+    //console.log("categoria(id):"+this.servicio.categoria.id);
+    //console.log("categoria(nombre)"+ this.servicio.categoria.nombre);
+    this.router.navigate(['/advancedSearch'], { queryParams: {search:this.servicio.categoria.id }});
+
   }
   onClickCity(){
     console.log("Listener City");
