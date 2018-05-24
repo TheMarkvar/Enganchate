@@ -10,7 +10,7 @@
 
             <label for="email">Email</label>
             <input type="email" name="email"  placeholder="Digite su correo" id="email"
-            ngModel #name="ngModel" pattern="[a-zA-Z0-9._]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9]+)+"
+            ngModel #name="ngModel" pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9]+)+"
              class="form-control" required>
              <label class="mismatch" *ngIf="name.errors">Correo inválido</label>
           </div>
