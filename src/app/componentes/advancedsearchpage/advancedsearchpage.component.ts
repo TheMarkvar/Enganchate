@@ -20,35 +20,37 @@ import { Modalidad } from '../../modelos/modalidad';
   styleUrls: ['./advancedsearchpage.component.scss']
 })
 export class AdvancedsearchpageComponent implements OnInit {
-  listaServicios = [];
-  categorias = [];
-  categoriasAux = [];
-  ciudades = [];
-  tipos_pago = [];
-  modalidades_pago = [];
+  private listaServicios = [];
+  private categorias = [];
+  private categoriasAux = [];
+  private ciudades = [];
+  private tipos_pago = [];
+  private modalidades_pago = [];
 
-  selectedItems = [];
-  dropdownSettings = {};
+  private selectedItems = [];
+  private dropdownSettings = {};
 
-  selectedItems2 = [];
-  dropdownSettings2 = {};
+  private selectedItems2 = [];
+  private dropdownSettings2 = {};
 
-  selectedItems3 = [];
-  dropdownSettings3 = {};
+  private selectedItems3 = [];
+  private dropdownSettings3 = {};
 
-  selectedItems4 = [];
-  dropdownSettings4 = {};
+  private selectedItems4 = [];
+  private dropdownSettings4 = {};
 
 
-  precioMinimo: number;
-  precioMaximo: number;
-  buscar:string;
-  categoriaBusqueda:string;
+  private precioMinimo: number;
+  private precioMaximo: number;
+  private buscar:string;
+  private categoriaBusqueda:string;
 
-  navigationSubscription:any=null;
+  private navigationSubscription:any=null;
 
-  resultadoCiudades:string;
-  resultadoTipoPago:string;
+  private resultadoCiudades:string;
+  private resultadoTipoPago:string;
+
+  private entrada:boolean;
 
 
   constructor(
@@ -62,9 +64,13 @@ export class AdvancedsearchpageComponent implements OnInit {
   ) {
     this.precioMinimo=0;
     this.precioMaximo=1000000;
+    this.entrada=false;
     this.navigationSubscription = this.router.events.subscribe((e: any) => {
       if (e instanceof NavigationEnd) {
-        this.initialiseInvites();
+
+
+        //this.initialiseInvites();
+        //this.cargarCategorias();
         //console.log("Entra en lo del constructor");
 
       }
@@ -72,15 +78,22 @@ export class AdvancedsearchpageComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.activatedRoute.queryParams
       .filter(params => params.search)
       .subscribe(params => {
+
+        this.cargarCategorias();
+        this.cargarCiudades();
+        this.cargarTiposPago();
+        this.cargarModalidades();
 
           if(Number(params.search)){
             this.categoriaBusqueda=params.search;
             this.buscar = "";
             console.log("Categoria:"+ this.categoriaBusqueda);
             this.filtrarServiciosParametros();
+
           }else{
               this.categoriaBusqueda="";
               this.buscar=params.search;
@@ -92,12 +105,9 @@ export class AdvancedsearchpageComponent implements OnInit {
 
       });
 
-      this.cargarCategorias();
-      this.cargarCiudades();
-      this.cargarTiposPago();
-      this.cargarModalidades();
 
       //console.log(this.buscar);
+
 
     //this.validarParametro();
     //this.filtrarServiciosBarraBusqueda();
@@ -106,19 +116,112 @@ export class AdvancedsearchpageComponent implements OnInit {
 
 
   }
+  /*filtrarServiciosBarraBusqueda(){
+    this.activatedRoute.queryParams
+      .filter(params => params.search)
+      .subscribe(params => {
+
+        this.buscar=params.search;
+
+        console.log("filtrarServicioBarraBusqueda");
+        console.log("buscar" + this.buscar);
+        console.log("categoria:"+ this.categoriaBusqueda);
+        this.databaseServicioService.getServicios().snapshotChanges().subscribe(item => {
+          this.listaServicios = [];
+
+          item.forEach(element => {
+          let x = element.payload.toJSON();
+          x["$key"] = element.key;
+
+          let servicioFiltro:Servicio = new Servicio();
+          var servicioValido:boolean = false;
+
+          for(var key in x) {
+
+              var value = x[key];
+
+              if(key === "zona_cobertura"){
+                let value2 = [];
+                for (let key2 in value) {
+                    value2.push(value[key2]);
+                    if(value[key2].nombre.toUpperCase().includes(this.buscar.toUpperCase())
+                    || this.buscar.toUpperCase().includes(value[key2].nombre.toUpperCase())){
+                      servicioValido = true;
+                    }
+                }
+                servicioFiltro.zona_cobertura = value2;
+              }
+              if(key === "modalidad"){
+                let value2 = [];
+                for (let key2 in value) {
+                    value2.push(value[key2]);
+                    if(value[key2].nombre.toUpperCase().includes(this.buscar.toUpperCase())
+                    || this.buscar.toUpperCase().includes(value[key2].nombre.toUpperCase())){
+                      servicioValido = true;
+                    }
+                }
+                servicioFiltro.modalidad = value2;
+              }
+              else if(key === "tipo_pago"){
+                let value2 = [];
+                for (let key2 in value) {
+                    value2.push(value[key2]);
+                }
+                servicioFiltro.tipo_pago = value2;
+              }
+              else if(key === "nombre"){
+                servicioFiltro.nombre = value;
+                if(value.toUpperCase().includes(this.buscar.toUpperCase())
+                || this.buscar.toUpperCase().includes(value.toUpperCase())){
+                  servicioValido = true;
+                }
+              }
+              else if(key === "categoria"){
+                servicioFiltro.categoria = value;
+                if(value.nombre.toUpperCase().includes(this.buscar.toUpperCase())
+                 || this.buscar.toUpperCase().includes(value.nombre.toUpperCase())){
+                  servicioValido = true;
+                }
+              }
+              else if(key === "descripcion"){
+                servicioFiltro.descripcion = value;
+                if(value.toUpperCase().includes(this.buscar.toUpperCase())
+                || this.buscar.toUpperCase().includes(value.toUpperCase())){
+                  servicioValido = true;
+                }
+              }
+              else if(key === "precio"){
+                servicioFiltro.precio = value;
+              }
+              else if(key=="pathImagen"){
+                this.uploadService.downloadFile('servicios/'+value).subscribe(URL=>{
+                  //console.log(URL.toString());
+                  servicioFiltro.idServicio = value;
+                  servicioFiltro.pathImagen = URL;
+                });
+              }
+
+          }
+          if(servicioValido){
+              this.listaServicios.push(servicioFiltro);
+          }
+         ;});});
+      });
+  }*/
 
   filtrarServiciosBarraBusqueda(){
+    console.log("(FiltrarServiciosBarraBusqueda)buscar: " + this.buscar);
+    console.log("categoria:(FiltrarServiciosBarraBusqueda ) "+ this.categoriaBusqueda);
     this.databaseServicioService.getServicios().snapshotChanges().subscribe(item => {
       this.listaServicios = [];
 
       item.forEach(element => {
       let x = element.payload.toJSON();
       x["$key"] = element.key;
+      console.log("entra en forEach");
 
       let servicioFiltro:Servicio = new Servicio();
       var servicioValido:boolean = false;
-
-
 
       for(var key in x) {
 
@@ -187,6 +290,7 @@ export class AdvancedsearchpageComponent implements OnInit {
 
       }
       if(servicioValido){
+          console.log("servicioCumple con parametros");
           this.listaServicios.push(servicioFiltro);
       }
      ;});});
@@ -224,12 +328,14 @@ export class AdvancedsearchpageComponent implements OnInit {
     return this.resultadoTipoPago;
   }
   filtrarServiciosParametros(){
+
     this.databaseServicioService.getServicios().snapshotChanges().subscribe(item => {
       this.listaServicios = [];
 
       item.forEach(element => {
       let x = element.payload.toJSON();
       x["$key"] = element.key;
+      console.log("entra en filtrarServiciosParametros");
 
       let servicioFiltro:Servicio = new Servicio();
       var servicioValido:boolean = false;
@@ -344,11 +450,10 @@ export class AdvancedsearchpageComponent implements OnInit {
   cargarCategorias(){
     this.optionsService.getCategorias().snapshotChanges().subscribe(item => {
     this.categorias = [];
-    this.categoriasAux = [];
 
     item.forEach(element => {
     let x = element.payload.toJSON();
-    x["$key"] = element.key;
+    //x["$key"] = element.key;
     /*for(var key in x) {
         var value = x[key];
     }*/
@@ -356,16 +461,20 @@ export class AdvancedsearchpageComponent implements OnInit {
      this.categorias.push(x as Categoria);});
 
      if(this.categoriaBusqueda!=""){
+       this.selectedItems = [];
        for(let item of this.categorias){
-         console.log(item);
-         if(item.id==/*Number(this.categoriaBusqueda)*/1){
+         //console.log(item);
+         if(item.id==this.categoriaBusqueda){
            console.log("Entro mmmm");
-           this.selectedItems.push({id:"1",nombre:"Arte y Fotografia"} as Categoria);
+           //this.onItemSelect({id:item.id,nombre:item.nombre});
+           this.onItemSelect(item);
+           console.log(this.categorias);
            this.filtrarServiciosParametros();
+           //this.selectedItems.push(cat);
+           //this.filtrarServiciosParametros();
          }
        }
      }
-
    });
 
     this.dropdownSettings = {
@@ -378,6 +487,7 @@ export class AdvancedsearchpageComponent implements OnInit {
         itemsShowLimit: 10,
         allowSearchFilter: true
     };
+    //this.filtrarServiciosParametros();
 
   }
 
@@ -455,6 +565,8 @@ export class AdvancedsearchpageComponent implements OnInit {
 
   onItemSelect(item:any){
       this.selectedItems.push(item);
+
+      console.log(this.selectedItems);
       this.filtrarServiciosParametros();
       //console.log(this.selectedItems);
   }
@@ -536,7 +648,8 @@ export class AdvancedsearchpageComponent implements OnInit {
   }
 
   initialiseInvites() {
-    this.filtrarServiciosBarraBusqueda();
+    //this.filtrarServiciosBarraBusqueda();
+    //this.filtrarServiciosParametros();
   }
 
   ngOnDestroy() {
