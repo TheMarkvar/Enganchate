@@ -142,10 +142,16 @@
   </div>
 
   <div class="col-md-9">
-    <div class="container">
+    <div class="container title-result">
 
           Resultados de la Búsqueda
           <br>
+          <div *ngIf="listaServicios.length===0">
+            <br><br><br><br>
+            <p class="title-result">No hay resultados de búsqueda</p>
+          </div>
+
+
           <div class="form-row">
             <!-- <div class="col-xs-12 col-sm-6 col-md-16"> -->
             <div class="col-xs-12 col-sm-6 col-md-14" *ngFor="let servicio of listaServicios">

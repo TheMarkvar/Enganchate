@@ -10,9 +10,12 @@ $shadow-z-1: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0
 
 
 .title{
-  font-size: 15;
-  font-weight: bold;
+  //font-weight: bold;
+  font-size: 16px;
+  color: #2d8f98;
+  font: "Lato", Arial, sans-serif;
 }
+
 .hide{
   content: none;
   visibility: hidden;

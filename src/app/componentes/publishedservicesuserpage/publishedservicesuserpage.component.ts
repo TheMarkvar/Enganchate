@@ -43,7 +43,7 @@ export class PublishedservicesuserpageComponent implements OnInit {
 
   ngOnInit() {
     this.filtrarServiciosUsuario();
-    console.log(this.authService.afAuth.auth.currentUser.uid);
+    //console.log(this.authService.afAuth.auth.currentUser.uid);
   }
 
   filtrarServiciosUsuario(){

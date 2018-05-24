@@ -1,27 +1,3 @@
-
-<span [ngSwitch]="status">
-
-
-  <span *ngSwitchCase="'online'" >
-    Online <i class="fa fa-circle is-success"></i>
-  </span>
-
-
-  <span *ngSwitchCase="'offline'" >
-    Offline <i class="fa fa-circle is-danger"></i>
-  </span>
-
-  <span *ngSwitchCase="'away'">
-    Away <i class="fa fa-circle is-warning"></i>
-  </span>
-
-
-  <span *ngSwitchDefault class="help">
-    Unknown
-  </span>
-
-</span>
-
 <div class="form-row container clearfix">
   <div class="col-md-4">
     <div class="people-list" id="people-list">

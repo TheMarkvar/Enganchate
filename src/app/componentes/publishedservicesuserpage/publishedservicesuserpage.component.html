@@ -2,7 +2,8 @@
 
       <br>
       <div class="form-row">
-        <!-- <div class="col-xs-12 col-sm-6 col-md-16"> -->
+
+        <p class="title" *ngIf="listaServicios.length===0">No hay servicios publicados</p>
         <div class="col-xs-12 col-sm-4" *ngFor="let servicio of listaServicios">
           <article class="card-wrapper">
             <div class="image-holder">
