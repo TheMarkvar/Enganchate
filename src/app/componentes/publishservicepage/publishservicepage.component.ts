@@ -34,7 +34,7 @@ export class PublishservicepageComponent implements OnInit, AfterViewInit {
   nombre:string;
   descripcion:string;
   tiempo_duracion:number;
-  opcion_duracion:string;
+  opcion_duracion:OpcionDuracion;
   total_duracion:string;
   precio:number;
   ciudades = [];
@@ -47,8 +47,8 @@ export class PublishservicepageComponent implements OnInit, AfterViewInit {
   pagos;
   direccion:string;
   direccionValida:boolean;
-  opcDuracion = [];
-  tipoPago = [];
+  opcDuracion;
+  tipoPago;
   modalidades = [];
   selectedItems3 = [];
   event;
@@ -59,6 +59,8 @@ export class PublishservicepageComponent implements OnInit, AfterViewInit {
 
   opcionCategoria;
   opcionesPago;
+  cat:Categoria;
+  opcDur:OpcionDuracion;
 
 
   firstStepCompleted = false;
@@ -97,6 +99,7 @@ export class PublishservicepageComponent implements OnInit, AfterViewInit {
     this.categorias = new Map();
     this.pagos = new Map();
     this.opcionesPago = new Map();
+
 
 
 
@@ -164,19 +167,27 @@ export class PublishservicepageComponent implements OnInit, AfterViewInit {
          });});
 
          this.OptionsService.getOpcDuracion().snapshotChanges().subscribe(item => {
-         this.opcDuracion = [];
+         this.opcDuracion = new Map();
 
          item.forEach(element => {
          let x = element.payload.toJSON();
          x["$key"] = element.key;
-          this.opcDuracion.push(x as OpcionDuracion);});});
+         //console.log(x);
+         let op:{nombre:string, id:string};
+         op = {nombre:x["nombre"].toString(),id:x["id"]};
+         this.opcDuracion.set(op.id,op);
+
+          //this.opcDuracion.push(x as OpcionDuracion)
+          ;});
+          //console.log(this.opcDuracion);
+        });
 
           this.OptionsService.getTipoPago().snapshotChanges().subscribe(item => {
-          this.tipoPago = [];
+          this.tipoPago = new Map();
 
           item.forEach(element => {
           let x = element.payload.toJSON();
-          x["$key"] = element.key;
+          //x["$key"] = element.key;
 
           if(x["id"]!=null && x["id"]!=undefined){
             let pago:{nombre:string, id:string};
@@ -196,7 +207,9 @@ export class PublishservicepageComponent implements OnInit, AfterViewInit {
           }
 
 
-           this.tipoPago.push(x as TipoPago);});});
+           //this.tipoPago.push(x as TipoPago);
+           this.tipoPago.set(x["id"], x as TipoPago);
+         });});
 
            this.OptionsService.getModalidad().snapshotChanges().subscribe(item => {
            this.modalidades = [];
@@ -278,20 +291,20 @@ export class PublishservicepageComponent implements OnInit, AfterViewInit {
      return Array.from(map.values());
   }
 
+
   getEventCategory(event){
-    this.opcionCategoria = event.srcElement.value;
-    //console.log(this.opcionCategoria);
+    this.opcionCategoria = Number(event.srcElement.value);
+    this.cat = this.categorias.get(this.opcionCategoria);
   }
 
   getEventPayment(event){
     let value = event.target.value;
     if(event.target.checked){
-      this.opcionesPago.set(value, value);
+      this.opcionesPago.set(Number(value), this.pagos.get(Number(value)));
     }else if(!event.target.checked){
-      this.opcionesPago.delete(value);
+      this.opcionesPago.delete(Number(value));
     }
 
-    //console.log(this.opcionesPago);
   }
 
   onSubmitDescription(descriptionform){
@@ -303,6 +316,8 @@ export class PublishservicepageComponent implements OnInit, AfterViewInit {
     this.descripcion = descriptionform.controls.descripcion.value;
     this.tiempo_duracion = descriptionform.controls.tiempo_duracion.value;
     this.opcion_duracion = descriptionform.controls.opcion_duracion.value;
+
+    console.log(descriptionform.controls);
 
     if(!this.fotoDisponible){
       this.flashMensaje.show("No se ha seleccionado una imagen",
@@ -388,6 +403,13 @@ export class PublishservicepageComponent implements OnInit, AfterViewInit {
       this.secondStepVisible = false;
       this.thirdStepVisible = true;
       this.initAddressOnMap();
+      this.opcDur = this.opcDuracion.get(Number(this.opcion_duracion));
+
+
+      for (let key in this.opcion_duracion) {
+          let value = this.opcion_duracion[key];
+          // Use `key` and `value`
+      }
     }
   }
 
@@ -465,26 +487,33 @@ export class PublishservicepageComponent implements OnInit, AfterViewInit {
       this.flashMensaje.show("Usuario con correo: "+ email+" debe confirmar cuenta",
       {cssClass: 'alert-danger', timeout: 4000});
     }else{
-      let path2, ciudades=[], modalidades=[], pagos=[];
+      let path2, ciudades=[], modalidades=[], pagos=[], opcionD:OpcionDuracion;
       for (let entry of this.selectedItems) {
-           ciudades.push(entry.nombre);
+           ciudades.push(entry);
       }
       for (let entry of this.selectedItems3) {
-           modalidades.push(entry.nombre);
+           modalidades.push(entry);
       }
 
       for (let pago of this.getValues(this.opcionesPago)) {
-           pagos.push(pago);
+           //pagos.push(pago);
+           let id = pago["id"];
+           let p = this.tipoPago.get(id);
+           pagos.push(p);
       }
+
+      let ban = false;
+      console.log(pagos);
 
 
       this.fourthStepCompleted = true;
       this.fourthStepVisible = false;
 
+      //let op = this.opcDuracion.get(Number(this.opcion_duracion));
 
       path2=this.databaseServicio.insertServiceDatabase(this.authService.afAuth.auth.currentUser.uid,
-      this.opcionCategoria,this.nombre, this.descripcion,this.tiempo_duracion, this.opcion_duracion,
-      this.precio,ciudades, modalidades, this.direccion, pagos,this.fecha);
+      this.cat,this.nombre, this.descripcion,this.tiempo_duracion, this.opcDur,this.precio,ciudades,
+      modalidades,this.direccion, pagos,this.fecha);
 
       this.uploadFile(path2);
 

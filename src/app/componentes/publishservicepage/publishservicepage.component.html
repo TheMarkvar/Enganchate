@@ -83,7 +83,7 @@
           <div class="row">
             <label for="{{cat.id}}" *ngFor="let cat of getValues(categorias) | pipeCategorias:1" >
               <div class="col-xs-4" *ngIf="cat.pathImagen">
-                  <input id="{{cat.id}}" name="opc-cat" type="radio" (change)="getEventCategory($event)" value="{{cat.nombre}}" >
+                  <input id="{{cat.id}}" name="opc-cat" type="radio" (change)="getEventCategory($event)" value="{{cat.id}}" >
                   <img src="{{cat.pathImagen}}" />
               </div>
 
@@ -139,7 +139,7 @@
                     <div class="col selectContainer">
                       <label for="opcion_duracion">Opción</label>
                        <select class="form-control" name="opcion_duracion" [(ngModel)]="opcion_duracion" required>
-                         <option *ngFor="let opc of opcDuracion" [value]="opc.nombre">
+                         <option *ngFor="let opc of getValues(opcDuracion)" [value]="opc.id">
                             {{opc.nombre}}
                          </option>
                       </select>
@@ -200,7 +200,7 @@
 
                     <label class="col-xs-4" for="{{pago.id}}" *ngFor="let pago of getValues(pagos)" >
                       <div *ngIf="pago.pathImagen">
-                          <input id="{{pago.id}}" name="opc-cat" type="checkbox" (change)="getEventPayment($event)" value="{{pago.nombre}}" >
+                          <input id="{{pago.id}}" name="opc-cat" type="checkbox" (change)="getEventPayment($event)" value="{{pago.id}}" >
                           <img src="{{pago.pathImagen}}" />
                       </div>
 
@@ -239,7 +239,7 @@
               </div>
               <div class="col-sm-8">
                 <div class="row">
-                  {{opcionCategoria}}
+                  {{cat.nombre}}
                 </div>
 
               </div>
@@ -287,7 +287,7 @@
               </div>
               <div class="col-sm-8">
                 <div class="row">
-                  {{opcion_duracion}}
+                  {{opcDur.nombre}}
                 </div>
               </div>
             </div>
@@ -339,7 +339,7 @@
               <div class="col-sm-8">
                 <div class="row">
                   <div *ngFor="let pago of getValues(opcionesPago)">
-                    {{pago}} <br>
+                    {{pago.nombre}} <br>
                   </div>
                 </div>
 

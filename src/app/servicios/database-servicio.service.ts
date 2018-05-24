@@ -21,19 +21,21 @@ export class DatabaseServicioService {
   constructor(public afDatabase: AngularFireDatabase) {
     this.pathServicios = 'servicios';
   }
-  insertServiceDatabase(publicador:string,categoria:string,nombre:string,descripcion:string,tiempo_duracion:number,
-                        opcion_duracion:string,precio:number,zona_cobertura:Array<string>,modalidad:Array<string>,
-                        direccion:string, tipo_pago:Array<string>,fecha:Date){
+  insertServiceDatabase(publicador:string,categoria:Categoria,nombre:string,descripcion:string,tiempo_duracion:number,
+                        opcion_duracion:OpcionDuracion,precio:number,zona_cobertura:Array<string>,modalidad:Array<string>,
+                        direccion:string, tipo_pago:Array<TipoPago>,fecha:Date){
 
     var variable;
     this.getServicios();
+    let opcionDuracion = new OpcionDuracion();
+
     this.servicio=new Servicio();
     this.servicio.publicador=publicador;
-    //this.servicio.categoria=categoria;
+    this.servicio.categoria=categoria;
     this.servicio.nombre=nombre;
     this.servicio.descripcion=descripcion;
     this.servicio.tiempo_duracion=tiempo_duracion;
-    //this.servicio.opcion_duracion=opcion_duracion;
+    this.servicio.opcion_duracion=opcion_duracion;
     this.servicio.precio=precio;
     this.servicio.zona_cobertura=zona_cobertura;
     this.servicio.modalidad=modalidad;
