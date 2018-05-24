@@ -16,7 +16,6 @@
         <br><br>
         <div class="nav-item">
           <img [src]="nombreArchivo" class="center rounded-circle" >
-          <a class="centered" *ngIf="fotoInicial">{{iniciales}}</a>
         </div>
         <br>
 
@@ -32,7 +31,7 @@
         <br><br>
         <div class="nav-item">
           <img [src]="nombreArchivo2" class="center rounded-circle" >
-          <a class="centered" *ngIf="fotoInicial">{{iniciales}}</a>
+
         </div>
 
 
@@ -69,11 +68,11 @@
                title="" [(ngModel)]="descripcion"></textarea>
           </div>
 
-          <input type="submit" value="ACTUALIZAR INFORMACIÓN" class="btn btn-primary btn-block btn-lg">
+          <input type="submit" value="ACTUALIZAR INFORMACIÓN" class="btn edit-style-background btn-block btn-lg">
         </form>
 
         <br><br>
-        <button class="btn btn-primary" (click)="cambiarContrasena()">Cambiar Contraseña</button>
+        <button class="btn edit-style-background" (click)="cambiarContrasena()">Cambiar Contraseña</button>
         <br><br><br>
 
 

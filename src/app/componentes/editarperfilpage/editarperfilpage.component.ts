@@ -142,7 +142,7 @@ export class EditarperfilpageComponent implements OnInit {
               this.nombreArchivo2 = URL;
             });
           }else{
-              this.nombreArchivo2 = 'assets/images/light-sky-blue-solid-color-background.jpg';
+              this.nombreArchivo2 = 'assets/images/user.png';
               this.fotoInicial2 = true;
           }
 

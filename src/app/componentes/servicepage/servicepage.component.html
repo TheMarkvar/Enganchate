@@ -27,31 +27,31 @@
           </p>
 
 
-          <div class="ratings">
+          <!--<div class="ratings">
             <div class="rating-box">
-                <!--<div class="rating" style="width:20%;"></div>-->
+
                 <div class="rating" [style.width]="calificacion"></div>
             </div>
           </div>
-          <span class="review-no">{{cant}} opiniones</span>
+          <span class="review-no">{{cant}} opiniones</span>-->
 
           <br>
           <p class="product-description">{{servicio.descripcion}}</p>
           <h4 class="price">precio actual: <span>$ {{servicio.precio}}</span></h4>
-          <p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>
+          <!--<p class="vote"><strong>91%</strong> of buyers enjoyed this product! <strong>(87 votes)</strong></p>-->
 
 
           <div class="action" *ngIf="servicio.publicador == idUsuarioActual">
-            <button class="add-to-cart btn btn-default" (click)="onClickEditService()"
+            <button class="service-style-background btn btn-default" (click)="onClickEditService()"
             type="button" data-toggle="modal" data-target="#sendMessageModal3">Editar</button>
-            <button class="add-to-cart btn btn-default" (click)="onClickDeleteService()"
+            <button class="service-style-background btn btn-default" (click)="onClickDeleteService()"
             type="button">Eliminar</button>
           </div>
 
           <div class="action" *ngIf="servicio.publicador != idUsuarioActual">
-            <button class="add-to-cart btn btn-default"
+            <button class="service-style-background btn btn-default"
             type="button" data-toggle="modal" data-target="#sendMessageModal2">Comprar</button>
-            <button class="add-to-cart btn btn-default"
+            <button class="service-style-background btn btn-default"
             type="button" data-toggle="modal" data-target="#sendMessageModal">Contactar</button>
           </div>
 
@@ -72,8 +72,8 @@
                     </div>
                   </div>
                   <div class="modal-footer">
-                    <button class="btn btn-primary" data-dismiss="modal"(click)="onSubmitSendMessageUser()">Enviar</button>
-                    <button class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                    <button class="btn service-style-background" data-dismiss="modal"(click)="onSubmitSendMessageUser()">Enviar</button>
+                    <button class="btn service-style-background" data-dismiss="modal">Cancelar</button>
                   </div>
               </div>
             </div>
@@ -95,8 +95,8 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button class="btn btn-primary" data-dismiss="modal"(click)="onClickPurchase()">Aceptar</button>
-                  <button class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                  <button class="btn service-style-background" data-dismiss="modal"(click)="onClickPurchase()">Aceptar</button>
+                  <button class="btn service-style-background" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>
           </div>
@@ -210,8 +210,8 @@
               </div>
             </div>
               <div class="modal-footer">
-                <button class="btn btn-primary" data-dismiss="modal"(click)="onClickAceptarEditService()">Aceptar</button>
-                <button class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                <button class="btn service-style-background" data-dismiss="modal"(click)="onClickAceptarEditService()">Aceptar</button>
+                <button class="btn service-style-background" data-dismiss="modal">Cancelar</button>
               </div>
           </div>
         </div>

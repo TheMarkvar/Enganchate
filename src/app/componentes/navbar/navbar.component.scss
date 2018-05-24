@@ -1,3 +1,19 @@
+.logoImage{
+  width: 100px;
+  height: 50px;
+  cursor: pointer;
+  //overflow: hidden;
+}
+
+
+.navbar-custom {
+    background-color: #2C3D4F;
+}
+
+.padding-left{
+  padding-left: 10px;
+}
+
 img.rounded-circle{
   width: 45px;
   height: 45px;
@@ -129,7 +145,7 @@ input::-webkit-input-placeholder {
   color:black;
 }
 .dropdown-style:hover{
-    color: #4CAF50;
+    color: #2d8f98;
     background-color: transparent; /* or #000 */
 }
 

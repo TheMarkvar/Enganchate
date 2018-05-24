@@ -9,16 +9,16 @@
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img class="d-block w-100" src="assets/images/Home1.png" alt="Educación">
+      <img class="d-block w-100" src="assets/images/Home1.png" alt="Veterinaria">
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="assets/images/Home2.jpg" alt="Salud">
+      <img class="d-block w-100" src="assets/images/Home2.png" alt="Turismo">
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="assets/images/Home3.jpg" alt="Música">
+      <img class="d-block w-100" src="assets/images/Home3.png" alt="Gastronomía">
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="assets/images/Home4.jpg" alt="Diseño">
+      <img class="d-block w-100" src="assets/images/Home4.png" alt="Confección">
     </div>
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -35,7 +35,7 @@
 <br>
 <br>
 <div class="stepper-content" >
-<p class="title">Categorías</p>
+<p class="title" *ngIf="getValues(categorias).length>0">Categorías</p>
 <div class="row">
   <label for="{{cat.id}}" *ngFor="let cat of getValues(categorias) | pipeCategorias:1" >
     <div class="col-xs-4" *ngIf="cat.pathImagen">

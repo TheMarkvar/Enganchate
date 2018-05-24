@@ -17,10 +17,10 @@
           <img class="photo" src="{{usuarioActual.URLImagen}}"
           alt="avatar" *ngIf="!usuarioParam.idUsuario && usuarioActual.URLImagen" />
 
-          <img class="photo" src="assets/images/light-sky-blue-solid-color-background.jpg"
+          <img class="photo" src="assets/images/user.png"
           alt="avatar" *ngIf="usuarioParam.idUsuario && !usuarioParam.URLImagen"/>
 
-          <img class="photo" src="assets/images/light-sky-blue-solid-color-background.jpg"
+          <img class="photo" src="assets/images/user.png"
           alt="avatar" *ngIf="!usuarioParam.idUsuario && !usuarioActual.URLImagen"/>
 
 
@@ -59,8 +59,8 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button class="btn btn-primary" data-dismiss="modal"(click)="onSubmitSendMessageUser()">Enviar</button>
-                <button class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                <button class="btn user-profile-style-background" data-dismiss="modal"(click)="onSubmitSendMessageUser()">Enviar</button>
+                <button class="btn user-profile-style-background" data-dismiss="modal">Cancelar</button>
               </div>
           </div>
         </div>
