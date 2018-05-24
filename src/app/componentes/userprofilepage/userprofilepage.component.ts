@@ -78,8 +78,6 @@ export class UserprofilepageComponent implements OnInit {
         this.urlIconoMensaje = URL;
       });
 
-      //this.listaServiciosContratadosActual.push(2);
-      //this.listaServiciosContratadosParam.push(3);
 
 
 
@@ -353,82 +351,70 @@ export class UserprofilepageComponent implements OnInit {
     });
   }
     serviciosContratadosActual(){
-    this.databaseServicioService.getServicios().snapshotChanges().subscribe(item => {
-    this.listaServiciosContratadosActual = [];
+      this.databaseServicioService.getCompras().snapshotChanges().subscribe(item => {
+      this.listaServiciosContratadosParam= [];
 
-    item.forEach(element => {
-    let x = element.payload.toJSON();
-    x["$key"] = element.key;
+      item.forEach(element => {
+      let x = element.payload.toJSON();
+      x["$key"] = element.key;
 
-    let servicioFiltro:Servicio = new Servicio();
-    var servicioValido:boolean = false;
+      let servicioFiltro:Servicio = new Servicio();
+      var servicioValido:boolean = false;
+      console.log(x);
 
+      for(var key in x) {
 
-    for(var key in x) {
+          var value = x[key];
 
-        var value = x[key];
-
-        if(key === "zona_cobertura"){
-          let value2 = [];
-          for (let key2 in value) {
-              value2.push(value[key2].nombre);
+          if(key === "zona_cobertura"){
+            let value2 = [];
+            for (let key2 in value) {
+                value2.push(value[key2].nombre);
+            }
+            servicioFiltro.zona_cobertura = value2;
           }
-          servicioFiltro.zona_cobertura = value2;
-        }
-        if(key === "modalidad"){
-          let value2 = [];
-          for (let key2 in value) {
-              value2.push(value[key2]);
+          else if(key === "tipo_pago"){
+            let value2 = [];
+            for (let key2 in value) {
+                value2.push(value[key2].nombre);
+            }
+            servicioFiltro.tipo_pago = value2;
           }
-          servicioFiltro.modalidad = value2;
-        }
-        else if(key === "tipo_pago"){
-          let value2 = [];
-          for (let key2 in value) {
-              value2.push(value[key2].nombre);
+          else if(key === "nombre"){
+            servicioFiltro.nombre = value;
           }
-          servicioFiltro.tipo_pago = value2;
-        }
-        else if(key === "nombre"){
-          servicioFiltro.nombre = value;
-        }
-        else if(key === "categoria"){
-          servicioFiltro.categoria = value.nombre;
-        }
-        else if(key === "descripcion"){
-          servicioFiltro.descripcion = value;
-        }
-        else if(key === "precio"){
-          servicioFiltro.precio = value;
-        }
-        else if(key === "publicador"){
-          servicioFiltro.publicador = value;
-
-          if(value === this.usuarioActual.idUsuario){
-              servicioValido = true;
+          else if(key === "categoria"){
+            servicioFiltro.categoria = value.nombre;
+          }
+          else if(key === "valor"){
+            servicioFiltro.precio = value;
+          }
+          else if(key === "idComprador"){
+            if(value === this.usuarioActual.idUsuario){
+                servicioValido = true;
+            }
+          }
+          else if(key=="pathImagen"){
+            this.uploadService.downloadFile('servicios/'+value).subscribe(URL=>{
+              servicioFiltro.idServicio = value;
+              servicioFiltro.pathImagen = URL;
+            });
           }
 
-        }
-        else if(key=="pathImagen"){
-          this.uploadService.downloadFile('servicios/'+value).subscribe(URL=>{
-            servicioFiltro.idServicio = value;
-            servicioFiltro.pathImagen = URL;
-          });
-        }
-
-    }
-    if(servicioValido){
-        this.listaServiciosContratadosActual.push(servicioFiltro);
-    }
+      }
+      if(servicioValido){
+          this.listaServiciosContratadosParam.push(servicioFiltro);
+      }
 
 
-   ;});
+     ;});
 
-    });
+      });
+
   }
 
   serviciosContratadosParam(){
-    this.databaseServicioService.getServicios().snapshotChanges().subscribe(item => {
+    this.databaseServicioService.getCompras().snapshotChanges().subscribe(item => {
     this.listaServiciosContratadosParam= [];
 
     item.forEach(element => {
@@ -437,7 +423,7 @@ export class UserprofilepageComponent implements OnInit {
 
     let servicioFiltro:Servicio = new Servicio();
     var servicioValido:boolean = false;
-
+    console.log(x);
 
     for(var key in x) {
 
@@ -449,13 +435,6 @@ export class UserprofilepageComponent implements OnInit {
               value2.push(value[key2].nombre);
           }
           servicioFiltro.zona_cobertura = value2;
-        }
-        if(key === "modalidad"){
-          let value2 = [];
-          for (let key2 in value) {
-              value2.push(value[key2]);
-          }
-          servicioFiltro.modalidad = value2;
         }
         else if(key === "tipo_pago"){
           let value2 = [];
@@ -470,19 +449,13 @@ export class UserprofilepageComponent implements OnInit {
         else if(key === "categoria"){
           servicioFiltro.categoria = value.nombre;
         }
-        else if(key === "descripcion"){
-          servicioFiltro.descripcion = value;
-        }
-        else if(key === "precio"){
+        else if(key === "valor"){
           servicioFiltro.precio = value;
         }
-        else if(key === "publicador"){
-          servicioFiltro.publicador = value;
-
+        else if(key === "idComprador"){
           if(value === this.usuarioParam.idUsuario){
               servicioValido = true;
           }
-
         }
         else if(key=="pathImagen"){
           this.uploadService.downloadFile('servicios/'+value).subscribe(URL=>{
@@ -494,7 +467,6 @@ export class UserprofilepageComponent implements OnInit {
     }
     if(servicioValido){
         this.listaServiciosContratadosParam.push(servicioFiltro);
-        //console.log(servicioFiltro);
     }
 
 

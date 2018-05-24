@@ -348,11 +348,23 @@ export class ServicepageComponent implements OnInit {
     doc.save('factura.pdf');
   }
   onClickPurchase(){
-    console.log("entra en compra");
-    this.purchaseService.insertPurchaseDatabase(this.servicio.publicador,this.authService.afAuth.auth.currentUser.uid,
-    this.servicio.idServicio,this.servicio.precio,this.servicio.nombre,
-    this.servicio.categoria,this.servicio.zona_cobertura,this.servicio.tipo_pago,this.servicio.idServicio);
-    //this.downloadPDF();
+    let cuentaValidada = this.authService.getVerficationAccount();
+
+    if(cuentaValidada){
+      this.purchaseService.insertPurchaseDatabase(this.servicio.publicador,this.authService.afAuth.auth.currentUser.uid,
+      this.servicio.idServicio,this.servicio.precio,this.servicio.nombre,
+      this.servicio.categoria,this.servicio.zona_cobertura,this.servicio.tipo_pago,this.servicio.idServicio);
+      //this.downloadPDF();
+      this.flashMensaje.show('Servicio publicado satisfactoriamente',
+      {cssClass: 'alert-success', timeout: 4000});
+      this.router.navigate(['/home']);
+
+    }else{
+      var email = this.authService.getEmail();
+      this.authService.sendEmailVerification();
+      this.flashMensaje.show("Usuario con correo: "+ email+" debe confirmar cuenta",
+      {cssClass: 'alert-danger', timeout: 4000});
+    }
 
   }
 
