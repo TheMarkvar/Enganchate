@@ -370,7 +370,7 @@ export class ServicepageComponent implements OnInit {
       doc.save('factura.pdf');
 
 
-      this.flashMensaje.show('Servicio publicado satisfactoriamente',
+      this.flashMensaje.show('Servicio contratado satisfactoriamente',
       {cssClass: 'alert-success', timeout: 4000});
       this.router.navigate(['/home']);
 
