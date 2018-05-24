@@ -230,8 +230,7 @@
         <div div class="col-xs-6" *ngFor="let zona of servicio.zona_cobertura">
           <img src="assets/images/location.png" />
           <span class="zone">
-              <button type="button" (click)="onClickCity()"
-               class="btn btn-link text-muted">{{zona.nombre}}</button>
+              {{zona.nombre}}
           </span>
           <!--<span class="zone"
           data-toggle="tooltip">{{zona.nombre}}</span>-->

@@ -25,6 +25,9 @@ export class PublishedservicesuserpageComponent implements OnInit {
 
   listaServicios = [];
 
+  private resultadoCiudades:string;
+  private resultadoTipoPago:string;
+
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -117,7 +120,34 @@ export class PublishedservicesuserpageComponent implements OnInit {
 
      ;});});
   }
-
+  imprimirCiudades(ciudades:Array<Ciudad>){
+    this.resultadoCiudades = "";
+    var aux=1;
+    for(let item of ciudades){
+      if(aux==1){
+        this.resultadoCiudades=this.resultadoCiudades+item.nombre;
+      }
+      if(aux!=1){
+        this.resultadoCiudades=this.resultadoCiudades+","+item.nombre;
+      }
+      aux=aux+1;
+    }
+    return this.resultadoCiudades;
+  }
+  imprimirTiposPago(tipoPago:Array<TipoPago>){
+    this.resultadoTipoPago="";
+    var aux=1;
+    for(let item of tipoPago){
+      if(aux==1){
+        this.resultadoTipoPago=this.resultadoTipoPago+item.nombre;
+      }
+      if(aux!=1){
+        this.resultadoTipoPago=this.resultadoTipoPago+","+item.nombre;
+      }
+      aux=aux+1;
+    }
+    return this.resultadoTipoPago;
+  }
   onClickService(idService){
     this.router.navigate(['/service'], { queryParams: { search: idService } });
   }
