@@ -30,7 +30,7 @@ import * as jsPDF from 'jspdf';
 })
 export class ServicepageComponent implements OnInit {
 
-  @ViewChild('content') content:ElementRef;
+  @ViewChild('purchase') content:ElementRef;
   constructor(
     private activatedRoute: ActivatedRoute,
     private optionsService:OptionsService,
@@ -355,6 +355,21 @@ export class ServicepageComponent implements OnInit {
       this.servicio.idServicio,this.servicio.precio,this.servicio.nombre,
       this.servicio.categoria,this.servicio.zona_cobertura,this.servicio.tipo_pago,this.servicio.idServicio);
       //this.downloadPDF();
+
+      let doc = new jsPDF();
+      let specialElementHandlers = {
+        '#editor': function(element, renderer){
+          return true;
+        }
+      };
+      let content = this.content.nativeElement;
+      doc.fromHTML(content.innerHTML,15,15,{
+        'width':190,
+        'elementHandlers':specialElementHandlers
+      });
+      doc.save('factura.pdf');
+
+
       this.flashMensaje.show('Servicio publicado satisfactoriamente',
       {cssClass: 'alert-success', timeout: 4000});
       this.router.navigate(['/home']);

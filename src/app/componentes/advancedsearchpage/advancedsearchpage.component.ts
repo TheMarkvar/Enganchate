@@ -20,37 +20,37 @@ import { Modalidad } from '../../modelos/modalidad';
   styleUrls: ['./advancedsearchpage.component.scss']
 })
 export class AdvancedsearchpageComponent implements OnInit {
-  private listaServicios = [];
-  private categorias = [];
-  private categoriasAux = [];
-  private ciudades = [];
-  private tipos_pago = [];
-  private modalidades_pago = [];
+  listaServicios = [];
+  categorias = [];
+  categoriasAux = [];
+  ciudades = [];
+  tipos_pago = [];
+  modalidades_pago = [];
 
-  private selectedItems = [];
-  private dropdownSettings = {};
+  selectedItems = [];
+  dropdownSettings = {};
 
-  private selectedItems2 = [];
-  private dropdownSettings2 = {};
+  selectedItems2 = [];
+  dropdownSettings2 = {};
 
-  private selectedItems3 = [];
-  private dropdownSettings3 = {};
+  selectedItems3 = [];
+  dropdownSettings3 = {};
 
-  private selectedItems4 = [];
-  private dropdownSettings4 = {};
+  selectedItems4 = [];
+  dropdownSettings4 = {};
 
 
-  private precioMinimo: number;
-  private precioMaximo: number;
-  private buscar:string;
-  private categoriaBusqueda:string;
+  precioMinimo: number;
+  precioMaximo: number;
+  buscar:string;
+  categoriaBusqueda:string;
 
-  private navigationSubscription:any=null;
+  navigationSubscription:any=null;
 
-  private resultadoCiudades:string;
-  private resultadoTipoPago:string;
+  resultadoCiudades:string;
+  resultadoTipoPago:string;
 
-  private entrada:boolean;
+  entrada:boolean;
 
 
   constructor(
