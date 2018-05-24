@@ -9,17 +9,21 @@ import { Modalidad } from '../modelos/modalidad';
 import { TipoPago } from '../modelos/tipo-pago';
 import { Categoria } from '../modelos/categoria';
 import { OpcionDuracion } from '../modelos/opcion-duracion';
+import { Compra } from '../modelos/compra';
 
 @Injectable()
 export class DatabaseServicioService {
-
-  private pathServicios:string;
+  public pathCompras:string;
+  public pathServicios:string;
   public servicio:Servicio;
   public servicio2:Servicio;
-  private listaServicios: AngularFireList<Servicio>;
+  public listaServicios: AngularFireList<Servicio>;
+  public listaCompras: AngularFireList<Compra>;
 
   constructor(public afDatabase: AngularFireDatabase) {
     this.pathServicios = 'servicios';
+    this.pathCompras = 'compras';
+
   }
   insertServiceDatabase(publicador:string,categoria:Categoria,nombre:string,descripcion:string,tiempo_duracion:number,
                         opcion_duracion:OpcionDuracion,precio:number,zona_cobertura:Array<string>,modalidad:Array<string>,
@@ -84,6 +88,8 @@ export class DatabaseServicioService {
   getServicio(id:string){
     return  this.afDatabase.database.ref(this.pathServicios+'/'+id).once('value');
   }
-
+  getCompras(){
+    return this.listaCompras = this.afDatabase.list(this.pathCompras);
+  }
 
 }

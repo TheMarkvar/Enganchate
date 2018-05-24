@@ -97,7 +97,53 @@
           <p>No Hay Servicios Disponibles</p>
       </div>
       <div class="row gallery" *ngIf="serviciosContratados && usuarioParam.idUsuario && listaServiciosContratadosParam.length>0">
-        <p>Aquí van los servicios contratador por el param</p>
+        <div class="col-md-6" *ngFor="let servicio of listaServiciosContratadosActual">
+
+            <article class="card-wrapper">
+              <div class="image-holder">
+                <a (click)="onClickService(servicio.idServicio)" class="image-holder__link"></a>
+                <div class="image-liquid image-holder--original" [style.background-image]="getBackground(servicio.pathImagen)">
+                </div>
+              </div>
+
+
+              <div class="product-description">
+
+                <h1 class="product-description__title">
+                  <a href="">
+                    {{servicio.nombre}}
+                    </a>
+                </h1>
+
+                <div class="row">
+                  <div class="col-xs-6 col-md-4 col-sm-4 product-description__category secondary-text">
+                    {{servicio.categoria}}
+                  </div>
+                  <div class="col-xs-6 col-md-2 col-sm-2 product-description__price">
+                    $ {{servicio.precio}}
+                  </div>
+                </div>
+
+
+                <div class="sizes-wrapper">
+                  <b>Zona de cobertura</b>
+                  <br />
+                  <span class="secondary-text text-uppercase">
+                      {{servicio.zona_cobertura.toString()}}
+                  </span>
+                </div>
+                <div class="sizes-wrapper">
+                  <b>Tipo de pago</b>
+                  <br />
+                  <span class="secondary-text text-uppercase">
+                      {{servicio.tipo_pago.toString()}}
+                  </span>
+                </div>
+
+              </div>
+
+            </article>
+          </div>
 
       </div>
 
@@ -105,8 +151,53 @@
           <p>No Hay Servicios Disponibles</p>
       </div>
       <div class="row gallery" *ngIf="serviciosContratados && !usuarioParam.idUsuario && listaServiciosContratadosActual.length>0">
-        <p>Aquí van los servicios contratador por el actual</p>
+        <div class="col-md-6" *ngFor="let servicio of listaServiciosContratadosActual">
 
+            <article class="card-wrapper">
+              <div class="image-holder">
+                <a (click)="onClickService(servicio.idServicio)" class="image-holder__link"></a>
+                <div class="image-liquid image-holder--original" [style.background-image]="getBackground(servicio.pathImagen)">
+                </div>
+              </div>
+
+
+              <div class="product-description">
+
+                <h1 class="product-description__title">
+                  <a href="">
+                    {{servicio.nombre}}
+                    </a>
+                </h1>
+
+                <div class="row">
+                  <div class="col-xs-6 col-md-4 col-sm-4 product-description__category secondary-text">
+                    {{servicio.categoria}}
+                  </div>
+                  <div class="col-xs-6 col-md-2 col-sm-2 product-description__price">
+                    $ {{servicio.precio}}
+                  </div>
+                </div>
+
+
+                <div class="sizes-wrapper">
+                  <b>Zona de cobertura</b>
+                  <br />
+                  <span class="secondary-text text-uppercase">
+                      {{servicio.zona_cobertura.toString()}}
+                  </span>
+                </div>
+                <div class="sizes-wrapper">
+                  <b>Tipo de pago</b>
+                  <br />
+                  <span class="secondary-text text-uppercase">
+                      {{servicio.tipo_pago.toString()}}
+                  </span>
+                </div>
+
+              </div>
+
+            </article>
+          </div>
       </div>
 
     <div class="row gallery" *ngIf="serviciosPublicados && !usuarioParam.idUsuario && listaServiciosPublicadosActual.length===0">

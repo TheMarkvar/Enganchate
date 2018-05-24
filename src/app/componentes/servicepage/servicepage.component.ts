@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ViewChild, ElementRef } from '@angular/core';
 import { FlashMessagesService} from 'angular2-flash-messages';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -20,6 +21,7 @@ import { OpcionDuracion } from  '../../modelos/opcion-duracion';
 import { TipoPago } from  '../../modelos/tipo-pago';
 import { Observable } from 'rxjs/Observable';
 import { Modalidad } from '../../modelos/modalidad';
+import * as jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-servicepage',
@@ -28,7 +30,7 @@ import { Modalidad } from '../../modelos/modalidad';
 })
 export class ServicepageComponent implements OnInit {
 
-
+  @ViewChild('content') content:ElementRef;
   constructor(
     private activatedRoute: ActivatedRoute,
     private optionsService:OptionsService,
@@ -331,11 +333,27 @@ export class ServicepageComponent implements OnInit {
     this.router.navigate(['/userProfile'], { queryParams: { search: this.servicio.publicador } });
 
   }
-
+  public downloadPDF(){
+    let doc = new jsPDF();
+    let specialElementHandlers = {
+      '#editor': function(element, renderer){
+        return true;
+      }
+    };
+    let content = this.content.nativeElement;
+    doc.fromHTML(content.innerHTML,15,15,{
+      'width':190,
+      'elementHandlers':specialElementHandlers
+    });
+    doc.save('factura.pdf');
+  }
   onClickPurchase(){
     console.log("entra en compra");
     this.purchaseService.insertPurchaseDatabase(this.servicio.publicador,this.authService.afAuth.auth.currentUser.uid,
-    this.servicio.idServicio,this.servicio.precio);
+    this.servicio.idServicio,this.servicio.precio,this.servicio.nombre,
+    this.servicio.categoria,this.servicio.zona_cobertura,this.servicio.tipo_pago,this.servicio.idServicio);
+    //this.downloadPDF();
+
   }
 
   onClickEditService(){

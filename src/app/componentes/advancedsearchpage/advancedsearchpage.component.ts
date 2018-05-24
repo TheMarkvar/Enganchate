@@ -210,15 +210,15 @@ export class AdvancedsearchpageComponent implements OnInit {
   }*/
 
   filtrarServiciosBarraBusqueda(){
-    console.log("(FiltrarServiciosBarraBusqueda)buscar: " + this.buscar);
-    console.log("categoria:(FiltrarServiciosBarraBusqueda ) "+ this.categoriaBusqueda);
+    //console.log("(FiltrarServiciosBarraBusqueda)buscar: " + this.buscar);
+    //console.log("categoria:(FiltrarServiciosBarraBusqueda ) "+ this.categoriaBusqueda);
     this.databaseServicioService.getServicios().snapshotChanges().subscribe(item => {
       this.listaServicios = [];
 
       item.forEach(element => {
       let x = element.payload.toJSON();
       x["$key"] = element.key;
-      console.log("entra en forEach");
+      //console.log("entra en forEach");
 
       let servicioFiltro:Servicio = new Servicio();
       var servicioValido:boolean = false;
@@ -290,14 +290,14 @@ export class AdvancedsearchpageComponent implements OnInit {
 
       }
       if(servicioValido){
-          console.log("servicioCumple con parametros");
+          //console.log("servicioCumple con parametros");
           this.listaServicios.push(servicioFiltro);
       }
      ;});});
   }
   filtrarPrecio(){
-    console.log(this.precioMinimo);
-    console.log(this.precioMaximo);
+    //console.log(this.precioMinimo);
+    //console.log(this.precioMaximo);
   }
   imprimirCiudades(ciudades:Array<Ciudad>){
     this.resultadoCiudades = "";
@@ -335,7 +335,7 @@ export class AdvancedsearchpageComponent implements OnInit {
       item.forEach(element => {
       let x = element.payload.toJSON();
       x["$key"] = element.key;
-      console.log("entra en filtrarServiciosParametros");
+      //console.log("entra en filtrarServiciosParametros");
 
       let servicioFiltro:Servicio = new Servicio();
       var servicioValido:boolean = false;
@@ -465,10 +465,10 @@ export class AdvancedsearchpageComponent implements OnInit {
        for(let item of this.categorias){
          //console.log(item);
          if(item.id==this.categoriaBusqueda){
-           console.log("Entro mmmm");
+           //console.log("Entro mmmm");
            //this.onItemSelect({id:item.id,nombre:item.nombre});
            this.onItemSelect(item);
-           console.log(this.categorias);
+           //console.log(this.categorias);
            this.filtrarServiciosParametros();
            //this.selectedItems.push(cat);
            //this.filtrarServiciosParametros();

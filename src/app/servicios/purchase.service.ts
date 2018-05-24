@@ -5,6 +5,9 @@ import 'rxjs/add/operator/map';
 import { Usuario } from '../modelos/usuario';
 import { Servicio } from '../modelos/servicio';
 import { Compra } from '../modelos/compra';
+import { Categoria } from '../modelos/categoria';
+import { Ciudad } from '../modelos/ciudad';
+import { TipoPago } from '../modelos/tipo-pago';
 
 @Injectable()
 export class PurchaseService {
@@ -21,7 +24,8 @@ export class PurchaseService {
   ) {
     this.pathCompras='compras';
   }
-  insertPurchaseDatabase(idVendedor:string,idComprador:string,idServicio:string,valor:number){
+  insertPurchaseDatabase(idVendedor:string,idComprador:string,idServicio:string,valor:number,nombre:string,
+  categoria:Categoria,zona_cobertura:Array<Ciudad>,tipo_pago:Array<TipoPago>,pathImagen:string){
     this.getCompras();
     this.compra=new Compra();
     this.compra.idVendedor=idVendedor;
@@ -30,7 +34,12 @@ export class PurchaseService {
     this.compra.estadoComprador=false;
     this.compra.estadoVendedor=false;
     this.compra.valor=valor;
+    this.compra.nombre=nombre;
+    this.compra.categoria=categoria;
+    this.compra.zona_cobertura=zona_cobertura;
+    this.compra.tipo_pago=tipo_pago;
     this.compra.estadoPago=false;
+    this.compra.pathImagen=pathImagen;
     var idCompra;
     idCompra=this.listaCompras.push(this.compra);
     console.log(idCompra.path.pieces_[1]);

@@ -60,6 +60,7 @@ export class UserprofilepageComponent implements OnInit {
         if(auth){
           this.cargarUsuario(auth.uid, this.usuarioActual, this.iniciales);
           this.serviciosPublicadosActual();
+          this.serviciosContratadosActual();
         }
       }
     );
@@ -70,6 +71,7 @@ export class UserprofilepageComponent implements OnInit {
         let idUsuarioParam:string = params.search;
         this.cargarUsuario(idUsuarioParam, this.usuarioParam, this.iniciales);
         this.serviciosPublicadosParam();
+        this.serviciosContratadosParam();
       });
 
       this.uploadService.downloadFile('opciones/otros/mensaje').subscribe(URL=>{
@@ -342,6 +344,156 @@ export class UserprofilepageComponent implements OnInit {
     }
     if(servicioValido){
         this.listaServiciosPublicadosParam.push(servicioFiltro);
+        //console.log(servicioFiltro);
+    }
+
+
+   ;});
+
+    });
+  }
+    serviciosContratadosActual(){
+    this.databaseServicioService.getServicios().snapshotChanges().subscribe(item => {
+    this.listaServiciosContratadosActual = [];
+
+    item.forEach(element => {
+    let x = element.payload.toJSON();
+    x["$key"] = element.key;
+
+    let servicioFiltro:Servicio = new Servicio();
+    var servicioValido:boolean = false;
+
+
+    for(var key in x) {
+
+        var value = x[key];
+
+        if(key === "zona_cobertura"){
+          let value2 = [];
+          for (let key2 in value) {
+              value2.push(value[key2].nombre);
+          }
+          servicioFiltro.zona_cobertura = value2;
+        }
+        if(key === "modalidad"){
+          let value2 = [];
+          for (let key2 in value) {
+              value2.push(value[key2]);
+          }
+          servicioFiltro.modalidad = value2;
+        }
+        else if(key === "tipo_pago"){
+          let value2 = [];
+          for (let key2 in value) {
+              value2.push(value[key2].nombre);
+          }
+          servicioFiltro.tipo_pago = value2;
+        }
+        else if(key === "nombre"){
+          servicioFiltro.nombre = value;
+        }
+        else if(key === "categoria"){
+          servicioFiltro.categoria = value.nombre;
+        }
+        else if(key === "descripcion"){
+          servicioFiltro.descripcion = value;
+        }
+        else if(key === "precio"){
+          servicioFiltro.precio = value;
+        }
+        else if(key === "publicador"){
+          servicioFiltro.publicador = value;
+
+          if(value === this.usuarioActual.idUsuario){
+              servicioValido = true;
+          }
+
+        }
+        else if(key=="pathImagen"){
+          this.uploadService.downloadFile('servicios/'+value).subscribe(URL=>{
+            servicioFiltro.idServicio = value;
+            servicioFiltro.pathImagen = URL;
+          });
+        }
+
+    }
+    if(servicioValido){
+        this.listaServiciosContratadosActual.push(servicioFiltro);
+    }
+
+
+   ;});
+
+    });
+  }
+
+  serviciosContratadosParam(){
+    this.databaseServicioService.getServicios().snapshotChanges().subscribe(item => {
+    this.listaServiciosContratadosParam= [];
+
+    item.forEach(element => {
+    let x = element.payload.toJSON();
+    x["$key"] = element.key;
+
+    let servicioFiltro:Servicio = new Servicio();
+    var servicioValido:boolean = false;
+
+
+    for(var key in x) {
+
+        var value = x[key];
+
+        if(key === "zona_cobertura"){
+          let value2 = [];
+          for (let key2 in value) {
+              value2.push(value[key2].nombre);
+          }
+          servicioFiltro.zona_cobertura = value2;
+        }
+        if(key === "modalidad"){
+          let value2 = [];
+          for (let key2 in value) {
+              value2.push(value[key2]);
+          }
+          servicioFiltro.modalidad = value2;
+        }
+        else if(key === "tipo_pago"){
+          let value2 = [];
+          for (let key2 in value) {
+              value2.push(value[key2].nombre);
+          }
+          servicioFiltro.tipo_pago = value2;
+        }
+        else if(key === "nombre"){
+          servicioFiltro.nombre = value;
+        }
+        else if(key === "categoria"){
+          servicioFiltro.categoria = value.nombre;
+        }
+        else if(key === "descripcion"){
+          servicioFiltro.descripcion = value;
+        }
+        else if(key === "precio"){
+          servicioFiltro.precio = value;
+        }
+        else if(key === "publicador"){
+          servicioFiltro.publicador = value;
+
+          if(value === this.usuarioParam.idUsuario){
+              servicioValido = true;
+          }
+
+        }
+        else if(key=="pathImagen"){
+          this.uploadService.downloadFile('servicios/'+value).subscribe(URL=>{
+            servicioFiltro.idServicio = value;
+            servicioFiltro.pathImagen = URL;
+          });
+        }
+
+    }
+    if(servicioValido){
+        this.listaServiciosContratadosParam.push(servicioFiltro);
         //console.log(servicioFiltro);
     }
 
